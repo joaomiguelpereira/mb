@@ -1,0 +1,14 @@
+%h1 Registar novo utilizador
+=simple_form_for @user do |f|
+  =f.input :first_name
+  =f.input :last_name
+  =f.input :email
+  =f.input :email_confirmation
+  =f.input :password
+  =f.input :password_confirmation
+  =f.input :role, :as=>:hidden
+  = f.submit 'Criar'
+  
+  
+  
+

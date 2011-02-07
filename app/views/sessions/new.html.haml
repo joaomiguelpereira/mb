@@ -1,0 +1,32 @@
+= title "Iniciar sessão"
+= more_stylesheets "forms"
+
+-if @not_active
+  %div.user_message
+    %div
+      O seu registo está quase completo. Enviamos um email para 
+      =@email+"."
+      Siga as instruções para activar a sua conta. Após a activação pode iniciar a sessão.
+#formContainer
+  %h1 Iniciar sessão
+  %div.message
+    Caso ainda não tenha uma conta no medibooking.com,  
+    =link_to 'registe-se aqui.', new_user_path
+    
+    %div.message
+      Se prentende registar o seu negócio no medibooking.com faça-o  
+      =link_to 'aqui.', new_user_path(:role=>User::BUSINESS_OWNER)
+    
+    
+    
+  =simple_form_for :session, :url=>sessions_path do |f|
+    =f.input :email, :required=>false, :label=>I18n.t("activerecord.attributes.user.email")
+    =f.input :password, :required=>false, :label=>I18n.t("activerecord.attributes.user.password")
+    =f.input :keep_logged, :as=>:boolean, :required=>false, :label=>I18n.t("activerecord.attributes.user.keep_logged")
+    
+    = f.submit I18n.t "activerecord.actions.session.create"
+  
+  
+
+
+    

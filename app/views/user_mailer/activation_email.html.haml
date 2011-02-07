@@ -1,0 +1,6 @@
+%p= "Caro #{@user.full_name},"
+%p= "Recebemos o seu pedido de registo em #{h Application::config['application_name']} e estamos a um passo de activar a sua conta."
+%p Para activar sua conta utilize este link:
+=@url
+%p Obrigado,
+= Application::config['application_name']  

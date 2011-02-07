@@ -1,0 +1,5 @@
+pt:
+  mailer:
+    user:
+      activation:
+        subject : Active a sua conta

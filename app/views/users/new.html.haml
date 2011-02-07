@@ -1,13 +1,26 @@
-%h1 Registar novo utilizador
-=simple_form_for @user do |f|
-  =f.input :first_name
-  =f.input :last_name
-  =f.input :email
-  =f.input :email_confirmation
-  =f.input :password
-  =f.input :password_confirmation
-  =f.input :role, :as=>:hidden
-  = f.submit 'Criar'
+
+= title "Novo utilizador"
+= more_stylesheets "forms"
+
+#formContainer
+  %h1 Registar novo utilizador 
+  %div
+    Caso já tenha uma conta no medibooking.com, identifique-se 
+    =link_to 'aqui', new_session_path
+  %div.attention
+    Todos os campos marcados com * são obrigatórios
+  =simple_form_for @user do |f|
+    /= f.error_messages
+    =f.input :first_name
+    =f.input :last_name
+    =f.input :email
+    =f.input :email_confirmation
+    =f.input :password
+    =f.input :password_confirmation
+    =f.input :role, :as=>:hidden
+    =f.input :terms_and_conditions, :as=>:boolean
+    
+    = f.submit I18n.t "activerecord.actions.user.create"
   
   
   

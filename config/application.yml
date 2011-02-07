@@ -1,0 +1,9 @@
+development:
+  mail_notifications: 
+    default_mail_from: notifications@medibooking.com
+test:
+  mail_notifications:
+    default_mail_from: notifications@medibooking.com
+production:
+  mail_notifications:
+    default_mail_from: notifications@medibooking.com

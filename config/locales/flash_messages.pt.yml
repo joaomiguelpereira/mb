@@ -1,0 +1,5 @@
+pt:
+  flash:
+    error:
+      session:
+        invalid_data: Não foi possível iniciar a sessão. Verifique os dados.

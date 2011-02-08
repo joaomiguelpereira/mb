@@ -65,6 +65,7 @@ Medibooking::Application.routes.draw do
   
   match "user/activate/:activation_key" => "users#activate", :via=>[:get], :as=>:activate_user
   
-  resources :sessions
+  resources :sessions, :only=>[:new, :create]
+  match "session/delete" =>"sessions#destroy", :via=>[:delete], :as=>:delete_session
   
 end

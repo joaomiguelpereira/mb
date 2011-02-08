@@ -18,4 +18,8 @@ class ActiveSupport::TestCase
    def assert_success_flashed(i18nkey,*params)
     assert_equal I18n.t(i18nkey,*params), flash[:success]
   end
+  
+  def authenticated_user(user)
+    {:user_id=>user.id}
+  end
 end

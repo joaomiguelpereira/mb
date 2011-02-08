@@ -9,7 +9,13 @@ class SessionsController < ApplicationController
         @not_active = true
       end
     end
-    
+  end
+  
+  def destroy
+    reset_session
+    session[:user_id] = nil
+    flash_success "flash.success.session.destroy", {:keep=>true}
+    redirect_to root_path
     
   end
   
@@ -31,16 +37,17 @@ class SessionsController < ApplicationController
         render :new
       else
         create_session_for(user,keep_logged)
-        flash_success "flash.success.session.create", {:email=>user.email}
+        flash_success "flash.success.session.create", {:keep=>true}, {:email=>user.email}
         redirect_to root_path
       end
     end
-    
-    
   end
   private
+  
   def create_session_for(user, keeploged)
     reset_session
     session[:user_id] = user.id
   end
+  
+  
 end

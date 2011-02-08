@@ -47,5 +47,12 @@ class SessionsControllerTest < ActionController::TestCase
     assert_redirected_to root_path
   end
   
+  test "should destroy session with no remember option" do
+    delete :destroy, {}, authenticated_user(users(:jonh))
+    assert_nil session[:user_id]
+    assert_redirected_to root_path
+    assert_success_flashed "flash.success.session.destroy"
+  end
+  
   
 end

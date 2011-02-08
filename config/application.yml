@@ -1,9 +1,14 @@
 development:
+  application_name: medibooking.com
   mail_notifications: 
+    mail_host: localhost:3000
     default_mail_from: notifications@medibooking.com
 test:
+  application_name: medibooking.com
   mail_notifications:
+    mail_host: localhost:3000
     default_mail_from: notifications@medibooking.com
 production:
+  application_name: medibooking.com
   mail_notifications:
     default_mail_from: notifications@medibooking.com

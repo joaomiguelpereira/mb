@@ -10,6 +10,7 @@ pt:
     success:
       session:
         create: A sessão foi criada com sucesso com o email %{email}
+        destroy: A sessão for terminada com sucesso.
       user:
         create: Utilizador registado com sucesso.
         activate: A conta do utilizador %{email} está agora activa. Pode iniciar a sessão.

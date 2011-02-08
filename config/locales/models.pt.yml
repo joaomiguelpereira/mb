@@ -11,7 +11,7 @@ pt:
         password: Palavra passe
         password_confirmation: Confirmação da palavra passe
         terms_and_conditions: Aceito os termos e condições
-        keep_logged: Manter a minha sessão activa por 15 dias
+        keep_logged: Manter a minha sessão activa neste computador
     actions:
       user:
         create: Criar utilizador

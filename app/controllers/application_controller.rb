@@ -2,7 +2,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   
   
-  before_filter :mailer_set_url_options
+  
+  helper_method :current_user
   
   layout "default"
   def index
@@ -11,12 +12,25 @@ class ApplicationController < ActionController::Base
   
   
   protected
-  def flash_error(i18nkey) 
-    flash.now[:error] = I18n.t(i18nkey) 
+  def flash_error(i18nkey, options={},*params)
+    if options[:keep] 
+      flash[:error] = I18n.t(i18nkey,*params)
+    else
+      flash.now[:error] = I18n.t(i18nkey,*params)
+    end
+    
+    
+  end
+  def flash_success(i18nkey, options={},*params) 
+    if options[:keep] 
+      flash[:success] = I18n.t(i18nkey,*params)
+    else
+      flash.now[:success] = I18n.t(i18nkey,*params)
+    end 
   end
   
-  private 
-  def mailer_set_url_options
-    ActionMailer::Base.default_url_options[:host] = request.host_with_port
+  private
+  def current_user
+    @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
 end

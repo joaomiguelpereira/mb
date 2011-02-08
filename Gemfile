@@ -13,6 +13,13 @@ gem 'mysql2'
 # gem 'unicorn'
 
 gem 'mongrel', '>= 1.2.0.pre2'
+gem 'haml'
+#gem 'sass'
+gem 'compass'
+gem 'simple_form'
+gem 'dynamic_form'
+gem "bcrypt-ruby", :require => "bcrypt"
+
 
 # Deploy with Capistrano
 # gem 'capistrano'

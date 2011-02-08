@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   
   
   #helper_method :current_user
-  before_filter :set_current_user
+  before_filter :set_current_user, :auto_login
   
   layout "default"
   def index
@@ -31,7 +31,22 @@ class ApplicationController < ActionController::Base
   end
   
   private
- 
+  
+  def auto_login
+    if  cookies.signed[:remember_me] && @current_user.nil?
+      user = User.authenticate_from_salt(*cookies.signed[:remember_me])
+      if !user.nil?
+        session[:user_id] = user.id
+        @current_user = user
+      else
+        cookies.delete[:remember_me]       
+      end
+      
+      
+    end
+  end
+  
+  
   def set_current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end

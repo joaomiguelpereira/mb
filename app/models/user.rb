@@ -53,7 +53,23 @@ class User < ActiveRecord::Base
     self.activation_key =  (0..50).map{ o[rand(o.length)]  }.join;
     
   end
-  
+  def self.authenticate_from_salt(user_id, salt) 
+    user = nil 
+    if (!user_id.nil? && !salt.nil?)
+      puts "looking for user"
+      user = find_by_id_and_password_salt(user_id, salt)
+    end
+    
+    if user && user.active
+      puts "found user"
+      user
+    else
+      puts "user not found"
+      nil
+    end
+    
+    
+  end
   def self.authenticate(email, password)
     user = find_by_email(email)
     if user && user.active && user.password_hash == BCrypt::Engine.hash_secret(password, user.password_salt)

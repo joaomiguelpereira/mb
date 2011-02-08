@@ -14,6 +14,7 @@ class SessionsController < ApplicationController
   def destroy
     reset_session
     session[:user_id] = nil
+    cookies.delete :remember_me
     flash_success "flash.success.session.destroy", {:keep=>true}
     redirect_to root_path
     
@@ -47,6 +48,10 @@ class SessionsController < ApplicationController
   def create_session_for(user, keeploged)
     reset_session
     session[:user_id] = user.id
+    
+    if keeploged=="1"  
+      cookies.permanent.signed[:remember_me] = [user.id, user.password_salt]
+    end
   end
   
   

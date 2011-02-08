@@ -3,3 +3,15 @@ pt:
     error:
       session:
         invalid_data: Não foi possível iniciar a sessão. Verifique os dados.
+        inactive_user: O utilizador com o email %{email} não está activo. Já efectuou a sua activação? Veja o seu email.
+      user:
+        create: Não foi possível registar o utilizador!
+      activate: Não foi possível activar a conta!
+    success:
+      session:
+        create: A sessão foi criada com sucesso com o email %{email}
+      user:
+        create: Utilizador registado com sucesso.
+        activate: A conta do utilizador %{email} está agora activa. Pode iniciar a sessão.
+     
+        

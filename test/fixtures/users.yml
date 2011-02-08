@@ -1,0 +1,21 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+#Password is: 11111
+
+jonh:
+  email: jonh@doe.com
+  password_hash: $2a$10$I0VHZmlvIEhAxEHqnAWECO0KPQcUiNIQ2CetUkW6H3EE0c4HEHNRO
+  password_salt: $2a$10$I0VHZmlvIEhAxEHqnAWECO
+  first_name: Jonh
+  last_name: Doe
+  role: <%=User::USER%>
+  active: true
+  
+not_active:
+  email: notactive@doe.com
+  password_hash: $2a$10$I0VHZmlvIEhAxEHqnAWECO0KPQcUiNIQ2CetUkW6H3EE0c4HEHNRO
+  password_salt: $2a$10$I0VHZmlvIEhAxEHqnAWECO
+  first_name: Not
+  last_name: Active
+  role: <%=User::USER%>
+  active: false
+  activation_key: 1231231l23l1k23lk1l2k3l12hfsjkdh

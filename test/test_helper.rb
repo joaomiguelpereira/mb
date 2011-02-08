@@ -10,4 +10,12 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+  
+  def assert_error_flashed(i18nkey, *params)
+    assert_equal I18n.t(i18nkey,*params), flash[:error]
+  end
+  
+   def assert_success_flashed(i18nkey,*params)
+    assert_equal I18n.t(i18nkey,*params), flash[:success]
+  end
 end

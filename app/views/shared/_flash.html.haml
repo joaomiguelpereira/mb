@@ -5,6 +5,8 @@
         =flash[:error]   
     #page_message_close
       =link_to_function 'X', 'flash_messages.close()'
+
+
 -if flash[:success]
   #floating_message_wrapper.success
     #page_message
@@ -13,11 +15,13 @@
     #page_message_close
       =link_to_function 'X', 'flash_messages.close()'
 
+
+
 -if flash[:warning]
   #floating_message_wrapper.warning
     #page_message
       %strong
-        =flash[:error]   
+        =flash[:warning]   
     #page_message_close
       =link_to_function 'X', 'flash_messages.close()'
 

@@ -13,9 +13,9 @@
     Caso ainda não tenha uma conta no medibooking.com,  
     =link_to 'registe-se aqui.', new_user_path
     
-    %div.message
-      Se prentende registar o seu negócio no medibooking.com faça-o  
-      =link_to 'aqui.', new_user_path(:role=>User::BUSINESS_OWNER)
+  %div.message
+    Se prentende registar o seu negócio no medibooking.com faça-o  
+    =link_to 'aqui.', new_user_path(:role=>User::BUSINESS_OWNER)
     
     
     
@@ -24,7 +24,11 @@
     =f.input :password, :required=>false, :label=>I18n.t("activerecord.attributes.user.password")
     =f.input :keep_logged, :as=>:boolean, :required=>false, :label=>I18n.t("activerecord.attributes.user.keep_logged")
     
+    
     = f.submit I18n.t "activerecord.actions.session.create"
+
+  %div.form_aligned
+    =link_to "Esqueci-me da minha password", reset_password_path
   
   
 

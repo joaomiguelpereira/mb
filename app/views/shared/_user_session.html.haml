@@ -1,0 +1,12 @@
+-if @current_user
+  %strong=@current_user.email
+  %span 
+    | 
+    =link_to 'Terminar Sessão', :delete_session, {:method=>:delete}
+    |
+  =link_to "O meu perfil", ""
+-else
+  %span 
+    =link_to 'Inicial Sessão', :new_session
+    |
+  =link_to "Criar conta", :new_user

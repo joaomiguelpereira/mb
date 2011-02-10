@@ -47,12 +47,24 @@ class SessionsControllerTest < ActionController::TestCase
     assert_redirected_to root_path
   end
   
+  test "should create session with remember option" do
+    user = users(:jonh)
+    post :create, :session=>{:email=>user.email, :password=>"11111", :keep_logged=>true}
+    assert_success_flashed "flash.success.session.create",{:email=>user.email}
+    assert_equal user.id, session[:user_id]
+    assert_redirected_to root_path
+    #assert_equal [user.id, user.password_salt], cookies.permanent.signed[:remember_me]
+  end
+  
+  
   test "should destroy session with no remember option" do
     delete :destroy, {}, authenticated_user(users(:jonh))
     assert_nil session[:user_id]
     assert_redirected_to root_path
     assert_success_flashed "flash.success.session.destroy"
   end
+  
+  
   
   
 end

@@ -9,6 +9,7 @@ jonh:
   last_name: Doe
   role: <%=User::USER%>
   active: true
+  reset_password_key: OqQxYTgjYKxXgvbAsTsWtMnIpMOpsjCRzLGZmJZLSbYtjvcvdpO
   
 not_active:
   email: notactive@doe.com
@@ -18,4 +19,4 @@ not_active:
   last_name: Active
   role: <%=User::USER%>
   active: false
-  activation_key: 1231231l23l1k23lk1l2k3l12hfsjkdh
+  activation_key: OqQxYTgjYKxXgvbAsTsWtMnIpMOpsjCRzLGZmJZLSbYtjvcvdpO

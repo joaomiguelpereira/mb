@@ -13,6 +13,7 @@ pt:
         create_new_password: Não foi possível alterar a password  
       general:
         invalid_operation: Não foi possível entender este pedido 
+        not_authorized: Não está autorizado a ver esta página
     success:
       session:
         create: A sessão foi criada com sucesso com o email %{email}
@@ -22,6 +23,8 @@ pt:
         activate: A conta do utilizador %{email} está agora activa. Pode iniciar a sessão.
         reset_password: As instruções para recuperar a sua password foram enviadas para %{email}
         create_new_password: A sua password foi correctamente aterada. Faça login.
+        
+      
         
         
      

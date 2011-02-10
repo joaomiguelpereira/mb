@@ -13,6 +13,11 @@ class ApplicationController < ActionController::Base
   
   
   protected
+  def ensure_authenticated
+    raise WebAppException::SessionRequiredError if @current_user.nil?
+  end
+  
+  
   def flash_error(i18nkey, options={},*params)
     if options[:keep] 
       flash[:error] = I18n.t(i18nkey,*params)

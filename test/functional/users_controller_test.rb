@@ -17,7 +17,10 @@ class UsersControllerTest < ActionController::TestCase
       :role=>"what"
     } 
   end
-  
+  ##################################################
+  ####Create new User
+  ##################################################
+
   test "should get new" do
     get :new
     assert_response :success
@@ -75,6 +78,10 @@ class UsersControllerTest < ActionController::TestCase
     assert_match /#{user.activation_key}/, email.encoded
   end
   
+  
+  ##################################################
+  ####RESET PASSWORD
+  ##################################################
   
   test "should get reset password page" do
     get :reset_password
@@ -175,4 +182,27 @@ class UsersControllerTest < ActionController::TestCase
     assert_error_flashed "flash.error.general.invalid_operation"
     assert_redirected_to root_path
   end
+  
+  
+  
+  ##################################################
+  ####Change User
+  ##################################################
+  
+  test "should not get edit user if no session exists" do
+    user = users(:jonh)
+    assert_raise(WebAppException::SessionRequiredError) do 
+      get :edit, {:id=>user.id}  
+    end
+  end
+  
+  test "should not get edit user is session exists but wrong user is logged in" do
+    jonh = users(:jonh)
+    sam = users(:sam)
+      assert_raise(WebAppException::AuthorizationError) do 
+      get :edit, {:id=>sam.id}, authenticated_user(jonh)  
+    end
+  end
+  
+
 end

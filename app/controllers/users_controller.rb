@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
   
+  before_filter :ensure_authenticated, :except=>[:new, :create, :activate, :reset_password, :create_new_password]
+  
   def new
     #get the role from params
     @role = params[:role]
@@ -9,6 +11,9 @@ class UsersController < ApplicationController
     @user.role = @role 
   end
   
+  def edit
+    
+  end
   
   def create
     @user = User.new(params[:user])
@@ -66,11 +71,7 @@ class UsersController < ApplicationController
     render :reset_password
   end
   
-  def save_new_password
-        flash_success "flash.success.user.create_new_password", {:keep=>true}
-        redirect_to new_session_path
-    
-  end
+ 
   def create_new_password
     reset_key = params[:reset_password_key]
     raise InvalidParameterError if reset_key.nil?  || reset_key.empty?

@@ -10,6 +10,16 @@ jonh:
   role: <%=User::USER%>
   active: true
   reset_password_key: OqQxYTgjYKxXgvbAsTsWtMnIpMOpsjCRzLGZmJZLSbYtjvcvdpO
+
+sam:
+  email: same@doe.com
+  password_hash: $2a$10$I0VHZmlvIEhAxEHqnAWECO0KPQcUiNIQ2CetUkW6H3EE0c4HEHNRO
+  password_salt: $2a$10$I0VHZmlvIEhAxEHqnAWECO
+  first_name: Sam
+  last_name: Doe
+  role: <%=User::USER%>
+  active: true
+  reset_password_key: OqQxYTgjYKxXgvbAsTsWtMnIpMOpsjCRzLGZmJZLSbYtjvcvdpO
   
 not_active:
   email: notactive@doe.com

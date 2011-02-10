@@ -5,11 +5,9 @@ class User < ActiveRecord::Base
   
   attr_accessible :terms_and_conditions, :role, :email, :email_confirmation, :first_name, :last_name, :password, :password_confirmation
   
-  attr_accessor  :password, :email_confirmation, :password_confirmation, :terms_and_conditions
-  
+  attr_accessor  :password, :email_confirmation, :password_confirmation, :terms_and_conditions, :updating_password 
   #Validations
-  
-  
+   
   validates :first_name, :presence=>true, 
                          :length=>{:minimum=>2, :maximum=>64}
   
@@ -24,9 +22,13 @@ class User < ActiveRecord::Base
   
   
   validates :role, :presence=>true, :inclusion=>{:in=> %w(business user) }
-  validates :password, :presence=>true, :on=>:create, :length=>{:minimum=>5, :maximum=>64}
   
-  validates_confirmation_of :email, :password, :on=>:create
+  validates :password, :presence=>true, :length=>{:minimum=>5, :maximum=>64}, :if=>:validate_password?
+  
+  validates_confirmation_of :password, :if=>:validate_password?
+  
+  validates_confirmation_of :email, :on=>:create
+  
   validates_acceptance_of :terms_and_conditions, :accept => "1"
   
   #validates_format_of :email, :with => /[a-zA-Z0-9._%]@(?:[a-zA-Z0-9]\.)[a-zA-Z]{2,4}/, 
@@ -35,6 +37,10 @@ class User < ActiveRecord::Base
   before_save :encrypt_password
   before_create :generate_activation_key
   
+  
+  def validate_password?
+    updating_password || new_record?  
+  end
   
   def full_name
     self.first_name+" "+self.last_name
@@ -48,11 +54,12 @@ class User < ActiveRecord::Base
   end
   
   def generate_activation_key
-    #Generate ramdom string. See http://stackoverflow.com/questions/88311/how-best-to-generate-a-random-string-in-ruby
-    o =  [('a'..'z'),('A'..'Z')].map{|i| i.to_a}.flatten;  
-    self.activation_key =  (0..50).map{ o[rand(o.length)]  }.join;
-    
+    #Generate random string. See http://stackoverflow.com/questions/88311/how-best-to-generate-a-random-string-in-ruby
+    #o =  [('a'..'z'),('A'..'Z')].map{|i| i.to_a}.flatten;  
+    #self.activation_key =  (0..50).map{ o[rand(o.length)]  }.join;
+    self.activation_key = StringUtils::generate_random_string
   end
+  
   def self.authenticate_from_salt(user_id, salt) 
     user = nil 
     if (!user_id.nil? && !salt.nil?)
@@ -61,10 +68,8 @@ class User < ActiveRecord::Base
     end
     
     if user && user.active
-      puts "found user"
       user
     else
-      puts "user not found"
       nil
     end
     

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110206232805) do
+ActiveRecord::Schema.define(:version => 20110209121925) do
 
   create_table "users", :force => true do |t|
     t.string   "email"
@@ -21,8 +21,9 @@ ActiveRecord::Schema.define(:version => 20110206232805) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "role"
-    t.boolean  "active",         :default => false
+    t.boolean  "active",             :default => false
     t.string   "activation_key"
+    t.string   "reset_password_key"
   end
 
 end

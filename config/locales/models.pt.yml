@@ -8,16 +8,18 @@ pt:
         last_name: Último nome
         email: Email
         email_confirmation: Confirmação do email
-        password: Palavra passe
-        password_confirmation: Confirmação da palavra passe
+        password: Password
+        password_confirmation: Confirmação da password
         terms_and_conditions: Aceito os termos e condições
         keep_logged: Manter a minha sessão activa neste computador
     actions:
       user:
         create: Criar utilizador
+        recover_password: Enviar instruções por email
+        create_new_password: Criar nova password
       session:
         create: Iniciar sessão
     errors:
       messages:
-        invalid_email: o formato do email não é valido  
+        invalid_email: o formato do email não é valido
         

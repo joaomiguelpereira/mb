@@ -60,12 +60,14 @@ Medibooking::Application.routes.draw do
   root :to => "application#index"
   
   
+  match "user/activate/:activation_key" => "users#activate", :via=>[:get], :as=>:activate_user
+  match "user/reset_password" =>"users#reset_password", :via=>[:get, :post], :as=>:reset_password
+  match "user/create_new_password/:reset_password_key" =>"users#create_new_password",:via=>[:get, :put], :as=>:create_new_password
   
   resources :users
   
-  match "user/activate/:activation_key" => "users#activate", :via=>[:get], :as=>:activate_user
-  
   resources :sessions, :only=>[:new, :create]
+  
   match "session/delete" =>"sessions#destroy", :via=>[:delete], :as=>:delete_session
   
 end

@@ -6,7 +6,13 @@ pt:
         inactive_user: O utilizador com o email %{email} não está activo. Já efectuou a sua activação? Veja o seu email.
       user:
         create: Não foi possível registar o utilizador!
-      activate: Não foi possível activar a conta!
+        activate: Não foi possível activar a conta!
+        reset_password_empty_email: Por favor introduza o seu email 
+        reset_password_email_not_found: Não encontramos nenhuma conta com o email %{email}
+        reset_password_inactive_user: O utilizador com o email %{email} não está activo. Procure o mail de activação ou contacte o suporte. 
+        create_new_password: Não foi possível alterar a password  
+      general:
+        invalid_operation: Não foi possível entender este pedido 
     success:
       session:
         create: A sessão foi criada com sucesso com o email %{email}
@@ -14,5 +20,9 @@ pt:
       user:
         create: Utilizador registado com sucesso.
         activate: A conta do utilizador %{email} está agora activa. Pode iniciar a sessão.
+        reset_password: As instruções para recuperar a sua password foram enviadas para %{email}
+        create_new_password: A sua password foi correctamente aterada. Faça login.
+        
+        
      
         

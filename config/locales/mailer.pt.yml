@@ -3,3 +3,5 @@ pt:
     user:
       activation:
         subject : Active a sua conta
+      reset_password:
+        subject: Recuperação de password

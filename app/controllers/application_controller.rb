@@ -38,16 +38,15 @@ class ApplicationController < ActionController::Base
   private
   
   def auto_login
+     
     if  cookies.signed[:remember_me] && @current_user.nil?
       user = User.authenticate_from_salt(*cookies.signed[:remember_me])
       if !user.nil?
         session[:user_id] = user.id
         @current_user = user
       else
-        cookies.delete[:remember_me]       
-      end
-      
-      
+        cookies.delete :remember_me       
+      end  
     end
   end
   

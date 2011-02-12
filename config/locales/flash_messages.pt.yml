@@ -23,7 +23,7 @@ pt:
         create: Utilizador registado com sucesso.
         activate: A conta do utilizador %{email} está agora activa. Pode iniciar a sessão.
         reset_password: As instruções para recuperar a sua password foram enviadas para %{email}
-        create_new_password: A sua password foi correctamente aterada. Faça login.
+        create_new_password: A sua password foi correctamente aterada. 
         update: A informação foi actualizada com sucesso
       
         

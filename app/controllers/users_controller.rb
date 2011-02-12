@@ -99,9 +99,23 @@ class UsersController < ApplicationController
   end
   
   
+  def change_password
+    @user = @current_user
+    if request.put?
+      @user.updating_password = true
+      @user.reset_password_key = nil
+      if @user.update_attributes(params[:user])
+        update_cookies_for_new_password(@user)
+        flash_success "flash.success.user.create_new_password", {:keep=>true}
+        redirect_to user_profile_path
+      else
+        flash_error "flash.error.user.create_new_password"
+      end
+    end
+  end
   def create_new_password
     reset_key = params[:reset_password_key]
-    raise InvalidParameterError if reset_key.nil?  || reset_key.empty?
+    raise InvalidParameterError if (reset_key.nil?  || reset_key.empty?)
     @user = User.find_by_reset_password_key(reset_key)
     
     raise InvalidParameterError if @user.nil?  
@@ -109,6 +123,8 @@ class UsersController < ApplicationController
       @user.updating_password = true
       @user.reset_password_key = nil
       if @user.update_attributes(params[:user])
+        #update cookies, if they exists
+        
         flash_success "flash.success.user.create_new_password", {:keep=>true}
         redirect_to new_session_path
       else
@@ -125,6 +141,13 @@ class UsersController < ApplicationController
   
   ##EXCEPTIONS FOR THIS CONTROLLER
   private
+  def update_cookies_for_new_password(user)
+    if cookies.signed[:remember_me]   
+      cookies.permanent.signed[:remember_me] = [user.id, user.password_salt]
+    end
+    
+  end
+  
   class InvalidParameterError < StandardError
     
   end

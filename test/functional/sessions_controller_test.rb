@@ -53,7 +53,8 @@ class SessionsControllerTest < ActionController::TestCase
     assert_success_flashed "flash.success.session.create",{:email=>user.email}
     assert_equal user.id, session[:user_id]
     assert_redirected_to root_path
-    #assert_equal [user.id, user.password_salt], cookies.permanent.signed[:remember_me]
+    assert_equal [user.id, user.password_salt], cookies[:remember_me]
+    
   end
   
   

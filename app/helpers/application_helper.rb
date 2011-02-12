@@ -21,7 +21,8 @@ module ApplicationHelper
   end
   
   def errors_for(object, attribute, show_all=false)
-    if errors = object.errors.on(attribute)
+    errors = object.errors[attribute]
+    if errors.size>0
       errors = [errors] unless errors.is_a?(Array)
       
       return "<div class='error'>"+errors[0]+"</div>" unless show_all

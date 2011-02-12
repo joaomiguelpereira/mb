@@ -284,5 +284,53 @@ class UsersControllerTest < ActionController::TestCase
     assert_equal jonh.role, updated_user.role
     
   end
+  
+  #####################################3
+  ###Change password
+  ######################################
+  
+  test "should not get change password page is not authenticated" do
+     assert_raise(WebAppException::SessionRequiredError) do 
+       get :change_password, {}, {}   
+     end
+  end
+  test "should get the change password page if authenticated" do
+    jonh = users(:jonh)
+    get :change_password, {}, authenticated_user(jonh)   
+    assert_response :success
+    assert_not_nil assigns(:user)
+    assert_template :change_password
+  end
+  
+  test "shoudl not update password for invalid password" do
+    jonh = users(:jonh)
+    put :change_password, {:user=>{:password=>"1", :password_confirmation=>"1"}}, authenticated_user(jonh)   
+    
+    assert_not_nil assigns(:user)
+    assert_template :change_password
+    assert_error_flashed "flash.error.user.create_new_password"
+
+  end
+
+  test "shoudl not update password for invalid password confirmation" do
+    jonh = users(:jonh)
+    put :change_password, {:user=>{:password=>"123456", :password_confirmation=>"654321"}}, authenticated_user(jonh)   
+    
+    assert_not_nil assigns(:user)
+    assert_template :change_password
+    assert_error_flashed "flash.error.user.create_new_password"
+
+  end
+
+  test "shoudl update password for valid password" do
+    jonh = users(:jonh)
+    put :change_password, {:user=>{:password=>"123456", :password_confirmation=>"123456"}}, authenticated_user(jonh)   
+    assert_redirected_to user_profile_path
+    assert_success_flashed "flash.success.user.create_new_password"
+
+    #must change also the cookie...
+  end
+
+
 
 end

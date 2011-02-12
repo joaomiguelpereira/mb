@@ -64,6 +64,8 @@ Medibooking::Application.routes.draw do
   match "user/reset_password" =>"users#reset_password", :via=>[:get, :post], :as=>:reset_password
   match "user/create_new_password/:reset_password_key" =>"users#create_new_password",:via=>[:get, :put], :as=>:create_new_password
   match "user/profile" =>"users#profile", :via=>[:get], :as=>:user_profile
+  match "user/profile/change_password" =>"users#change_password", :via=>[:get, :put], :as=>:user_change_password
+  match "user/profile/preferences" =>"users#profile", :via=>[:get], :as=>:user_preferences
   resources :users
   
   resources :sessions, :only=>[:new, :create]

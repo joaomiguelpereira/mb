@@ -2,6 +2,21 @@ require 'test_helper'
 
 class UsersControllerTest < ActionController::TestCase
   setup do 
+    
+    @update_valid_user_with_more_attrs = {
+      :first_name=>"NewFirstName", :last_name=>"newLastName",
+      :role=>User::BUSINESS_OWNER,
+      :email=>"udpate@emai.com"
+    }
+    
+    @update_valid_user = {
+      :first_name=>"NewFirstName", :last_name=>"newLastName"
+    }
+    
+    @update_invalid_user = {
+      :first_name=>"N", :last_name=>"n"
+    }
+    
     @new_valid_user = {
       :first_name=>"Jonh", :last_name=>"F. Kenedy", 
       :email=>"jfk@gmail.com", :email_confirmation=>"jfk@gmail.com", 
@@ -184,25 +199,90 @@ class UsersControllerTest < ActionController::TestCase
   end
   
   
-  
-  ##################################################
-  ####Change User
-  ##################################################
-  
-  test "should not get edit user if no session exists" do
+  #################################################
+  #### View User Profile
+  #################################################
+  test "should not get profile page for unauthenticated user" do
     user = users(:jonh)
     assert_raise(WebAppException::SessionRequiredError) do 
-      get :edit, {:id=>user.id}  
+      get :profile 
     end
   end
   
-  test "should not get edit user is session exists but wrong user is logged in" do
+  test "should get the profile page for the authenticated user" do
+    user = users(:jonh)
+    get :profile, {},  authenticated_user(user) 
+    assert_not_nil assigns(:user)
+    assert_equal user.id, assigns(:user).id
+    assert_template :profile
+  end
+  
+  #################################################
+  #### Update user
+  ################################################
+  test "should not get edit user if not authenticated" do
+    user = users(:jonh)
+    assert_raise(WebAppException::SessionRequiredError) do 
+      get :edit, {:id=>user.id}, {}  
+    end
+  end
+
+  test "should not get edit user if not authorized" do
     jonh = users(:jonh)
     sam = users(:sam)
-      assert_raise(WebAppException::AuthorizationError) do 
-      get :edit, {:id=>sam.id}, authenticated_user(jonh)  
+    assert_raise(WebAppException::AuthorizationError) do 
+      get :edit, {:id=>jonh.id},authenticated_user(sam)  
+    end
+  end
+
+  test "should not update user is not authenticated" do
+    user = users(:jonh)
+    assert_raise(WebAppException::SessionRequiredError) do 
+      put :update, {:id=>user.id, :user=>@update_valid_user}, {}  
     end
   end
   
+  test "should not update is authenticated user id different" do
+    jonh = users(:jonh)
+    sam = users(:sam)
+    assert_raise(WebAppException::AuthorizationError) do 
+      put :update, {:id=>jonh.id, :user=>@update_valid_user}, authenticated_user(sam)  
+    end
+  end
+  
+  test "should update" do
+    jonh = users(:jonh)
+    put :update, {:id=>jonh.id, :user=>@update_valid_user}, authenticated_user(jonh)  
+    assert_success_flashed "flash.success.user.update"
+    assert_redirected_to user_profile_path
+    #get the user
+    updated_user = User.find(jonh.id)    
+    assert_equal @update_valid_user[:first_name], updated_user.first_name
+    assert_equal @update_valid_user[:last_name], updated_user.last_name
+  end
+  
+   test "should not update invalid data" do
+    jonh = users(:jonh)
+    put :update, {:id=>jonh.id, :user=>@update_invalid_user}, authenticated_user(jonh)  
+    assert_error_flashed "flash.error.user.update"
+    assert_template :edit
+  end
+  
+  test "shoul not update unapdatable data" do
+    jonh = users(:jonh)
+    put :update, {:id=>jonh.id, :user=>@update_valid_user_with_more_attrs}, authenticated_user(jonh)  
+    assert_success_flashed "flash.success.user.update"
+    assert_redirected_to user_profile_path
+    #get the user
+    
+    updated_user = User.find(jonh.id)    
+    assert_equal @update_valid_user_with_more_attrs[:first_name], updated_user.first_name
+    assert_equal @update_valid_user_with_more_attrs[:last_name], updated_user.last_name
+    
+    #not updatable attributes
+    assert_equal jonh.email, updated_user.email
+    assert_equal jonh.role, updated_user.role
+    
+  end
 
 end

@@ -18,7 +18,8 @@ gem 'haml'
 gem 'compass'
 gem 'simple_form'
 gem 'dynamic_form'
-gem "bcrypt-ruby", :require => "bcrypt"
+gem 'bcrypt-ruby', :require => 'bcrypt'
+gem 'jquery-rails'
 
 
 # Deploy with Capistrano

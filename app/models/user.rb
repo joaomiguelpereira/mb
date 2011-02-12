@@ -3,11 +3,12 @@ class User < ActiveRecord::Base
   BUSINESS_OWNER = "business"
   USER = "user"
   
-  attr_accessible :terms_and_conditions, :role, :email, :email_confirmation, :first_name, :last_name, :password, :password_confirmation
+  #:role and admin are only set during creation, or...
+  attr_accessible :terms_and_conditions, :email_confirmation, :first_name, :last_name, :password, :password_confirmation
   
   attr_accessor  :password, :email_confirmation, :password_confirmation, :terms_and_conditions, :updating_password 
   #Validations
-   
+  
   validates :first_name, :presence=>true, 
                          :length=>{:minimum=>2, :maximum=>64}
   
@@ -75,6 +76,7 @@ class User < ActiveRecord::Base
     
     
   end
+  
   def self.authenticate(email, password)
     user = find_by_email(email)
     if user && user.active && user.password_hash == BCrypt::Engine.hash_secret(password, user.password_salt)
@@ -84,4 +86,8 @@ class User < ActiveRecord::Base
     end
   end
   
+  private
+  def mass_assignment_authorizer
+    super  + ( new_record? ? [:role, :email]: [])
+  end
 end

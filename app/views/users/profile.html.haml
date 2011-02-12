@@ -1,0 +1,16 @@
+= title "Perfil do utilizador"
+= more_stylesheets "forms"
+= more_javascripts_files "user_profile_function"
+
+#settings
+  =render :partial=>"users/profile_menu"  
+  #content
+    //start partial to show basic user info
+    #user_basic_info
+      =render :partial=>"users/user", :object=>@user
+            
+  
+  
+  
+
+

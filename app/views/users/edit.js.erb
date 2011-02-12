@@ -1,0 +1,10 @@
+<%if !flash.empty?%>
+  $("#page_errors_container").html("<%= escape_javascript(render :partial=>"shared/flash", :locals=>{:flash=>flash})%>");
+<%else%>
+  $("#page_errors_container").html("");
+<%end%>
+
+
+$("#user_basic_info").html("<%= escape_javascript(render :partial=>"edit_user", :object=>@user)%>");
+loading_indicator.hide();
+

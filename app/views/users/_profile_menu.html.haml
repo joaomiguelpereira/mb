@@ -1,0 +1,17 @@
+%h1 A minha conta
+#options
+  -if current_uri = request.env['PATH_INFO'] == user_profile_path
+    %span.selected
+      Informação pessoal 
+  -else
+    %span
+      =link_to "Informação pessoal", user_profile_path
+      
+  %span 
+    =link_to "Preferências" ""
+  %span 
+    =link_to "Editar", edit_user_path(@current_user.id)
+    
+  %span 
+    =link_to "Alterar password",""
+		

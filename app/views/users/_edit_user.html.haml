@@ -1,0 +1,34 @@
+=form_for edit_user, :remote=>true do |f|
+   
+  
+  %table.record
+    %tr
+      %td.label
+        =f.label :first_name 
+      %td.value
+        =f.text_field :first_name
+        =raw errors_for edit_user, :first_name
+    %tr
+      %td.label
+        =f.label :last_name 
+      %td.value
+        =f.text_field :last_name
+        =raw errors_for edit_user, :last_name
+    %tr
+      %td.label
+        =t "activerecord.attributes.user.email" 
+      %td.value
+        =edit_user.email
+  
+        %tr
+      %td.label
+        =t "activerecord.attributes.user.created_at" 
+      %td.value
+        =l edit_user.created_at
+      %tr
+        %td.label
+        %td.value
+          = f.submit t "actions.update"
+          %input{:type=>"button", :value=>t("actions.cancel"), :id=>"cancel_user_edit", :remote_url=>user_profile_path}
+          
+          

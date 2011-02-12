@@ -20,6 +20,7 @@ gem 'simple_form'
 gem 'dynamic_form'
 gem 'bcrypt-ruby', :require => 'bcrypt'
 gem 'jquery-rails'
+gem 'factory_girl_rails'
 
 
 # Deploy with Capistrano

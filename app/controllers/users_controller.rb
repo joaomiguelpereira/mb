@@ -11,10 +11,37 @@ class UsersController < ApplicationController
     @user.role = @role 
   end
   
-  def edit
-    
+  
+  def profile
+    @user = @current_user
   end
   
+  def edit
+    raise WebAppException::AuthorizationError if params[:id].to_s != @current_user.id.to_s #in case of a super admin
+    @user = User.find(params[:id])
+  end
+  
+  def update
+    
+    raise WebAppException::AuthorizationError if params[:id].to_s != @current_user.id.to_s #in case of a super admin
+    @user = User.find(params[:id])  
+    if @user.update_attributes(params[:user])
+      
+      respond_to do |format|
+        format.html {
+          flash_success "flash.success.user.update", {:keep=>true}
+          redirect_to user_profile_url
+        }
+        format.js { flash_success "flash.success.user.update"
+          render :profile
+        }
+      end
+    else
+      flash_error "flash.error.user.update"
+      render :edit
+    end
+    
+  end
   def create
     @user = User.new(params[:user])
     if @user.save
@@ -71,7 +98,7 @@ class UsersController < ApplicationController
     render :reset_password
   end
   
- 
+  
   def create_new_password
     reset_key = params[:reset_password_key]
     raise InvalidParameterError if reset_key.nil?  || reset_key.empty?

@@ -11,6 +11,7 @@ pt:
         reset_password_email_not_found: Não encontramos nenhuma conta com o email %{email}
         reset_password_inactive_user: O utilizador com o email %{email} não está activo. Procure o mail de activação ou contacte o suporte. 
         create_new_password: Não foi possível alterar a password  
+        update: Não foi possível actualizar a informação
       general:
         invalid_operation: Não foi possível entender este pedido 
         not_authorized: Não está autorizado a ver esta página
@@ -23,7 +24,7 @@ pt:
         activate: A conta do utilizador %{email} está agora activa. Pode iniciar a sessão.
         reset_password: As instruções para recuperar a sua password foram enviadas para %{email}
         create_new_password: A sua password foi correctamente aterada. Faça login.
-        
+        update: A informação foi actualizada com sucesso
       
         
         

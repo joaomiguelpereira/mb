@@ -1,4 +1,8 @@
  pt:
+  #accoes em geral
+  actions:
+    update: Gravar
+    cancel: Cancelar
   # formatos de data e hora
   date:
     formats:
@@ -14,9 +18,10 @@
   
   time:
     formats:
-      default: "%A, %d de %B de %Y, %H:%M h"
+      default: "%A, %d de %B de %Y"
       short: "%d/%m, %H:%M h"
       long: "%A, %d de %B de %Y, %H:%M h"
+      
     am: ''
     pm: ''
   

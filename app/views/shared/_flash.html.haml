@@ -25,3 +25,7 @@
     #page_message_close
       =link_to_function 'X', 'flash_messages.close()'
 
+:javascript
+  $("#floating_message_wrapper").trigger('float_message:loaded');
+  
+  

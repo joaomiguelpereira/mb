@@ -4,7 +4,7 @@
     | 
     =link_to 'Terminar Sessão', :delete_session, {:method=>:delete}
     |
-  =link_to "O meu perfil", ""
+  =link_to "O meu perfil", :user_profile
 -else
   %span 
     =link_to 'Inicial Sessão', :new_session

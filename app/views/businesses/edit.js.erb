@@ -1,0 +1,3 @@
+<%=render :partial=>"shared/flash_messages", :locals=>{:flash=>flash}%>
+$("#business_info").html("<%= escape_javascript(render :partial=>"edit", :locals=>{:business=>@business})%>");
+loading_indicator.hide();

@@ -6,10 +6,55 @@ class BusinessesController < ApplicationController
     @businesses = @current_user.businesses
   end
   
+  
+  ###################################
+  ####Edit
+  ##################################
+  def edit
+    @business=Business.find(params[:id])
+    raise WebAppException::AuthorizationError if @business.user_id != @current_user.id
+  end
+  
+  def update
+    @business=Business.find(params[:id])
+    raise WebAppException::AuthorizationError if @business.user_id != @current_user.id
+    if @business.update_attributes(params[:business])
+      respond_to do |format| 
+        format.html {
+          
+          flash_success "flash.success.business.update", {:keep=>true}
+          redirect_to business_path(@business)
+        }
+        format.js {
+          flash_success "flash.success.business.update"
+          render :show
+        }
+        
+      end
+      
+    else
+      flash_error "flash.error.business.update"
+      render :edit
+      
+    end
+    
+  end
+  
+  ##############################################
+  ###Show 
+  ##############################################
+  def show
+    #find by name
+    @business = Business.find(params[:id])
+    raise WebAppException::AuthorizationError if @business.user_id != @current_user.id
+    
+  end
+  ###############################################
+  ######NEW
+  ###############################################
   def new
     @business = Business.new
   end
-  
   def create
     
     @business = Business.new(params[:business])

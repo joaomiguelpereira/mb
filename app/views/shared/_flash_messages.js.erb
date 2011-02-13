@@ -1,0 +1,5 @@
+<%if !flash.empty?%>
+  $("#page_errors_container").html("<%= escape_javascript(render :partial=>"shared/flash", :locals=>{:flash=>flash})%>");
+<%else%>
+  $("#page_errors_container").html("");
+<%end%>

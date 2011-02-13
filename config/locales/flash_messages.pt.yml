@@ -14,6 +14,7 @@ pt:
         update: Não foi possível actualizar a informação
       business:
         create: Não foi possível criar o seu negócio.
+        update: Não foi possível actualizar a informação.
       general:
         invalid_operation: Não foi possível entender este pedido 
         not_authorized: Não está autorizado a ver esta página
@@ -29,7 +30,7 @@ pt:
         update: A informação foi actualizada com sucesso
       business:
         create: O negócio foi registado com sucesso.
-      
+        update: A informação foi actualizada com sucesso.    
         
         
      

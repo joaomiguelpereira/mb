@@ -1,0 +1,25 @@
+%table.data_table{:border=>"0px", :cellspacing=>"0px"}
+  %thead
+    %tr.title
+      %td{:colspan=>"2"}
+        Os meus negócios
+      %td.actions
+        =link_to "+ Adicionar negócio", new_business_path
+    %tr
+      %td{:width=>"180px"}
+        =link_to "Identificação", ""
+      %td{:width=>"240px"}
+        =link_to "Nome", ""
+      %td.last_cell
+        %span
+          Criado em
+  -i=0      
+  -businesses.each do | business| 
+    -i+=1
+    -class_name = (i==businesses.size ? "last_row" : "middle_row")
+  
+    %tr{:class=>class_name}
+      %td=link_to business.short_name, business_path(business)
+      %td=business.full_name
+      %td.last_cell=business.created_at
+    

@@ -2,20 +2,16 @@ class UsersController < ApplicationController
   
   before_filter :ensure_authenticated, :except=>[:new, :create, :activate, :reset_password, :create_new_password]
   
-  def new
-    #get the role from params
-    @role = params[:role]
-    #set the role to user if role is not set
-    @role = User::USER unless @role
-    @user = User.new
-    @user.role = @role 
-  end
+ 
   
   
   def profile
     @user = @current_user
   end
   
+  ###############################################
+  ####Edit User
+  ##############################################
   def edit
     raise WebAppException::AuthorizationError if params[:id].to_s != @current_user.id.to_s #in case of a super admin
     @user = User.find(params[:id])
@@ -42,6 +38,9 @@ class UsersController < ApplicationController
     end
     
   end
+  ####################################################
+  #####Create User
+  ###################################################
   def create
     @user = User.new(params[:user])
     if @user.save
@@ -53,7 +52,18 @@ class UsersController < ApplicationController
     end
     
   end
+   def new
+    #get the role from params
+    @role = params[:role]
+    #set the role to user if role is not set
+    @role = User::USER unless @role
+    @user = User.new
+    @user.role = @role 
+  end
   
+  #################################################
+  ######Activate User
+  #################################################
   def activate
     #find user by it's activation key
     user = nil
@@ -70,6 +80,9 @@ class UsersController < ApplicationController
     end
   end
   
+  #############################################
+  ####Change and reset password
+  #############################################
   def reset_password   
     if request.post?
       email = params[:reset_password][:email]

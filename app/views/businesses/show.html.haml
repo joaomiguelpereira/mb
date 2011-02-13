@@ -1,0 +1,11 @@
+= title "Dashboard : "+@business.short_name
+= more_stylesheets "forms"
+= more_javascripts_files "businesses_functions"
+
+#full_content
+  =render :partial=>"businesses/business_dashboard_menu", :locals=>{:business=>@bussiness}
+  #content
+    #business_info
+      =render :partial=>"businesses/business", :object=>@business
+
+

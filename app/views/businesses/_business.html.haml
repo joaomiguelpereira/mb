@@ -1,0 +1,84 @@
+%table.record
+  //full name
+  %tr
+    %td.label
+      =t "activerecord.attributes.business.full_name" 
+    %td.value
+      =business.full_name
+  //short name
+  %tr
+    %td.label
+      =t "activerecord.attributes.business.short_name" 
+    %td.value
+      =business.short_name
+  //description
+  %tr
+    %td.label
+      =t "activerecord.attributes.business.description" 
+    %td.value
+      =business.description
+  //email
+  %tr
+    %td.label
+      =t "activerecord.attributes.business.email" 
+    %td.value
+      =business.email
+
+  //address
+  %tr
+    %td.label
+      =t "activerecord.attributes.business.address" 
+    %td.value
+      =business.address
+  //City
+  %tr
+    %td.label
+      =t "activerecord.attributes.business.city" 
+    %td.value
+      =business.city
+  //Postal code
+  %tr
+    %td.label
+      =t "activerecord.attributes.business.postal_code" 
+    %td.value
+      =business.postal_code
+
+  //phone
+  %tr
+    %td.label
+      =t "activerecord.attributes.business.phone" 
+    %td.value
+      =business.phone
+
+  //fax
+  %tr
+    %td.label
+      =t "activerecord.attributes.business.fax" 
+    %td.value
+      =business.fax
+  //url
+  %tr
+    %td.label
+      =t "activerecord.attributes.business.url" 
+    %td.value
+      =business.url
+
+  //facebook
+  %tr
+    %td.label
+      =t "activerecord.attributes.business.facebook" 
+    %td.value
+      =business.facebook
+   
+  //twitter
+  %tr
+    %td.label
+      =t "activerecord.attributes.business.twitter" 
+    %td.value
+      =business.twitter
+      
+      
+  %tr
+    %td.label
+    %td.value
+      =link_to I18n.t("actions.edit"), edit_business_path(business), :id=>"bt_edit_business"

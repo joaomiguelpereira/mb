@@ -52,6 +52,7 @@ pt:
         create: Iniciar sessão
       business:
         create: Criar negócio
+        update: Actualizar
     errors:
       messages:
         invalid_email: o formato do email não é valido

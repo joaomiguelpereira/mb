@@ -1,21 +1,21 @@
-%h1 Dashboard
+%h1 #{@business.short_name}
 #options
 
-  //personal info
-  -if current_uri = request.env['PATH_INFO'] == business_dashboard_path
+  //Information
+  -if current_uri = request.env['PATH_INFO'] == business_path(@business)
     %span.selected
-      Os meus negócios
+      Informação
   -else
     %span
-      =link_to "Os meus negócios", business_dashboard_path
+      =link_to "Informação", business_path(@business)
   
-  //personal info
+  //Working time
   -if current_uri = request.env['PATH_INFO'] == user_profile_path
     %span.selected
       Negócios registados 
   -else
     %span
-      =link_to "Negócios registados", user_profile_path
+      =link_to "Editar", edit_business_path(@business)
 
   //preferences
   -if current_uri = request.env['PATH_INFO'] == user_preferences_path

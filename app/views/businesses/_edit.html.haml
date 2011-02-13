@@ -1,0 +1,6 @@
+=simple_form_for business ,:remote=>true do |f|
+  =render :partial=>"businesses/form", :locals=>{:f=>f, :editing=>true}
+  /= f.error_messages
+  = f.submit I18n.t "actions.update"
+  = link_to I18n.t("actions.cancel"), business_path(business), :id=>"cancel_business_edit"
+  

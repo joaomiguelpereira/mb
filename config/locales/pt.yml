@@ -3,6 +3,7 @@
   actions:
     update: Gravar
     cancel: Cancelar
+    edit: Editar
   # formatos de data e hora
   date:
     formats:

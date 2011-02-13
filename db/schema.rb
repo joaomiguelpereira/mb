@@ -10,7 +10,26 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110209121925) do
+ActiveRecord::Schema.define(:version => 20110212222402) do
+
+  create_table "businesses", :force => true do |t|
+    t.string   "short_name"
+    t.string   "full_name"
+    t.text     "description"
+    t.text     "address"
+    t.string   "email"
+    t.string   "phone"
+    t.string   "fax"
+    t.string   "url"
+    t.string   "facebook"
+    t.string   "twitter"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "city"
+    t.string   "postal_code"
+    t.boolean  "publised"
+  end
 
   create_table "users", :force => true do |t|
     t.string   "email"

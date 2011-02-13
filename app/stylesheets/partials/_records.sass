@@ -8,7 +8,9 @@
   -moz-border-radius: 4px
   border-radius: 4px
   margin-top: 8px
-  
+@mixin textarea-base
+  width: 400px
+  height: 80px
 @mixin base-submit
   width: auto
   margin-top: 15px
@@ -45,15 +47,20 @@ table.record
     input
       border: solid 1px red
   .hint
-    text-size: $hint-error-font-size
+    font-size: $hint-error-font-size
     color: $hint-color 
   .error
-    text-size: $hint-error-font-size
+    font-size: $hint-error-font-size
     color: $error-color
 #formContainer 
   padding: 10px
   h1
+    margin-bottom: 5px
+    border-bottom: solid 1px #ccc
     font-size: 1.3em
+
+    
+      
       
 #formContainer
   div.message
@@ -75,7 +82,7 @@ form.simple_form
        
   .hint, .error
     margin-left: 190px
-    text-size: $hint-error-font-size
+    font-size: $hint-error-font-size
     color: $hint-color 
 
   .error
@@ -86,7 +93,8 @@ form.simple_form
     margin-left: 190px
   input[type="submit"]
     @include base-submit
-    
+  textarea
+    @include textarea-base 
     
   .boolean
     label

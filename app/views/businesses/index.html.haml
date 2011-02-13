@@ -1,0 +1,10 @@
+= title "Dashboard"
+
+#full_content
+  =render :partial=>"businesses/dashboard_menu"  
+  #content
+    -if @businesses.empty?
+      %strong
+        Ainda não tem nenhum negócio registado. Pretende registar um novo novo negócio?
+        =link_to "Sim, quero registar um novo negócio.", new_business_path
+

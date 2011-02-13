@@ -1,0 +1,31 @@
+= title "Registar novo negócio"
+= more_stylesheets "forms"
+= more_javascripts_files "business_create"
+
+
+#formContainer
+  %h1 Registar novo negócio 
+
+  %div.attention
+    Todos os campos marcados com * são obrigatórios
+  =simple_form_for @business do |f|
+    /= f.error_messages
+    =f.input :full_name, :hint=>t("activerecord.hints.business.full_name")
+    =f.input :short_name, :hint=>t("activerecord.hints.business.short_name")
+    =f.input :description, :hint=>t("activerecord.hints.business.description")
+    =f.input :email, :hint=>t("activerecord.hints.business.email")
+    =f.input :address,:hint=>t("activerecord.hints.business.address")
+    =f.input :city, :hint=>t("activerecord.hints.business.city")
+    =f.input :postal_code, :hint=>t("activerecord.hints.business.postal_code")
+    =f.input :phone, :hint=>t("activerecord.hints.business.phone")
+    =f.input :fax, :hint=>t("activerecord.hints.business.fax")
+    =f.input :url, :hint=>t("activerecord.hints.business.url")
+    =f.input :facebook, :hint=>t("activerecord.hints.business.facebook")
+    =f.input :twitter, :hint=>t("activerecord.hints.business.twitter")
+    
+    
+    =f.input :terms_and_conditions, :as=>:boolean
+    
+    = f.submit I18n.t "activerecord.actions.business.create"
+    =link_to "Cancelar", :back
+    

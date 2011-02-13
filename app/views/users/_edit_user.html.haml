@@ -29,6 +29,7 @@
         %td.label
         %td.value
           = f.submit t "actions.update"
-          %input{:type=>"button", :value=>t("actions.cancel"), :id=>"cancel_user_edit", :remote_url=>user_profile_path}
+          =link_to "Cancelar", user_profile_path
+          
           
           

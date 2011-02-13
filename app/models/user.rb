@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   #Constants for user role
   BUSINESS_OWNER = "business"
   USER = "user"
-  
+  has_many :businesses
   #:role and admin are only set during creation, or...
   attr_accessible :terms_and_conditions, :email_confirmation, :first_name, :last_name, :password, :password_confirmation
   
@@ -76,7 +76,9 @@ class User < ActiveRecord::Base
     
     
   end
-  
+  def business_owner?
+    self.role == User::BUSINESS_OWNER
+  end
   def self.authenticate(email, password)
     user = find_by_email(email)
     if user && user.active && user.password_hash == BCrypt::Engine.hash_secret(password, user.password_salt)

@@ -5,6 +5,9 @@
     =link_to 'Terminar Sessão', :delete_session, {:method=>:delete}
     |
   =link_to "A minha conta", :user_profile
+  -if @current_user.business_owner?
+    |
+    =link_to "Dashboard", :business_dashboard
 -else
   %span 
     =link_to 'Inicial Sessão', :new_session

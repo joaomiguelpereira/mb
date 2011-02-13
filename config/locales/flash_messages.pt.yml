@@ -12,6 +12,8 @@ pt:
         reset_password_inactive_user: O utilizador com o email %{email} não está activo. Procure o mail de activação ou contacte o suporte. 
         create_new_password: Não foi possível alterar a password  
         update: Não foi possível actualizar a informação
+      business:
+        create: Não foi possível criar o seu negócio.
       general:
         invalid_operation: Não foi possível entender este pedido 
         not_authorized: Não está autorizado a ver esta página
@@ -25,6 +27,8 @@ pt:
         reset_password: As instruções para recuperar a sua password foram enviadas para %{email}
         create_new_password: A sua password foi correctamente aterada. 
         update: A informação foi actualizada com sucesso
+      business:
+        create: O negócio foi registado com sucesso.
       
         
         

@@ -13,6 +13,34 @@ pt:
         terms_and_conditions: Aceito os termos e condições
         keep_logged: Manter a minha sessão activa neste computador
         created_at: Data de registo
+      business:
+        short_name: Identificação
+        full_name: Nome
+        description: Descrição
+        email: Email
+        address: Morada
+        city: Localidade
+        postal_code: Código postal
+        phone: Telefone
+        url: Página web
+        twitter: Twitter (URL)
+        facebook: Faceboolk (URL)
+        fax: Fax
+        terms_and_conditions: Aceito os termos e condições
+    hints:
+      business:
+        short_name: "Identifica o seu negócio no serviço. Apenas pode ter letras, números, dígitos e _. Ex: clinica_da_cruz2021"
+        full_name: "O nome completo do seu negócio. Este nome vai ser apresentado nas listagens públicas"
+        description: Uma descrição do seu negócio. Esta informação vai ser apresntada nas listagens públicas
+        email: O email que vai ser publicado nas listagens publicas.
+        address: A morada do negócio. Vai ser publicada nas listagens públicas
+        city: Localidade
+        postal_code: Código postal
+        phone: Vai ser publicado para que possa ser contactado
+        url: "ex: http://clinicsmorais.com"
+        twitter: "Ex: http://twitter.com/clinicamorais"
+        facebook: "ex: htto://facebook.com/clinicamorais"
+        fax: Fax
     actions:
       user:
         create: Criar utilizador
@@ -22,6 +50,8 @@ pt:
         change_password: Alterar password
       session:
         create: Iniciar sessão
+      business:
+        create: Criar negócio
     errors:
       messages:
         invalid_email: o formato do email não é valido

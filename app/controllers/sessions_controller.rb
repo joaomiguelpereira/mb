@@ -39,7 +39,8 @@ class SessionsController < ApplicationController
       else
         create_session_for(user,keep_logged)
         flash_success "flash.success.session.create", {:keep=>true}, {:email=>user.email}
-        redirect_to root_path
+        redirect_to root_path if user.role == User::USER
+        redirect_to business_dashboard_path if user.role == User::BUSINESS_OWNER
       end
     end
   end

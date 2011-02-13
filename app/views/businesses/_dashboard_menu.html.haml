@@ -1,0 +1,36 @@
+%h1 Dashboard
+#options
+
+  //personal info
+  -if current_uri = request.env['PATH_INFO'] == business_dashboard_path
+    %span.selected
+      Dashboad
+  -else
+    %span
+      =link_to "Dashboad", business_dashboard_path
+  
+  //personal info
+  -if current_uri = request.env['PATH_INFO'] == user_profile_path
+    %span.selected
+      Negócios registados 
+  -else
+    %span
+      =link_to "Negócios registados", user_profile_path
+
+  //preferences
+  -if current_uri = request.env['PATH_INFO'] == user_preferences_path
+    %span.selected
+      Preferênicas
+  -else
+    %span
+      =link_to "Preferênicas", user_preferences_path
+      
+  //change passowd
+  -if current_uri = request.env['PATH_INFO'] == user_change_password_path
+    %span.selected
+      Alterar password 
+  -else
+    %span
+      =link_to "Alterar password", user_change_password_path
+
+		

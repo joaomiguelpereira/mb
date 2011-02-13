@@ -14,7 +14,7 @@ $(function(){
 
 	$("#cancel_user_edit").live("click", function() {
 		loading_indicator.show();
-		$.getScript(this.remote_url);
+		$.getScript(this.href);
 		return false;
 	});
 	

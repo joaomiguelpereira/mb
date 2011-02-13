@@ -7,4 +7,7 @@
       %strong
         Ainda não tem nenhum negócio registado. Pretende registar um novo novo negócio?
         =link_to "Sim, quero registar um novo negócio.", new_business_path
-
+    -else
+      =link_to "Criar novo negócio", new_business_path
+      =render :partial=>"list", :collection=>@businesses
+    

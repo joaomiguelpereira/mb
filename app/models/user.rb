@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   #Constants for user role
   BUSINESS_OWNER = "business"
   USER = "user"
-  has_many :businesses
+  has_many :businesses, :dependent => :destroy
   #:role and admin are only set during creation, or...
   attr_accessible :terms_and_conditions, :email_confirmation, :first_name, :last_name, :password, :password_confirmation
   

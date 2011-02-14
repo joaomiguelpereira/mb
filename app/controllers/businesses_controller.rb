@@ -6,7 +6,21 @@ class BusinessesController < ApplicationController
     @businesses = @current_user.businesses
   end
   
-  
+  ##################################
+  ####Destroy
+  ##################################
+  def destroy
+    @business=Business.find(params[:id])
+    raise WebAppException::AuthorizationError if @business.user_id != @current_user.id
+    if @business.destroy
+      flash_success "flash.success.business.destroy", {:keep=>true}
+      redirect_to business_dashboard_path
+    else
+      flash_success "flash.error.business.destroy", {:keep=>true}
+      redirect_to business_path(@business)
+    end
+    
+  end
   ###################################
   ####Edit
   ##################################

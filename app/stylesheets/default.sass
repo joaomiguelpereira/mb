@@ -3,18 +3,57 @@
 @import "partials/lists"
 
 
+//drop down menus
+.ddm
+  
+  .ddm_title
+    
+    font-size: 1em
+    font-weight: bold
+    text-align: right
+    padding-right: 14px
+    padding-left: 6px
+    background: url("../images/drop_down_arrow.gif") no-repeat right
+    cursor: pointer
+    display: block
+  
+  ul
+    display: none
+    list-style-type: none
+    margin: 0
+    padding: 2px
+    background-color: #F7F7F7
+    border: solid 1px #ccc
+    li
+      padding: 2px
+      a
+        color: #000
+        text-decoration: none
+        padding: 2px
+        display: block
+      a:hover
+        background-color: #ddd
+
 
 //Move this
 #full_content
   padding: 10px
-  h1
-    @include base-h1
+  div.dashboard_header
+    border-bottom: solid 1px #ccc
+    margin-bottom: 8px
+    height: 25px
+    div.title
+      font-size: 1.3em
+      font-weight: bold
+      float: left
+    div.options
+      float: right
+      padding: 2px
+      
   
   #options
     span
       padding-right: 10px
-      a
-        
     span.selected
       font-weight: bold
       font-size: 1.1em

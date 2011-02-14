@@ -1,4 +1,22 @@
-%h1 #{@business.short_name}
+%div.dashboard_header
+  %div.title
+    #{@business.short_name}
+    
+  
+  %div.options
+    %span.ddm
+      %span.ddm_title
+        Opções
+      
+      %ul
+        %li
+          =link_to "Remover", @business, :confirm => 'Todos os dados deste negócio serão eliminados permanentemente. Tem a certeza que quer continuar e remover este negócio? ', :method => :delete 
+        %li
+          =link_to "option 2",""
+  %div.options
+    %span
+      =link_to "Voltar ao dashboard", business_dashboard_path    
+
 #options
 
   //Information

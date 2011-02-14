@@ -1,4 +1,8 @@
-%h1 A minha conta
+%div.dashboard_header
+  %div.title
+    A minha conta
+  %div.options
+
 #options
   //personal info
   -if current_uri = request.env['PATH_INFO'] == user_profile_path

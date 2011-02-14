@@ -53,9 +53,24 @@ var loading_indicator = {
     }
     
 }
+//Drop down menu stuff
+var ddm = {
+	start: function(){
+		$(".ddm .ddm_title").live("click", function(){
+			$(this).siblings("ul").toggle();
+		
+			return false;
+		})
+	}, 
+	close : function() {
+		
+		$(".ddm .ddm_title").siblings("ul").hide();
+	}
+};
 
 $(function(){
-
+	ddm.start();
+	$(window).click(function() {ddm.close()});
     $("*").live('ajax:beforeSend', function(){
         loading_indicator.show();
     });
@@ -71,7 +86,7 @@ $(function(){
     
     $(window).scroll(function(){
         flash_messages.scroll();
-		loading_indicator.scroll();
+        loading_indicator.scroll();
     });
     
     element = $("#floating_message_wrapper");
@@ -81,5 +96,5 @@ $(function(){
         flash_messages.scroll();
     };
     
-    })
+})
 

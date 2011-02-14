@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110212222402) do
+ActiveRecord::Schema.define(:version => 20110213220909) do
 
   create_table "businesses", :force => true do |t|
     t.string   "short_name"
@@ -43,6 +43,18 @@ ActiveRecord::Schema.define(:version => 20110212222402) do
     t.boolean  "active",             :default => false
     t.string   "activation_key"
     t.string   "reset_password_key"
+  end
+
+  create_table "workers", :force => true do |t|
+    t.string   "name"
+    t.string   "email"
+    t.string   "address"
+    t.string   "city"
+    t.string   "postal_code"
+    t.string   "phone"
+    t.integer  "business_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

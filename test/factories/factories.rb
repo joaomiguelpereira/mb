@@ -34,12 +34,13 @@ Factory.define :business_admin do |f|
   f.active true
 end
 
-Factory.define :worker do |f|
-  f.sequence(:email) {"worker#{(rand*Time.now.to_f).to_i}@mail.com"}
+Factory.define :staffer do |f|
+  f.sequence(:email) {"staffer#{(rand*Time.now.to_f).to_i}@mail.com"}
   f.password "12345"
   f.first_name "Jonh"
   f.last_name "Doe"
   f.active true
+  f.business_admin_id nil
 end
 #
 #Factory.define :worker do |f|

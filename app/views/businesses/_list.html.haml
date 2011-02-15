@@ -4,7 +4,7 @@
       %td{:colspan=>"2"}
         Os meus negócios
       %td.actions
-        =link_to "+ Adicionar negócio", new_business_path
+        =link_to "+ Adicionar negócio", new_business_admin_business_path(@current_user)
     %tr
       %td{:width=>"180px"}
         =link_to "Identificação", ""
@@ -19,7 +19,7 @@
     -class_name = (i==businesses.size ? "last_row" : "middle_row")
   
     %tr{:class=>class_name}
-      %td=link_to business.short_name, business_path(business)
+      %td=link_to business.short_name, business_admin_business_path(@current_user, business)
       %td=business.full_name
       %td.last_cell=business.created_at
     

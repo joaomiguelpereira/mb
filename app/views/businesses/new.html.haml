@@ -9,7 +9,7 @@
   %div.attention
     Todos os campos marcados com * são obrigatórios
   
-  =simple_form_for @business do |f|
+  =simple_form_for [@current_user, @business] do |f|
     =render :partial=>"businesses/form", :locals=>{:f=>f, :editing=>false}
     
     /= f.error_messages

@@ -1,0 +1,16 @@
+= title "Pessoal"
+= more_stylesheets "forms"
+= more_javascripts_files "businesses_functions"
+
+
+#full_content
+  =render :partial=>"businesses/dashboard_menu"
+  #content
+    -if @staffers.empty?
+      %strong
+        Ainda não tem nenhum colaborador registado. Pretende registar um novo novo colaborador?
+        =link_to "Sim, quero registar um novo colaborador.", new_business_admin_staffer_path(@current_user)
+    -else
+      
+      /=render :partial=>"list", :locals=>{:businesses=>@businesses}
+        

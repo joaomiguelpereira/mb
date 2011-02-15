@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(:version => 20110214162021) do
     t.string   "type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "business_admin_id"
   end
 
 end

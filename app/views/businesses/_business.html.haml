@@ -81,4 +81,4 @@
   %tr
     %td.label
     %td.value
-      =link_to I18n.t("actions.edit"), edit_business_path(business), :id=>"bt_edit_business"
+      =link_to I18n.t("actions.edit"), edit_business_admin_business_path(@current_user, business), :id=>"bt_edit_business"

@@ -20,7 +20,7 @@ class BusinessesControllerTest < ActionController::TestCase
   
   test "should get new page" do
     user =  Factory.create(:business_admin)
-    get :new,{},authenticated_user(user)
+    get :new,{:business_admin_id=>user.id},authenticated_user(user)
     assert_template :new
     assert_not_nil assigns(:business)
   end
@@ -30,7 +30,7 @@ class BusinessesControllerTest < ActionController::TestCase
      other = Factory.create(:business_admin)
      
      assert_raise(WebAppException::AuthorizationError) do
-       get :show, {:id=>business.id}, authenticated_user(other)
+       get :show, {:business_admin_id=>owner.id, :id=>business.id}, authenticated_user(other)
      end
   end
   
@@ -39,7 +39,7 @@ class BusinessesControllerTest < ActionController::TestCase
     valid_business = Factory.attributes_for(:business, :business_admin_id=>user.id)
     
     assert_difference ('Business.count') do
-      post :create, {:business=>valid_business}, authenticated_user(user)  
+      post :create, {:business_admin_id=>user.id, :business=>valid_business}, authenticated_user(user)  
     end
     assert_success_flashed "flash.success.business.create"
     assert_redirected_to business_dashboard_path
@@ -56,7 +56,7 @@ class BusinessesControllerTest < ActionController::TestCase
      other = Factory.create(:business_admin)
      
      assert_raise(WebAppException::AuthorizationError) do
-       get :edit, {:id=>business.id}, authenticated_user(other)
+       get :edit, {:business_admin_id=>owner.id, :id=>business.id}, authenticated_user(other)
      end
   end
   
@@ -65,7 +65,7 @@ class BusinessesControllerTest < ActionController::TestCase
     owner = Factory.create(:business_admin)
     business = Factory.create(:business, :business_admin_id=>owner.id)
     old = business.short_name
-    put :update, {:business=>{:short_name=>"somenewname"},:id=>business.id}, authenticated_user(owner)
+    put :update, {:business_admin_id=>owner.id, :business=>{:short_name=>"somenewname"},:id=>business.id}, authenticated_user(owner)
     assert_success_flashed "flash.success.business.update"
     updated_business = Business.find(business.id)
     assert_equal old, updated_business.short_name

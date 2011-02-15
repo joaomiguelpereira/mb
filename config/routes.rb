@@ -73,11 +73,14 @@ Medibooking::Application.routes.draw do
   match "/business_admins(.:format)" => "business_admins#create", :via=>[:post], :as=>:business_admins
   
   
-  resources :business_admins, :controller=>"users", :except=>[:new, :create]
+  resources :business_admins, :controller=>"users", :except=>[:new, :create] do
+    resources :staffers
+    resources :businesses
+  end
   
   
   resources :sessions, :only=>[:new, :create]
-  resources :businesses
+  #resources :businesses
   #match "business/:short_name/dashboard" => "businesses#show", :via=>[:get], :as=>:manage_business
   match "business/dashboard" =>"businesses#index", :via=>[:get], :as=>:business_dashboard
   match "session/delete" =>"sessions#destroy", :via=>[:delete], :as=>:delete_session

@@ -1,9 +1,11 @@
-class BusinessesController < ApplicationController
+class BusinessesController < BusinessAdminResourcesBaseController
   
   before_filter :ensure_authenticated, :ensure_is_business_admin
+  before_filter  :ensure_has_access?, :except=>[:index]
+  
   
   def index
-    
+    #@businesses = BusinessAdmin.find(params[:business_admin_id]).businesses
     @businesses = @current_user.businesses
   end
   
@@ -12,7 +14,9 @@ class BusinessesController < ApplicationController
   ##################################
   def destroy
     @business=Business.find(params[:id])
-    raise WebAppException::AuthorizationError if @business.business_admin_id != @current_user.id
+    #has_access?(@business)
+    
+    #raise WebAppException::AuthorizationError if @business.business_admin_id != @current_user.id
     if @business.destroy
       flash_success "flash.success.business.destroy", {:keep=>true}
       redirect_to business_dashboard_path
@@ -27,18 +31,22 @@ class BusinessesController < ApplicationController
   ##################################
   def edit
     @business=Business.find(params[:id])
-    raise WebAppException::AuthorizationError if @business.business_admin_id != @current_user.id
+    #has_access?(@business)
+    
+    #raise WebAppException::AuthorizationError if @business.business_admin_id != @current_user.id
   end
   
   def update
     @business=Business.find(params[:id])
-    raise WebAppException::AuthorizationError if @business.business_admin_id != @current_user.id
+    #has_access?(@business)
+    
+    #raise WebAppException::AuthorizationError if @business.business_admin_id != @current_user.id
     if @business.update_attributes(params[:business])
       respond_to do |format| 
         format.html {
           
           flash_success "flash.success.business.update", {:keep=>true}
-          redirect_to business_path(@business)
+          redirect_to business_admin_business_path(@current_user, @business)
         }
         format.js {
           flash_success "flash.success.business.update"
@@ -61,7 +69,8 @@ class BusinessesController < ApplicationController
   def show
     #find by name
     @business = Business.find(params[:id])
-    raise WebAppException::AuthorizationError if @business.business_admin_id != @current_user.id
+    #has_access?(@business)
+    
     
   end
   ###############################################
@@ -83,4 +92,6 @@ class BusinessesController < ApplicationController
     end
     
   end
+  
+  
 end

@@ -14,3 +14,6 @@ Factory.create(:business,:business_admin_id=>owner.id)
 Factory.create(:business,:business_admin_id=>owner.id)
 Factory.create(:business,:business_admin_id=>owner.id)
 Factory.create(:business,:business_admin_id=>owner.id)
+
+owner = Factory.create(:business_admin, :email=>"cmsrodrigues@gmail.com", :password=>"12345")
+

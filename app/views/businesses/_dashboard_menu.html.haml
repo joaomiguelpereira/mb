@@ -14,13 +14,13 @@
     %span
       =link_to "Os meus negócios", business_dashboard_path
   
-  //personal info
-  -if current_uri = request.env['PATH_INFO'] == user_profile_path
+  //Workers (or staff)
+  -if current_uri = request.env['PATH_INFO'] == business_admin_staffers_path(@current_user)
     %span.selected
-      Negócios registados 
+      Pessoal
   -else
     %span
-      =link_to "Negócios registados", user_profile_path
+      =link_to "Pessoal", business_admin_staffers_path(@current_user)
 
   //preferences
   -if current_uri = request.env['PATH_INFO'] == user_preferences_path

@@ -10,7 +10,7 @@
       
       %ul
         %li
-          =link_to "Remover", @business, :confirm => 'Todos os dados deste negócio serão eliminados permanentemente. Tem a certeza que quer continuar e remover este negócio? ', :method => :delete 
+          =link_to "Remover",[@current_user, @business], :confirm => 'Todos os dados deste negócio serão eliminados permanentemente. Tem a certeza que quer continuar e remover este negócio? ', :method => :delete 
         %li
           =link_to "option 2",""
   %div.options
@@ -20,21 +20,13 @@
 #options
 
   //Information
-  -if current_uri = request.env['PATH_INFO'] == business_path(@business)
+  -if current_uri = request.env['PATH_INFO'] == business_admin_business_path(@current_user, @business)
     %span.selected
       Informação
   -else
     %span
-      =link_to "Informação", business_path(@business)
+      =link_to "Informação", business_admin_business_path(@current_user, @business)
   
-  //Working time
-  -if current_uri = request.env['PATH_INFO'] == user_profile_path
-    %span.selected
-      Negócios registados 
-  -else
-    %span
-      =link_to "Editar", edit_business_path(@business)
-
   //preferences
   -if current_uri = request.env['PATH_INFO'] == user_preferences_path
     %span.selected

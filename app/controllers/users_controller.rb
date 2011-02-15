@@ -2,9 +2,6 @@ class UsersController < ApplicationController
   
   before_filter :ensure_authenticated, :except=>[:new, :create, :activate, :reset_password, :create_new_password]
   
- 
-  
-  
   def profile
     @user = @current_user
   end
@@ -21,7 +18,8 @@ class UsersController < ApplicationController
     
     raise WebAppException::AuthorizationError if params[:id].to_s != @current_user.id.to_s #in case of a super admin
     @user = User.find(params[:id])  
-    if @user.update_attributes(params[:user])
+    ##This method is handling both the update of BusinessAdmins and Users....
+    if @user.update_attributes(params[@user.class.name.underscore])
       
       respond_to do |format|
         format.html {
@@ -42,7 +40,9 @@ class UsersController < ApplicationController
   #####Create User
   ###################################################
   def create
+    
     @user = User.new(params[:user])
+    
     if @user.save
       flash_success "flash.success.user.create", {:keep=>true}
       redirect_to new_session_path(:email=>@user.email)
@@ -52,13 +52,9 @@ class UsersController < ApplicationController
     end
     
   end
-   def new
-    #get the role from params
-    @role = params[:role]
-    #set the role to user if role is not set
-    @role = User::USER unless @role
+  def new
     @user = User.new
-    @user.role = @role 
+    
   end
   
   #################################################
@@ -117,7 +113,7 @@ class UsersController < ApplicationController
     if request.put?
       @user.updating_password = true
       @user.reset_password_key = nil
-      if @user.update_attributes(params[:user])
+      if @user.update_attributes(params[@user.class.name.underscore])
         update_cookies_for_new_password(@user)
         flash_success "flash.success.user.create_new_password", {:keep=>true}
         redirect_to user_profile_path
@@ -135,7 +131,7 @@ class UsersController < ApplicationController
     if request.put?
       @user.updating_password = true
       @user.reset_password_key = nil
-      if @user.update_attributes(params[:user])
+      if @user.update_attributes(params[@user.class.name.underscore])
         #update cookies, if they exists
         
         flash_success "flash.success.user.create_new_password", {:keep=>true}

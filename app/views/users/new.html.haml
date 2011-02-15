@@ -16,8 +16,9 @@
     =f.input :email_confirmation, :required=>true
     =f.input :password
     =f.input :password_confirmation, :required=>true
-    =f.input :role, :as=>:hidden
     =f.input :terms_and_conditions, :as=>:boolean
+      
+    
     
     = f.submit I18n.t "activerecord.actions.user.create"
   

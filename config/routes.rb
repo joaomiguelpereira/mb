@@ -66,7 +66,15 @@ Medibooking::Application.routes.draw do
   match "user/profile" =>"users#profile", :via=>[:get], :as=>:user_profile
   match "user/profile/change_password" =>"users#change_password", :via=>[:get, :put], :as=>:user_change_password
   match "user/profile/preferences" =>"users#profile", :via=>[:get], :as=>:user_preferences
+  
   resources :users
+  
+  match "/business_admins/new(.:format)" => "business_admins#new", :via=>[:get], :as=>:new_business_admin
+  match "/business_admins(.:format)" => "business_admins#create", :via=>[:post], :as=>:business_admins
+  
+  
+  resources :business_admins, :controller=>"users", :except=>[:new, :create]
+  
   
   resources :sessions, :only=>[:new, :create]
   resources :businesses

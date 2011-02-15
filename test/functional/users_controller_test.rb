@@ -5,7 +5,7 @@ class UsersControllerTest < ActionController::TestCase
     
     @update_valid_user_with_more_attrs = {
       :first_name=>"NewFirstName", :last_name=>"newLastName",
-      :role=>User::BUSINESS_OWNER,
+      
       :email=>"udpate@emai.com"
     }
     
@@ -14,7 +14,7 @@ class UsersControllerTest < ActionController::TestCase
     }
     
     @update_invalid_user = {
-      :first_name=>"N", :last_name=>"n"
+      :first_name=>"1", :last_name=>"1"
     }
     
     @new_valid_user = {
@@ -22,14 +22,13 @@ class UsersControllerTest < ActionController::TestCase
       :email=>"jfk@gmail.com", :email_confirmation=>"jfk@gmail.com", 
       :password=>"123456", :password_confirmation=>"123456", 
       :terms_and_conditions=>"1",
-      :role=>User::BUSINESS_OWNER
+      
     }
     @new_invalid_user = {
       :first_name=>"Jonh", :last_name=>"Remedy", 
       :email=>"jr@gmail.com", :email_confirmation=>"jr@gmail.com", 
       :password=>"123456", :password_confirmation=>"123456", 
-      :terms_and_conditions=>"1",
-      :role=>"what"
+      :terms_and_conditions=>"1"
     } 
   end
   ##################################################
@@ -45,8 +44,9 @@ class UsersControllerTest < ActionController::TestCase
   
   test "should not create new user" do
     
+    invalid_user = Factory.attributes_for(:user, :first_name=>"N", :last_name=>"n")
     assert_no_difference('User.count') do
-      post :create, :user=>@new_invalid_user  
+      post :create, :user=>invalid_user  
     end
     assert_error_flashed "flash.error.user.create"
     assert_template :new
@@ -59,9 +59,12 @@ class UsersControllerTest < ActionController::TestCase
   end
   
   test "should activate user" do
-    user = users(:not_active)
+
+    user = Factory.create(:user, :active=>false, :activation_key=>"12172671627617267162716726176jsh")
+    
+    
     get :activate, :activation_key=>user.activation_key
-    assert_success_flashed "flash.success.user.activate", {:email=>user}
+    assert_success_flashed "flash.success.user.activate", {:email=>user.email}
     assert_redirected_to new_session_path
     
     active_user = User.find(user.id)
@@ -74,12 +77,14 @@ class UsersControllerTest < ActionController::TestCase
   
   
   test "should create new user" do
+    user =   Factory.attributes_for(:user)
+
     assert_difference('User.count') do
-      post :create, :user=>@new_valid_user  
+      post :create, :user=>user  
     end
-    assert_redirected_to new_session_path(:email=>"jfk@gmail.com")
+    assert_redirected_to new_session_path(:email=>user[:email])
     assert_success_flashed "flash.success.user.create"
-    user = User.find_by_email("jfk@gmail.com")
+    user = User.find_by_email(user[:email])
     assert_not_nil user
     #assert mail sent
     assert !ActionMailer::Base.deliveries.empty?
@@ -117,14 +122,18 @@ class UsersControllerTest < ActionController::TestCase
   end
   
   test "should not reset password for inactive user" do
-    user = users(:not_active)
+    
+    user = Factory.create(:user, :active=>false, :activation_key=>"12172671627617267162716726176jsh")
+    
     post :reset_password, :reset_password=>{:email=>user.email}
     assert_template :reset_password
     assert_error_flashed "flash.error.user.reset_password_inactive_user", {:email=>user.email}
   end
   
   test "should start reset password process" do
-    user = users(:jonh)
+
+    user = Factory.create(:user)
+    
     post :reset_password, :reset_password=>{:email=>user.email}
     assert_redirected_to root_path
     assert_success_flashed "flash.success.user.reset_password", {:email=>user.email}
@@ -151,7 +160,8 @@ class UsersControllerTest < ActionController::TestCase
   end
   
   test "should get create new password page" do
-    user = users(:jonh)
+    user = Factory.create(:user, :reset_password_key=>"1234321qwerewqassdert")
+    
     get :create_new_password, :reset_password_key=>user.reset_password_key
     assert_response :success
     assert_not_nil assigns(:user)
@@ -160,14 +170,14 @@ class UsersControllerTest < ActionController::TestCase
   end
   
   test "should not create new password for valid key with weak pass" do
-    user = users(:jonh)
+    user = Factory.create(:user, :reset_password_key=>"1234321qwerewqassdert")
     put :create_new_password, {:user=>{:password=>"1", :password_confirmation=>"1"}, :reset_password_key=>user.reset_password_key} 
     assert_error_flashed "flash.error.user.create_new_password"
     assert_template :create_new_password
   end
 
   test "should not create new password for valid key without correct pass conf" do
-    user = users(:jonh)
+    user = Factory.create(:user, :reset_password_key=>"1234321qwerewqassdert")
     put :create_new_password, {:user=>{:password=>"654321", :password_confirmation=>"123456"}, :reset_password_key=>user.reset_password_key} 
     assert_error_flashed "flash.error.user.create_new_password"
     assert_template :create_new_password
@@ -175,14 +185,14 @@ class UsersControllerTest < ActionController::TestCase
 
 
   test "should not create new password for invalid key but valid pass" do
-    user = users(:jonh)
+    user = Factory.create(:user, :reset_password_key=>"1234321qwerewqassdert")
     put :create_new_password, {:user=>{:password=>"123456", :password_confirmation=>"123456"}, :reset_password_key=>user.reset_password_key+"22"} 
     assert_error_flashed "flash.error.general.invalid_operation"
     assert_redirected_to root_path
   end
 
   test "should create new password " do
-    user = users(:jonh)
+    user = Factory.create(:user, :reset_password_key=>"1234321qwerewqassdert")
     
     put :create_new_password, {:user=>{:password=>"123456", :password_confirmation=>"123456"}, :reset_password_key=>user.reset_password_key} 
     assert_success_flashed "flash.success.user.create_new_password"
@@ -203,14 +213,14 @@ class UsersControllerTest < ActionController::TestCase
   #### View User Profile
   #################################################
   test "should not get profile page for unauthenticated user" do
-    user = users(:jonh)
+    
     assert_raise(WebAppException::SessionRequiredError) do 
       get :profile 
     end
   end
   
   test "should get the profile page for the authenticated user" do
-    user = users(:jonh)
+    user = Factory.create(:user)
     get :profile, {},  authenticated_user(user) 
     assert_not_nil assigns(:user)
     assert_equal user.id, assigns(:user).id
@@ -221,37 +231,38 @@ class UsersControllerTest < ActionController::TestCase
   #### Update user
   ################################################
   test "should not get edit user if not authenticated" do
-    user = users(:jonh)
+    user = Factory.create(:user)
     assert_raise(WebAppException::SessionRequiredError) do 
       get :edit, {:id=>user.id}, {}  
     end
   end
 
   test "should not get edit user if not authorized" do
-    jonh = users(:jonh)
-    sam = users(:sam)
+    jonh = Factory.create(:user)
+    sam = Factory.create(:user)
     assert_raise(WebAppException::AuthorizationError) do 
       get :edit, {:id=>jonh.id},authenticated_user(sam)  
     end
   end
 
   test "should not update user is not authenticated" do
-    user = users(:jonh)
+    user = Factory.create(:user)
+    
     assert_raise(WebAppException::SessionRequiredError) do 
       put :update, {:id=>user.id, :user=>@update_valid_user}, {}  
     end
   end
   
   test "should not update is authenticated user id different" do
-    jonh = users(:jonh)
-    sam = users(:sam)
+    jonh = Factory.create(:user)
+    sam = Factory.create(:user)
     assert_raise(WebAppException::AuthorizationError) do 
       put :update, {:id=>jonh.id, :user=>@update_valid_user}, authenticated_user(sam)  
     end
   end
   
   test "should update" do
-    jonh = users(:jonh)
+    jonh = Factory.create(:user)
     put :update, {:id=>jonh.id, :user=>@update_valid_user}, authenticated_user(jonh)  
     assert_success_flashed "flash.success.user.update"
     assert_redirected_to user_profile_path
@@ -262,14 +273,14 @@ class UsersControllerTest < ActionController::TestCase
   end
   
    test "should not update invalid data" do
-    jonh = users(:jonh)
+    jonh = Factory.create(:user)
     put :update, {:id=>jonh.id, :user=>@update_invalid_user}, authenticated_user(jonh)  
     assert_error_flashed "flash.error.user.update"
     assert_template :edit
   end
   
   test "shoul not update unapdatable data" do
-    jonh = users(:jonh)
+    jonh = Factory.create(:user)
     put :update, {:id=>jonh.id, :user=>@update_valid_user_with_more_attrs}, authenticated_user(jonh)  
     assert_success_flashed "flash.success.user.update"
     assert_redirected_to user_profile_path
@@ -281,7 +292,7 @@ class UsersControllerTest < ActionController::TestCase
     
     #not updatable attributes
     assert_equal jonh.email, updated_user.email
-    assert_equal jonh.role, updated_user.role
+   
     
   end
   
@@ -295,7 +306,7 @@ class UsersControllerTest < ActionController::TestCase
      end
   end
   test "should get the change password page if authenticated" do
-    jonh = users(:jonh)
+    jonh = Factory.create(:user)
     get :change_password, {}, authenticated_user(jonh)   
     assert_response :success
     assert_not_nil assigns(:user)
@@ -303,7 +314,7 @@ class UsersControllerTest < ActionController::TestCase
   end
   
   test "shoudl not update password for invalid password" do
-    jonh = users(:jonh)
+    jonh = Factory.create(:user)
     put :change_password, {:user=>{:password=>"1", :password_confirmation=>"1"}}, authenticated_user(jonh)   
     
     assert_not_nil assigns(:user)
@@ -313,7 +324,7 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test "shoudl not update password for invalid password confirmation" do
-    jonh = users(:jonh)
+    jonh = Factory.create(:user)
     put :change_password, {:user=>{:password=>"123456", :password_confirmation=>"654321"}}, authenticated_user(jonh)   
     
     assert_not_nil assigns(:user)
@@ -323,7 +334,7 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test "shoudl update password for valid password" do
-    jonh = users(:jonh)
+    jonh = Factory.create(:user)
     put :change_password, {:user=>{:password=>"123456", :password_confirmation=>"123456"}}, authenticated_user(jonh)   
     assert_redirected_to user_profile_path
     assert_success_flashed "flash.success.user.create_new_password"

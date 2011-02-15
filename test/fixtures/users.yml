@@ -1,42 +1,39 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 #Password is: 11111
 
-jonh:
-  email: jonh@doe.com
-  password_hash: $2a$10$I0VHZmlvIEhAxEHqnAWECO0KPQcUiNIQ2CetUkW6H3EE0c4HEHNRO
-  password_salt: $2a$10$I0VHZmlvIEhAxEHqnAWECO
-  first_name: Jonh
-  last_name: Doe
-  role: <%=User::USER%>
-  active: true
-  reset_password_key: OqQxYTgjYKxXgvbAsTsWtMnIpMOpsjCRzLGZmJZLSbYtjvcvdpO
+#jonh:
+#  email: jonh@doe.com
+#  password_hash: $2a$10$I0VHZmlvIEhAxEHqnAWECO0KPQcUiNIQ2CetUkW6H3EE0c4HEHNRO
+#  password_salt: $2a$10$I0VHZmlvIEhAxEHqnAWECO
+#  first_name: Jonh
+#  last_name: Doe
 
-sam:
-  email: same@doe.com
-  password_hash: $2a$10$I0VHZmlvIEhAxEHqnAWECO0KPQcUiNIQ2CetUkW6H3EE0c4HEHNRO
-  password_salt: $2a$10$I0VHZmlvIEhAxEHqnAWECO
-  first_name: Sam
-  last_name: Doe
-  role: <%=User::USER%>
-  active: true
-  reset_password_key: OqQxYTgjYKxXgvbAsTsWtMnIpMOpsjCRzLGZmJZLSbYtjvcvdpO
-  
-not_active:
-  email: notactive@doe.com
-  password_hash: $2a$10$I0VHZmlvIEhAxEHqnAWECO0KPQcUiNIQ2CetUkW6H3EE0c4HEHNRO
-  password_salt: $2a$10$I0VHZmlvIEhAxEHqnAWECO
-  first_name: Not
-  last_name: Active
-  role: <%=User::USER%>
-  active: false
-  activation_key: OqQxYTgjYKxXgvbAsTsWtMnIpMOpsjCRzLGZmJZLSbYtjvcvdpO
-  
-bowner:
-  email: business@doe.com
-  password_hash: $2a$10$I0VHZmlvIEhAxEHqnAWECO0KPQcUiNIQ2CetUkW6H3EE0c4HEHNRO
-  password_salt: $2a$10$I0VHZmlvIEhAxEHqnAWECO
-  first_name: Jonh
-  last_name: Doe
-  role: <%=User::BUSINESS_OWNER%>
-  active: true
-  reset_password_key: OqQxYTgjYKxXgvbAsTsWtMnIpMOpsjCRzLGZmJZLSbYtjvcvdpO
+#  active: true
+#  reset_password_key: OqQxYTgjYKxXgvbAsTsWtMnIpMOpsjCRzLGZmJZLSbYtjvcvdpO
+#
+#sam:
+#  email: same@doe.com
+#  password_hash: $2a$10$I0VHZmlvIEhAxEHqnAWECO0KPQcUiNIQ2CetUkW6H3EE0c4HEHNRO
+#  password_salt: $2a$10$I0VHZmlvIEhAxEHqnAWECO
+#  first_name: Sam
+#  last_name: Doe
+#  active: true
+#  reset_password_key: OqQxYTgjYKxXgvbAsTsWtMnIpMOpsjCRzLGZmJZLSbYtjvcvdpO
+#  
+#not_active:
+#  email: notactive@doe.com
+#  password_hash: $2a$10$I0VHZmlvIEhAxEHqnAWECO0KPQcUiNIQ2CetUkW6H3EE0c4HEHNRO
+#  password_salt: $2a$10$I0VHZmlvIEhAxEHqnAWECO
+#  first_name: Not
+#  last_name: Active
+#  active: false
+#  activation_key: OqQxYTgjYKxXgvbAsTsWtMnIpMOpsjCRzLGZmJZLSbYtjvcvdpO
+#  
+#bowner:
+#  email: business@doe.com
+#  password_hash: $2a$10$I0VHZmlvIEhAxEHqnAWECO0KPQcUiNIQ2CetUkW6H3EE0c4HEHNRO
+#  password_salt: $2a$10$I0VHZmlvIEhAxEHqnAWECO
+#  first_name: Jonh
+#  last_name: Doe
+#  active: true
+#  reset_password_key: OqQxYTgjYKxXgvbAsTsWtMnIpMOpsjCRzLGZmJZLSbYtjvcvdpO

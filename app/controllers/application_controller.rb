@@ -17,8 +17,8 @@ class ApplicationController < ActionController::Base
     raise WebAppException::SessionRequiredError if @current_user.nil?
   end
   
-  def ensure_is_business_owner
-    raise WebAppException::AuthorizationError if @current_user.role!= User::BUSINESS_OWNER
+  def ensure_is_business_admin
+    raise WebAppException::AuthorizationError if !@current_user.business_admin?
   end
   
   

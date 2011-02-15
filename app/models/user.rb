@@ -1,9 +1,6 @@
 class User < ActiveRecord::Base
-  #Constants for user role
-  BUSINESS_OWNER = "business"
-  USER = "user"
-  has_many :businesses, :dependent => :destroy
-  #:role and admin are only set during creation, or...
+
+  
   attr_accessible :terms_and_conditions, :email_confirmation, :first_name, :last_name, :password, :password_confirmation
   
   attr_accessor  :password, :email_confirmation, :password_confirmation, :terms_and_conditions, :updating_password 
@@ -21,8 +18,6 @@ class User < ActiveRecord::Base
                     :uniqueness=>true, 
                     :format => {:with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i, :message => I18n.t("activerecord.errors.messages.invalid_email")}
   
-  
-  validates :role, :presence=>true, :inclusion=>{:in=> %w(business user) }
   
   validates :password, :presence=>true, :length=>{:minimum=>5, :maximum=>64}, :if=>:validate_password?
   
@@ -64,7 +59,6 @@ class User < ActiveRecord::Base
   def self.authenticate_from_salt(user_id, salt) 
     user = nil 
     if (!user_id.nil? && !salt.nil?)
-      puts "looking for user"
       user = find_by_id_and_password_salt(user_id, salt)
     end
     
@@ -76,9 +70,13 @@ class User < ActiveRecord::Base
     
     
   end
-  def business_owner?
-    self.role == User::BUSINESS_OWNER
+  def user?
+    (type.nil?) || (type == User.name) ? true : false
   end
+  def business_admin?
+    (!type.nil?) && (type == BusinessAdmin.name) ? true : false
+  end
+  
   def self.authenticate(email, password)
     user = find_by_email(email)
     if user && user.active && user.password_hash == BCrypt::Engine.hash_secret(password, user.password_salt)
@@ -90,6 +88,6 @@ class User < ActiveRecord::Base
   
   private
   def mass_assignment_authorizer
-    super  + ( new_record? ? [:role, :email]: [])
+    super  + ( new_record? ? [:email]: [])
   end
 end

@@ -1,15 +1,17 @@
 
 Factory.define :user do |f|
-  f.sequence(:email) {|n| "user#{n}@mail.com"}
+  f.sequence(:email) {"user#{(rand*Time.now.to_f).to_i}@mail.com"}
   f.password "12345"
   f.first_name "Jonh"
   f.last_name "Doe"
-  f.role {User::USER}
   f.active true
+  f.activation_key nil
+  f.reset_password_key nil
+ 
 end
 
 Factory.define :business do |f|
-  f.sequence(:short_name) {|n| "business#{n}"}
+  f.sequence(:short_name) {"business#{(rand*Time.now.to_f).to_i}"}
   f.full_name "A clinica da beatriz, unhas e manicure"
   f.description "Alguma descritpion aqui"
   f.address "Address"
@@ -21,6 +23,31 @@ Factory.define :business do |f|
   f.twitter "http://twitter.com/test"
   f.city "Aveiro"
   f.postal_code "3452-202 aveiro"
-  f.user_id nil
+  f.business_admin_id nil
 end
 
+Factory.define :business_admin do |f|
+  f.sequence(:email) {"badmin#{(rand*Time.now.to_f).to_i}@mail.com"}
+  f.password "12345"
+  f.first_name "Jonh"
+  f.last_name "Doe"
+  f.active true
+end
+
+Factory.define :worker do |f|
+  f.sequence(:email) {"worker#{(rand*Time.now.to_f).to_i}@mail.com"}
+  f.password "12345"
+  f.first_name "Jonh"
+  f.last_name "Doe"
+  f.active true
+end
+#
+#Factory.define :worker do |f|
+#  f.sequence(:name) {|n| "Worker#{n} name "}
+#  f.sequence(:email) {|n| "worker#{n}@mail.com"}
+#  f.address "worker address, Street of nowhere"
+#  f.city "city of angels"
+#  f.postal_code "34545262626"
+#  f.phone "123456789"
+#  f.user_id  nil
+#end

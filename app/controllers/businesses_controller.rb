@@ -1,8 +1,9 @@
 class BusinessesController < ApplicationController
   
-  before_filter :ensure_authenticated, :ensure_is_business_owner
+  before_filter :ensure_authenticated, :ensure_is_business_admin
   
   def index
+    
     @businesses = @current_user.businesses
   end
   
@@ -11,7 +12,7 @@ class BusinessesController < ApplicationController
   ##################################
   def destroy
     @business=Business.find(params[:id])
-    raise WebAppException::AuthorizationError if @business.user_id != @current_user.id
+    raise WebAppException::AuthorizationError if @business.business_admin_id != @current_user.id
     if @business.destroy
       flash_success "flash.success.business.destroy", {:keep=>true}
       redirect_to business_dashboard_path
@@ -26,12 +27,12 @@ class BusinessesController < ApplicationController
   ##################################
   def edit
     @business=Business.find(params[:id])
-    raise WebAppException::AuthorizationError if @business.user_id != @current_user.id
+    raise WebAppException::AuthorizationError if @business.business_admin_id != @current_user.id
   end
   
   def update
     @business=Business.find(params[:id])
-    raise WebAppException::AuthorizationError if @business.user_id != @current_user.id
+    raise WebAppException::AuthorizationError if @business.business_admin_id != @current_user.id
     if @business.update_attributes(params[:business])
       respond_to do |format| 
         format.html {
@@ -60,7 +61,7 @@ class BusinessesController < ApplicationController
   def show
     #find by name
     @business = Business.find(params[:id])
-    raise WebAppException::AuthorizationError if @business.user_id != @current_user.id
+    raise WebAppException::AuthorizationError if @business.business_admin_id != @current_user.id
     
   end
   ###############################################
@@ -72,7 +73,7 @@ class BusinessesController < ApplicationController
   def create
     
     @business = Business.new(params[:business])
-    @business.user_id = @current_user.id
+    @business.business_admin_id = @current_user.id
     if @business.save
       flash_success "flash.success.business.create", {:keep=>true}
       redirect_to business_dashboard_path

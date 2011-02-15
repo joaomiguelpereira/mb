@@ -1,5 +1,6 @@
 class Business < ActiveRecord::Base
-  belongs_to :user
+  belongs_to :business_admin
+  
   before_save :fix_short_name
   attr_accessible :terms_and_conditions, :full_name, :description, 
                   :address, :city, :postal_code, :url,
@@ -9,7 +10,7 @@ class Business < ActiveRecord::Base
   
   #short name identifies the business across all the system and can only have letters and number
   #and must be unique
-  validates :user_id, :presence=>true
+  validates :business_admin_id, :presence=>true
   validates :short_name, :presence=>true, 
                          :length=>{:minimum=>4, :maximum=>24},
                          :uniqueness=>true,

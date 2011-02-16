@@ -48,6 +48,8 @@ pt:
         create_new_password: Criar nova password
         edit: Editar
         change_password: Alterar password
+      staffer:
+        create: Criar colaborador
       session:
         create: Iniciar sessão
       business:

@@ -2,5 +2,5 @@
   =render :partial=>"businesses/form", :locals=>{:f=>f, :editing=>true}
   /= f.error_messages
   = f.submit I18n.t "actions.update"
-  = link_to I18n.t("actions.cancel"), business_admin_business_path(business), :id=>"cancel_business_edit"
+  = link_to I18n.t("actions.cancel"), business_admin_business_path(@current_user, business), :id=>"cancel_business_edit"
   

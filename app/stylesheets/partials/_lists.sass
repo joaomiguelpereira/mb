@@ -1,10 +1,14 @@
 $table_header_text_color: #000
-$table_header_font_size: 0.8em
+$table_header_font_size: 1em
 $table_border_color: #bbb
 
+a.list_action
+  
+
 table.data_table
+  margin-top: 10px
   thead
-    background: #ccc
+    background: #DFFFCF
     
     tr
       td
@@ -16,25 +20,12 @@ table.data_table
       span
         color: $table_header_text_color
         font-size: $table_header_font_size
+        font-weight: bold
       a
         color: $table_header_text_color
         text-decoration: none
         font-size: $table_header_font_size
-    tr.title
-     
-      td
-        border: none
-        border-bottom: solid 2px #fff
         font-weight: bold
-        color: #000
-        background: #bbb
-        padding: 3px
-        margin-bottom: 3px
-      td.actions
-        text-align: right
-        a
-          font-size: 1em
-          text-decoration: underline
   tr
     td
       padding: 8px

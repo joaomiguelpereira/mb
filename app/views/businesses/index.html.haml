@@ -8,6 +8,6 @@
         Ainda não tem nenhum negócio registado. Pretende registar um novo novo negócio?
         =link_to "Sim, quero registar um novo negócio.", new_business_admin_business_path(@current_user)
     -else
-      
+      =link_to "Adicionar negócio", new_business_admin_business_path(@current_user), :class=>"action_add list_action"
       =render :partial=>"list", :locals=>{:businesses=>@businesses}
     

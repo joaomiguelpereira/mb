@@ -70,9 +70,18 @@ class UsersController < ApplicationController
     else
       user.active = true
       user.activation_key = nil
+      #if it needs to change the password, then create a password_reset_key
+      if user.need_new_password
+        user.reset_password_key = StringUtils.generate_random_string
+      end
       user.save!
       flash_success "flash.success.user.activate", {:keep=>true}, {:email=>user.email}
-      redirect_to new_session_path
+      if user.need_new_password
+        redirect_to create_new_password_path(user.reset_password_key) 
+      else
+        
+      redirect_to new_session_path 
+    end
     end
   end
   
@@ -87,6 +96,7 @@ class UsersController < ApplicationController
       raise EmailNotFoundError if user.nil?
       raise UserNotActiveError if !user.active
       user.reset_password_key = StringUtils::generate_random_string
+      user.need_new_password = true  
       user.save!
       #send the email
       UserMailer.reset_password_mail(user).deliver   
@@ -112,6 +122,7 @@ class UsersController < ApplicationController
     @user = @current_user
     if request.put?
       @user.updating_password = true
+      @user.need_new_password = false
       @user.reset_password_key = nil
       if @user.update_attributes(params[@user.class.name.underscore])
         update_cookies_for_new_password(@user)
@@ -130,6 +141,7 @@ class UsersController < ApplicationController
     raise InvalidParameterError if @user.nil?  
     if request.put?
       @user.updating_password = true
+      @user.need_new_password = false
       @user.reset_password_key = nil
       if @user.update_attributes(params[@user.class.name.underscore])
         #update cookies, if they exists

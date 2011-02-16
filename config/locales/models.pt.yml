@@ -13,6 +13,8 @@ pt:
         terms_and_conditions: Aceito os termos e condições
         keep_logged: Manter a minha sessão activa neste computador
         created_at: Data de registo
+      staffer:
+        notify_on_create: Enviar agora email de activação ao colaborador?
       business:
         short_name: Identificação
         full_name: Nome

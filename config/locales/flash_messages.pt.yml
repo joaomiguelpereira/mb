@@ -16,6 +16,8 @@ pt:
         create: Não foi possível criar o seu negócio.
         update: Não foi possível actualizar a informação.
         destroy: Não foi possível remover este negócio.
+      staffer: 
+        create: Não foi possível criar o colaborador
       general:
         invalid_operation: Não foi possível entender este pedido 
         not_authorized: Não está autorizado a ver esta página
@@ -33,6 +35,8 @@ pt:
         create: O negócio foi registado com sucesso.
         update: A informação foi actualizada com sucesso.    
         destroy: O negócio foi removido.
+      staffer:
+        create: O colaborador foi criado com sucesso.
         
      
         

@@ -61,7 +61,7 @@ class UsersControllerTest < ActionController::TestCase
   test "should activate user" do
 
     user = Factory.create(:user, :active=>false, :activation_key=>"12172671627617267162716726176jsh")
-    
+    assert !user.need_new_password, "need password should be false"
     
     get :activate, :activation_key=>user.activation_key
     assert_success_flashed "flash.success.user.activate", {:email=>user.email}
@@ -86,6 +86,7 @@ class UsersControllerTest < ActionController::TestCase
     assert_success_flashed "flash.success.user.create"
     user = User.find_by_email(user[:email])
     assert_not_nil user
+    assert  !user.active
     #assert mail sent
     assert !ActionMailer::Base.deliveries.empty?
     #get the last sent email
@@ -342,6 +343,22 @@ class UsersControllerTest < ActionController::TestCase
     #must change also the cookie...
   end
 
+
+   test "should ask new password after activation" do
+      badmin = Factory.create(:business_admin)
+      staffer = Factory.create(:staffer, :business_admin_id=>badmin.id, :active=>false, :need_new_password=>true)
+      assert_not_nil staffer.activation_key
+      
+      get :activate, :activation_key=>staffer.activation_key
+      assert_success_flashed "flash.success.user.activate", {:email=>staffer.email}
+      active_user = User.find(staffer.id)
+      #activation key should be now nil
+      assert_nil active_user.activation_key 
+      #user should be active
+      assert active_user.active
+      assert_not_nil active_user.reset_password_key
+      assert_redirected_to create_new_password_path(active_user.reset_password_key)
+  end
 
 
 end

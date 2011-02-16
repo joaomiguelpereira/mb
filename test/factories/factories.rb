@@ -40,7 +40,9 @@ Factory.define :staffer do |f|
   f.first_name "Jonh"
   f.last_name "Doe"
   f.active true
+  f.notify_on_create false
   f.business_admin_id nil
+  f.need_new_password false
 end
 #
 #Factory.define :worker do |f|

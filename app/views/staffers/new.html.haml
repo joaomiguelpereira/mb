@@ -6,13 +6,14 @@
   %h1 Registar novo colaborador
   %h2
     Todos os campos marcados com * são obrigatórios
-  #form_container
+  #form_container{:style=>"width:550px"}
     =simple_form_for [@current_user, @staffer] do |f|
       /= f.error_messages
       =f.input :first_name
       =f.input :last_name
       =f.input :email
       =f.input :email_confirmation, :required=>true
+      =f.input :notify_on_create, :as=>:boolean
       = f.submit I18n.t "activerecord.actions.staffer.create"
       =link_to t("actions.cancel"), :back
   .help_float_box

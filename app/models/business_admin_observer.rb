@@ -1,3 +1,0 @@
-class BusinessAdminObserver < UserObserver
-    
-end

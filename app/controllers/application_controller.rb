@@ -42,7 +42,7 @@ class ApplicationController < ActionController::Base
   private
   
   def auto_login
-     
+    
     if  cookies.signed[:remember_me] && @current_user.nil?
       user = User.authenticate_from_salt(*cookies.signed[:remember_me])
       if !user.nil?
@@ -57,5 +57,8 @@ class ApplicationController < ActionController::Base
   
   def set_current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
+  rescue ActiveRecord::RecordNotFound
+    #useful in dev, if a user is deleted from the db
+    @current_user = nil
   end
 end

@@ -7,28 +7,30 @@
       O seu registo está quase completo. Enviamos um email para 
       =@email+"."
       Siga as instruções para activar a sua conta. Após a activação pode iniciar a sessão.
-#formContainer
+#form_wrapper
   %h1 Iniciar sessão
-  %div.message
-    Caso ainda não tenha uma conta no medibooking.com,  
-    =link_to 'registe-se aqui.', new_user_path
+  %h2 Introduza o seu email e password
+  #form_container{:style=>"width: 550px"}
+    =simple_form_for :session, :url=>sessions_path do |f|
+      =f.input :email, :required=>false, :label=>I18n.t("activerecord.attributes.user.email")
+      =f.input :password, :required=>false, :label=>I18n.t("activerecord.attributes.user.password")
+      =f.input :keep_logged, :as=>:boolean, :required=>false, :label=>I18n.t("activerecord.attributes.user.keep_logged")
+      = f.submit I18n.t "activerecord.actions.session.create"
     
-  %div.message
-    Se prentende registar o seu negócio no medibooking.com faça-o  
-    =link_to 'aqui.', new_user_path(:type=>BusinessAdmin.name)
-    
-    
-    
-  =simple_form_for :session, :url=>sessions_path do |f|
-    =f.input :email, :required=>false, :label=>I18n.t("activerecord.attributes.user.email")
-    =f.input :password, :required=>false, :label=>I18n.t("activerecord.attributes.user.password")
-    =f.input :keep_logged, :as=>:boolean, :required=>false, :label=>I18n.t("activerecord.attributes.user.keep_logged")
-    
-    
-    = f.submit I18n.t "activerecord.actions.session.create"
 
-  %div.form_aligned
-    =link_to "Esqueci-me da minha password", reset_password_path
+  .help_float_box
+    %h1 Iniciar nova sessão
+    %p
+      =raw "Caso ainda não tenha uma conta no medibooking.com, #{link_to 'registe-se aqui.', new_user_path}"
+    %p
+      =raw "Se prentende registar o seu negócio no medibooking.com faça-o #{link_to 'aqui.', new_business_admin_path(:type=>BusinessAdmin.name)}"
+    %p
+      %strong Esqueceu-se da dua password?
+    %p
+      =raw "Se você se esqueceu da sua password, não há problema.  #{link_to "Recuperar a sua password", reset_password_path}"
+    
+    
+  
   
   
 

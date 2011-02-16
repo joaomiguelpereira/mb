@@ -1,10 +1,10 @@
-= title "Pessoal"
+= title "Colaboradores"
 = more_stylesheets "forms"
 = more_javascripts_files "businesses_functions"
 
 
 #full_content
-  =render :partial=>"businesses/dashboard_menu"
+  =render :partial=>"shared/business_admin/dashboard_menu"
   #content
     -if @staffers.empty?
       %strong

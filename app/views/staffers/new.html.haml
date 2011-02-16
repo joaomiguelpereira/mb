@@ -1,0 +1,26 @@
+= title "Novo colaborador"
+= more_stylesheets "forms"
+= more_javascripts_files "businesses_functions"
+
+#form_wrapper
+  %h1 Registar novo colaborador
+  %h2
+    Todos os campos marcados com * são obrigatórios
+  #form_container
+    =simple_form_for [@current_user, @staffer] do |f|
+      /= f.error_messages
+      =f.input :first_name
+      =f.input :last_name
+      =f.input :email
+      =f.input :email_confirmation, :required=>true
+      = f.submit I18n.t "activerecord.actions.staffer.create"
+      =link_to t("actions.cancel"), :back
+  .help_float_box
+    %h1
+      Registar novo colaborador
+    %p
+      Introduza a informação relativa ao novo colaborador e assegure-se que o email que fornece é o correcto
+    %p  
+      Vamos criar uma nova conta e enviar um email para que o novo colaborador active a conta
+      e crie uma nova password.
+  

@@ -17,10 +17,10 @@
   //Workers (or staff)
   -if current_uri = request.env['PATH_INFO'] == business_admin_staffers_path(@current_user)
     %span.selected
-      Pessoal
+      Colaboradores
   -else
     %span
-      =link_to "Pessoal", business_admin_staffers_path(@current_user)
+      =link_to "Colaboradores", business_admin_staffers_path(@current_user)
 
   //preferences
   -if current_uri = request.env['PATH_INFO'] == user_preferences_path

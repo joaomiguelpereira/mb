@@ -1,26 +1,32 @@
 = title "Novo utilizador"
 = more_stylesheets "forms"
 
-#formContainer
-  %h1 Registar novo utilizador 
-  %div
-    Caso já tenha uma conta no medibooking.com, identifique-se 
-    =link_to 'aqui', new_session_path
-  %div.attention
+-header = "Registar novo utilizador" if @user.class.name==User.name
+-header = "Registar novo gestor de negócio" if @user.class.name==BusinessAdmin.name
+
+#form_wrapper
+  
+  %h1
+    =header 
+  %h2
     Todos os campos marcados com * são obrigatórios
-  =simple_form_for @user do |f|
-    /= f.error_messages
-    =f.input :first_name
-    =f.input :last_name
-    =f.input :email
-    =f.input :email_confirmation, :required=>true
-    =f.input :password
-    =f.input :password_confirmation, :required=>true
-    =f.input :terms_and_conditions, :as=>:boolean
+  #form_container
+    =simple_form_for @user do |f|
+      =f.input :first_name
+      =f.input :last_name
+      =f.input :email
+      =f.input :email_confirmation, :required=>true
+      =f.input :password
+      =f.input :password_confirmation, :required=>true
+      =f.input :terms_and_conditions, :as=>:boolean
+      = f.submit I18n.t "activerecord.actions.user.create"
+  .help_float_box
+    %h1
+      =header
+    %p
+      =raw "Caso já tenha uma conta no medibooking.com, identifique-se #{link_to 'aqui', new_session_path}"
+   
       
-    
-    
-    = f.submit I18n.t "activerecord.actions.user.create"
   
   
   

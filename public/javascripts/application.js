@@ -67,9 +67,24 @@ var ddm = {
 		$(".ddm .ddm_title").siblings("ul").hide();
 	}
 };
-
+var form_utils = {
+	focus_first_field: function() {
+		$("[textarea||input]:visible:enabled:first").focus();
+		
+		//$("textarea:visible:enabled:first").focus();
+		
+		//try also on the on one that have errors
+		
+		$("div.field_with_errors").children("[textarea||input]:visible:enabled:first").focus();
+		//$("div.field_with_errors textarea:visible:enabled:first").focus();
+		
+		
+		
+	}
+}
 $(function(){
 	ddm.start();
+	form_utils.focus_first_field();
 	$(window).click(function() {ddm.close()});
     $("*").live('ajax:beforeSend', function(){
         loading_indicator.show();

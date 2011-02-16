@@ -3,4 +3,5 @@
 
 $("#user_basic_info").html("<%= escape_javascript(render :partial=>"edit_user", :object=>@user)%>");
 loading_indicator.hide();
+form_utils.focus_first_field();
 

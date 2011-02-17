@@ -11,6 +11,6 @@
         Ainda não tem nenhum colaborador registado. Pretende registar um novo novo colaborador?
         =link_to "Sim, quero registar um novo colaborador.", new_business_admin_staffer_path(@current_user)
     -else
-      
-      /=render :partial=>"list", :locals=>{:businesses=>@businesses}
+      =link_to "Adicionar colaborador", new_business_admin_staffer_path(@current_user), :class=>"action_add list_action"
+      =render :partial=>"list", :locals=>{:staffers=>@staffers}
         

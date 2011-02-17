@@ -1,5 +1,8 @@
 pt:
   flash:
+    notice:
+      user:
+        activation_pending: O seu registo está quase completo. Enviamos um email para %{email}. Siga as instruções para activar a sua conta. Após a activação pode iniciar a sessão.
     error:
       session:
         invalid_data: Não foi possível iniciar a sessão. Verifique os dados.

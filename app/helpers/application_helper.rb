@@ -19,7 +19,10 @@ module ApplicationHelper
       t + " | medibooking.com"
     end
   end
-  
+  def boolean_to_yes_no(val)
+    return I18n.t "general_words.positive" if val
+    return I18n.t "general_words.negative"
+  end
   def errors_for(object, attribute, show_all=false)
     errors = object.errors[attribute]
     if errors.size>0

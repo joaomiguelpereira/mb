@@ -4,7 +4,9 @@
 var flash_messages = {
 
     timer: null,
-    
+    close_notice : function() {
+		$('#notice_message').hide();
+	},
     close: function(){
         $('#floating_message_wrapper').hide();
         

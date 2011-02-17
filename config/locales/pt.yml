@@ -1,5 +1,7 @@
  pt:
-  #accoes em geral
+  general_words:
+    positive: Sim
+    negative: Não
   actions:
     update: Gravar
     cancel: Cancelar

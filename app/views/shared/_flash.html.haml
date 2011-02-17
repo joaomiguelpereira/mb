@@ -1,28 +1,36 @@
+-if flash[:notice]
+  #notice_message
+    %div.page_message
+      =flash[:notice]
+    %div.page_message_close
+      =link_to_function 'X', 'flash_messages.close_notice()'
+
+      
 -if flash[:error]
   #floating_message_wrapper.error
-    #page_message
+    %div.page_message
       %strong
         =flash[:error]   
-    #page_message_close
+    %div.page_message_close
       =link_to_function 'X', 'flash_messages.close()'
 
 
 -if flash[:success]
   #floating_message_wrapper.success
-    #page_message
+    %div.page_message
       %strong
         =flash[:success]   
-    #page_message_close
+    %div.page_message_close
       =link_to_function 'X', 'flash_messages.close()'
 
 
 
 -if flash[:warning]
   #floating_message_wrapper.warning
-    #page_message
+    %div.page_message
       %strong
         =flash[:warning]   
-    #page_message_close
+    %div.page_message_close
       =link_to_function 'X', 'flash_messages.close()'
 
 :javascript

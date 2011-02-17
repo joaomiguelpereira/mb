@@ -32,23 +32,11 @@ body
   display: none
   
    
-div.attention
-  font-size: 1.2em
-  font-weight: bold
-  padding-top: 5px
-  padding-bottom: 5px
-  color: #83B2ff
-    
-div.user_message
-  font-size: 1em
-  font-weight: normal
-  padding: 10px
-  background: orange
   
  
 //Flash Messages
 
-#floating_message_wrapper
+#floating_message_wrapper, #notice_message
   position: absolute
   top: 0
   left: 0
@@ -60,10 +48,10 @@ div.user_message
   -moz-opacity: 0.9
   -khtml-opacity: 0.9
   opacity: 0.9
-  #page_message
+  div.page_message
     width: 100%
     text-align: center
-  #page_message_close
+  div.page_message_close
     float: right
     margin-top: -20px
     a
@@ -77,7 +65,10 @@ div.user_message
     a:hover
       background-color: #FFF
       color: #000
-            
+
+#notice_message  
+  background: orange
+  position: relative          
 #floating_message_wrapper.error
   background-color: red
   color: #fff

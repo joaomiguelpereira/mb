@@ -8,7 +8,8 @@ class ApplicationController < ActionController::Base
   
   layout "default"
   def index
-    @title = "hello, man"
+    #flash_notice "flash.notice.user.activation_pending", {:keep=>true}, {:email=>"myemai.com"}
+    #flash_error "flash.notice.user.activation_pending", {:keep=>true}, {:email=>"myemai.com"}
   end
   
   
@@ -22,6 +23,8 @@ class ApplicationController < ActionController::Base
   end
   
   
+  ##TODO. Maybe implementation with method_missing...
+  
   def flash_error(i18nkey, options={},*params)
     if options[:keep] 
       flash[:error] = I18n.t(i18nkey,*params)
@@ -31,6 +34,16 @@ class ApplicationController < ActionController::Base
     
     
   end
+  
+  def flash_notice(i18nkey, options={},*params) 
+    if options[:keep] 
+      flash[:notice] = I18n.t(i18nkey,*params)
+    else
+      flash.now[:notice] = I18n.t(i18nkey,*params)
+    end 
+  end
+  
+  
   def flash_success(i18nkey, options={},*params) 
     if options[:keep] 
       flash[:success] = I18n.t(i18nkey,*params)

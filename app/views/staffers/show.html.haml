@@ -1,0 +1,11 @@
+= title "Colaborador : "+@staffer.full_name
+= more_stylesheets "forms"
+= more_javascripts_files "businesses_functions"
+
+#full_content
+  =render :partial=>"staffers/staffer_dashboard_menu", :locals=>{:staffer=>@staffer}
+  #content
+    #staffer_info
+      =render :partial=>"staffers/staffer", :object=>@staffer
+
+

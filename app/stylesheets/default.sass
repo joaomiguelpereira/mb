@@ -38,25 +38,51 @@
 //Move this
 #full_content
   padding: 10px
-  div.dashboard_header
-    border-bottom: solid 1px #ccc
-    margin-bottom: 8px
-    height: 25px
-    div.title
-      font-size: 1.3em
-      font-weight: bold
-      float: left
-    div.options
-      float: right
-      padding: 2px
-      
-  
-  #options
-    span
-      padding-right: 10px
-    span.selected
-      font-weight: bold
-      font-size: 1.1em
   #content
     padding-top: 10px
-        
+    clear: both
+      
+div.dashboard_header
+  border-bottom: solid 1px #ccc
+  margin-bottom: 0px
+  height: 25px
+  div.title
+    font-size: 1.3em
+    font-weight: bold
+    float: left
+  div.options
+    float: right
+    padding: 2px
+      
+      
+div.context_horizontal_menu
+  height: 34px
+  background: #E7EEF1
+  margin-bottom: 10px
+
+  div.right_menu, div.left_menu
+    margin-top: 8px
+    float: left
+    ul
+      margin: 0px
+      padding: 0px
+      list-style: none
+      li
+        margin: 0px
+        display: inline  
+        a
+          color: #000
+          margin: 0px
+          text-decoration: none
+          padding: 8px
+        a:hover
+          background: #fff
+          border-bottom: solid 2px #ccc
+        a.selected
+          border-bottom: solid 8px #ccc
+          padding-bottom: 0px
+          background: #fff
+          font-weight: bold
+  div.left_menu
+    float: right
+   

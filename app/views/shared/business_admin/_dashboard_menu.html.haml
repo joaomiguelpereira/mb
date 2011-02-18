@@ -1,41 +1,14 @@
 %div.dashboard_header
   %div.title
     Dashboard
-  %div.options
 
 
-#options
+.context_horizontal_menu      
+  .right_menu
+    %ul
+      %li
+        =link_to "Os meus negócios", business_dashboard_path, :class=>(request.env['PATH_INFO'] == business_dashboard_path) ? "selected" : ""
+      %li
+        =link_to "Colaboradores", business_admin_staffers_path(@current_user), :class=>(request.env['PATH_INFO'] == business_admin_staffers_path(@current_user)) ? "selected" : ""
 
-  //personal info
-  -if current_uri = request.env['PATH_INFO'] == business_dashboard_path
-    %span.selected
-      Os meus negócios
-  -else
-    %span
-      =link_to "Os meus negócios", business_dashboard_path
-  
-  //Workers (or staff)
-  -if current_uri = request.env['PATH_INFO'] == business_admin_staffers_path(@current_user)
-    %span.selected
-      Colaboradores
-  -else
-    %span
-      =link_to "Colaboradores", business_admin_staffers_path(@current_user)
 
-  //preferences
-  -if current_uri = request.env['PATH_INFO'] == user_preferences_path
-    %span.selected
-      Preferênicas
-  -else
-    %span
-      =link_to "Preferênicas", user_preferences_path
-      
-  //change passowd
-  -if current_uri = request.env['PATH_INFO'] == user_change_password_path
-    %span.selected
-      Alterar password 
-  -else
-    %span
-      =link_to "Alterar password", user_change_password_path
-
-		

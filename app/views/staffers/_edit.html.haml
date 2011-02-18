@@ -8,4 +8,4 @@
   =f.input :city
   
   = f.submit t "actions.update"
-  =link_to "Cancelar", business_admin_staffer_path(@current_user, staffer), :remote=>true
+  =link_to "Cancelar", business_admin_staffer_path(@current_user, staffer), :remote=>true, :class=>"link_as_button cancel_button"

@@ -11,7 +11,7 @@
       =render :partial=>"businesses/form", :locals=>{:f=>f, :editing=>false}
       =f.input :terms_and_conditions, :as=>:boolean
       = f.submit I18n.t "activerecord.actions.business.create"
-      =link_to t("actions.cancel"), :back
+      =link_to t("actions.cancel"), :back, :class=>"link_as_button cancel_button"
   .help_float_box
     %h1
       Registar novo negócio

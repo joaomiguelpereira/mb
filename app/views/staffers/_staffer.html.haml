@@ -37,6 +37,14 @@
     %td.value
       =staffer.city
 
+
+  %tr
+    %td.label
+      =t "activerecord.attributes.user.active" 
+    %td.value
+      =boolean_to_yes_no(staffer.active)
+
+
   %tr
     %td.label
       =t "activerecord.attributes.user.created_at" 
@@ -45,4 +53,6 @@
     %tr
       %td.label
       %td.value
-        =link_to I18n.t("activerecord.actions.user.edit"), edit_business_admin_staffer_path(@current_user, staffer), :remote=>true
+        =link_to I18n.t("activerecord.actions.user.edit"), edit_business_admin_staffer_path(@current_user, staffer), :remote=>true, :class=>"link_as_button"
+        =link_to I18n.t("actions.remove"), [@current_user, staffer], :confirm=>t("activerecord.messages.staffer.remove_confirmation"), :class=>"link_as_button danger_button",  :method => :delete
+        

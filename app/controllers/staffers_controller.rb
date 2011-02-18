@@ -49,7 +49,7 @@ class StaffersController < BusinessAdminResourcesBaseController
   end
   
   def update
-    puts "-----------------update"
+   
     @staffer = Staffer.find(params[:id])
     if @staffer.update_attributes(params[:staffer])
       
@@ -65,6 +65,34 @@ class StaffersController < BusinessAdminResourcesBaseController
     else
       flash_error "flash.error.staffer.update"
       render :edit
+    end
+  end
+  
+  ##########################################
+  ###Send activation email on rquestet
+  ##########################################
+  def send_activation_email
+    @staffer = Staffer.find(params[:id])
+    if @staffer.active
+      flash_error "flash.error.staffer.send_activation_mail_active" 
+    else 
+      UserMailer.staffer_activation_email(@staffer).deliver
+      flash_success "flash.success.staffer.send_activation_mail",{}, {:email=>@staffer.email} 
+    end
+    
+  end
+
+  ###########################################
+  ####Destroy
+  ##########################################
+  def destroy
+    @staffer = Staffer.find(params[:id])
+    if @staffer.destroy
+      flash_success "flash.success.staffer.destroy", {:keep=>true}
+      redirect_to business_admin_staffers_path(@current_user)
+    else
+      flash_success "flash.error.staffer.destroy", {:keep=>true}
+      redirect_to business_admin_staffes_path(@current_user, @staffer)
     end
   end
 end

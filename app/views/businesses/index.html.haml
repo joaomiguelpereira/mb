@@ -1,4 +1,5 @@
-= title "Dashboard"
+= title "Os meus negócios"
+= more_stylesheets "forms"
 
 #full_content
   =render :partial=>"shared/business_admin/dashboard_menu"
@@ -8,6 +9,6 @@
         Ainda não tem nenhum negócio registado. Pretende registar um novo novo negócio?
         =link_to "Sim, quero registar um novo negócio.", new_business_admin_business_path(@current_user)
     -else
-      =link_to "Adicionar negócio", new_business_admin_business_path(@current_user), :class=>"action_add list_action"
+      =link_to "Adicionar negócio", new_business_admin_business_path(@current_user), :class=>"action_add link_as_button"
       =render :partial=>"list", :locals=>{:businesses=>@businesses}
     

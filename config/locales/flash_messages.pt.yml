@@ -21,6 +21,8 @@ pt:
         destroy: Não foi possível remover este negócio.
       staffer: 
         create: Não foi possível criar o colaborador
+        destroy: Não foi possível eliminar o colaborador
+        send_activation_mail_active: O colaborador já se encontra activo
       general:
         invalid_operation: Não foi possível entender este pedido 
         not_authorized: Não está autorizado a ver esta página
@@ -40,6 +42,7 @@ pt:
         destroy: O negócio foi removido.
       staffer:
         create: O colaborador foi criado com sucesso.
-        
+        destroy: O colaborador e toda a sua informação foi removida. 
+        send_activation_mail: Foi enviado um email de activação ao colaborador com o email %{email}
      
         

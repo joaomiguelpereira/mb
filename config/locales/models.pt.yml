@@ -17,6 +17,7 @@ pt:
         terms_and_conditions: Aceito os termos e condições
         keep_logged: Manter a minha sessão activa neste computador
         created_at: Data de registo
+        active: Activo?
       staffer:
         notify_on_create: Enviar agora email de activação ao colaborador?
       business:
@@ -49,6 +50,11 @@ pt:
         twitter: "Ex: http://twitter.com/clinicamorais"
         facebook: "ex: htto://facebook.com/clinicamorais"
         fax: Fax
+    messages:
+      staffer:
+        remove_confirmation: "Todos os dados deste colaborador serão permanentemente removidos. Tem a certeza que quer continuar?"
+      business:
+        remove_confirmation: "Todos os dados deste negócio serão permanentemente removidos. Tem a certeza que quer continuar?"
     actions:
       user:
         create: Criar utilizador

@@ -2,45 +2,19 @@
   %div.title
     #{@business.short_name}
     
+.context_horizontal_menu      
+  .right_menu
+    %ul
+      %li
+        =link_to "Informação", user_profile_path, :class=>(request.env['PATH_INFO'] == business_admin_business_path(@current_user, @business)) ? "selected" : ""
+      %li
+        =link_to "Alterar password", user_change_password_path, :class=>(request.env['PATH_INFO'] == user_change_password_path) ? "selected" : ""
+
+
+    
+  .left_menu
+    %ul
+      %li
+        =link_to "Voltar ao dashboard", business_dashboard_path    
   
-  %div.options
-    %span.ddm
-      %span.ddm_title
-        Opções
-      
-      %ul
-        %li
-          =link_to "Remover",[@current_user, @business], :confirm => 'Todos os dados deste negócio serão eliminados permanentemente. Tem a certeza que quer continuar e remover este negócio? ', :method => :delete
-        %li
-          =link_to "option 2",""
-  %div.options
-    %span
-      =link_to "Voltar ao dashboard", business_dashboard_path    
-
-#options
-
-  //Information
-  -if current_uri = request.env['PATH_INFO'] == business_admin_business_path(@current_user, @business)
-    %span.selected
-      Informação
-  -else
-    %span
-      =link_to "Informação", business_admin_business_path(@current_user, @business)
-  
-  //preferences
-  -if current_uri = request.env['PATH_INFO'] == user_preferences_path
-    %span.selected
-      Preferênicas
-  -else
-    %span
-      =link_to "Preferênicas", user_preferences_path
-      
-  //change passowd
-  -if current_uri = request.env['PATH_INFO'] == user_change_password_path
-    %span.selected
-      Alterar password 
-  -else
-    %span
-      =link_to "Alterar password", user_change_password_path
-
 		

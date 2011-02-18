@@ -3,28 +3,13 @@
     A minha conta
   %div.options
 
-#options
-  //personal info
-  -if current_uri = request.env['PATH_INFO'] == user_profile_path
-    %span.selected
-      Informação pessoal 
-  -else
-    %span
-      =link_to "Informação pessoal", user_profile_path
-
-  //preferences
-  -if current_uri = request.env['PATH_INFO'] == user_preferences_path
-    %span.selected
-      Preferênicas
-  -else
-    %span
-      =link_to "Preferênicas", user_preferences_path
-      
-  //change passowd
-  -if current_uri = request.env['PATH_INFO'] == user_change_password_path
-    %span.selected
-      Alterar password 
-  -else
-    %span
-      =link_to "Alterar password", user_change_password_path
-		
+.context_horizontal_menu
+  .right_menu
+    %ul
+      %li
+        =link_to "Informação pessoal", user_profile_path, :class=>(request.env['PATH_INFO'] == user_profile_path) ? "selected" : ""
+      %li
+        =link_to "Preferênicas", user_preferences_path, :class=>(request.env['PATH_INFO'] == user_preferences_path) ? "selected" : ""
+      %li
+        =link_to "Alterar password", user_change_password_path, :class=>(request.env['PATH_INFO'] == user_change_password_path) ? "selected" : ""
+        

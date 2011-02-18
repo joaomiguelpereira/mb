@@ -15,7 +15,7 @@
       =f.input :email_confirmation, :required=>true
       =f.input :notify_on_create, :as=>:boolean
       = f.submit I18n.t "activerecord.actions.staffer.create"
-      =link_to t("actions.cancel"), :back
+      =link_to t("actions.cancel"), :back, :class=>"link_as_button cancel_button"
   .help_float_box
     %h1
       Registar novo colaborador

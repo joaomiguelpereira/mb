@@ -80,11 +80,13 @@ Medibooking::Application.routes.draw do
   match "/business_admins/:business_admin_id/staffers/:id(.:format)" => "staffers#show", :via=>[:get], :as=>:business_admin_staffer
   match "/business_admins/:business_admin_id/staffers/:id/edit(.:format)" => "staffers#edit", :via=>[:get], :as=>:edit_business_admin_staffer
   match "/business_admins/:business_admin_id/staffers/:id(.:format)" => "staffers#update", :via=>[:put]
+  match "/business_admins/:business_admin_id/staffers/:id(.:format)" => "staffers#destroy", :via=>[:delete]
+  match "/business_admins/:business_admin_id/staffers/:id/send_activation_email(.:format)" => "staffers#send_activation_email", :via=>[:put], :as=>:send_activation_email
   
   
   
   resources :business_admins, :controller=>"users", :except=>[:new, :create] do
-    resources :staffers, :controller=>"users", :except=>[:new, :create, :index, :show, :edit]
+    resources :staffers, :controller=>"users", :except=>[:new, :create, :index, :show, :edit, :update, :destroy]
     resources :businesses
   end
   

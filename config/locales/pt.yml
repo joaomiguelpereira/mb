@@ -6,6 +6,7 @@
     update: Gravar
     cancel: Cancelar
     edit: Editar
+    remove: Remover
   # formatos de data e hora
   date:
     formats:

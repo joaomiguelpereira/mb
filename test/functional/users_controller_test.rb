@@ -82,7 +82,8 @@ class UsersControllerTest < ActionController::TestCase
     assert_difference('User.count') do
       post :create, :user=>user  
     end
-    assert_redirected_to new_session_path(:email=>user[:email])
+    assert_redirected_to new_session_path()
+    #assert_notice_flashed ""
     assert_success_flashed "flash.success.user.create"
     user = User.find_by_email(user[:email])
     assert_not_nil user

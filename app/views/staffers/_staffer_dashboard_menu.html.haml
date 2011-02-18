@@ -1,0 +1,46 @@
+%div.dashboard_header
+  %div.title
+    #{@staffer.full_name}
+    
+  
+  %div.options
+    %span.ddm
+      %span.ddm_title
+        Opções
+      
+      %ul
+        %li
+          =link_to "Remover",[@current_user, @staffer], :confirm => 'Todos os dados deste colaborador serão eliminados permanentemente. Tem a certeza que quer continuar e remover este negócio? ', :method => :delete
+        %li
+          =link_to "option 2",""
+  %div.options
+    %span
+      =link_to "Voltar ao dashboard", business_admin_staffers_path(@current_user)    
+
+#options
+
+  //Information
+  -if current_uri = request.env['PATH_INFO'] == business_admin_staffer_path(@current_user, @staffer)
+    %span.selected
+      Informação
+  -else
+    %span
+      =link_to "Informação", business_admin_staffer_path(@current_user, @staffer)
+  
+  //preferences
+  -if current_uri = request.env['PATH_INFO'] == user_preferences_path
+    %span.selected
+      Preferênicas
+  -else
+    %span
+      =link_to "Preferênicas", user_preferences_path
+      
+  //change passowd
+  -if current_uri = request.env['PATH_INFO'] == user_change_password_path
+    %span.selected
+      Alterar password 
+  -else
+    %span
+      =link_to "Alterar password", user_change_password_path
+
+		

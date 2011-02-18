@@ -3,46 +3,46 @@
     %td.label
       =t "activerecord.attributes.user.first_name" 
     %td.value
-      =user.first_name
+      =staffer.first_name
   %tr
     %td.label
       =t "activerecord.attributes.user.last_name" 
     %td.value
-      =user.last_name
+      =staffer.last_name
   %tr
     %td.label
       =t "activerecord.attributes.user.email" 
     %td.value
-      =user.email
+      =staffer.email
   %tr
     %td.label
       =t "activerecord.attributes.user.phone" 
     %td.value
-      =user.phone
+      =staffer.phone
 
   %tr
     %td.label
       =t "activerecord.attributes.user.address" 
     %td.value
-      =user.address
+      =staffer.address
   %tr
     %td.label
       =t "activerecord.attributes.user.postal_code" 
     %td.value
-      =user.postal_code
+      =staffer.postal_code
 
   %tr
     %td.label
       =t "activerecord.attributes.user.city" 
     %td.value
-      =user.city
+      =staffer.city
 
   %tr
     %td.label
       =t "activerecord.attributes.user.created_at" 
     %td.value
-      =l user.created_at
+      =l staffer.created_at
     %tr
       %td.label
       %td.value
-        =link_to I18n.t("activerecord.actions.user.edit"), edit_user_path(@user), :id=>"bt_edit_user"
+        =link_to I18n.t("activerecord.actions.user.edit"), edit_business_admin_staffer_path(@current_user, staffer), :remote=>true

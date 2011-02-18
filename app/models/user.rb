@@ -1,10 +1,15 @@
 class User < ActiveRecord::Base
 
   
-  attr_accessible :terms_and_conditions, :email_confirmation, :first_name, :last_name, :password, :password_confirmation
+  attr_accessible :phone, :address, :postal_code, :city, :terms_and_conditions, 
+                  :email_confirmation, :first_name, :last_name, 
+                  :password, :password_confirmation
   
   attr_accessor  :password, :email_confirmation, :password_confirmation, :terms_and_conditions, :updating_password 
   #Validations
+  validates :postal_code, :postal_code=>true
+  validates :phone, :phone=>true
+  
   
   validates :first_name, :presence=>true, 
                          :length=>{:minimum=>2, :maximum=>64}

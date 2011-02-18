@@ -9,6 +9,10 @@ pt:
         email: Email
         email_confirmation: Confirmação do email
         password: Password
+        city: Localidade
+        address: Morada
+        phone: Telefone
+        postal_code: Código Postal
         password_confirmation: Confirmação da password
         terms_and_conditions: Aceito os termos e condições
         keep_logged: Manter a minha sessão activa neste computador
@@ -30,6 +34,9 @@ pt:
         fax: Fax
         terms_and_conditions: Aceito os termos e condições
     hints:
+      generic:
+        postal-code: "Código postal no formato xxxx-xxx (Ex: 3810-074)"
+        phone: "Formato xxxxxxxxx (ex: 234112211)"
       business:
         short_name: "Identifica o seu negócio no serviço. Apenas pode ter letras, números, dígitos e _. Ex: clinica_da_cruz2021"
         full_name: "O nome completo do seu negócio. Este nome vai ser apresentado nas listagens públicas"
@@ -37,7 +44,6 @@ pt:
         email: O email que vai ser publicado nas listagens publicas.
         address: A morada do negócio. Vai ser publicada nas listagens públicas
         city: Localidade
-        postal_code: Código postal
         phone: Vai ser publicado para que possa ser contactado
         url: "ex: http://clinicsmorais.com"
         twitter: "Ex: http://twitter.com/clinicamorais"

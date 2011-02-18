@@ -11,6 +11,9 @@ class CreateUsers < ActiveRecord::Migration
       t.string :reset_password_key
       t.string :phone
       t.string :type
+      t.text :address
+      t.string :postal_code
+      t.string :city
       
       t.timestamps
     end

@@ -10,22 +10,8 @@ class SessionsControllerTest < ActionController::TestCase
     assert_nil assigns(:not_active)
   end
   
-  test "should show new with email only" do
-    get :new, :email=>"someemail@gmail.com"
-    assert_response :success
-    assert_equal "someemail@gmail.com", assigns(:email)
-    assert_nil assigns(:not_active)
-    
-  end
-  
-  test "should show new email with post registerd message" do 
-    user = Factory.create(:user, :active=>false)
-    
-    get :new, :email=>user.email
-    assert assigns(:not_active)
-    assert_equal assigns(:email), user.email
-  end
-  
+
+   
   test "should not create session for invalid info" do
     post :create, :session=>{:email=>"notvalid", :password=>"notvalid", :keep_logged=>false}
     assert_error_flashed "flash.error.session.invalid_data"

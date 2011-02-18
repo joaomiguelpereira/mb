@@ -1,0 +1,5 @@
+<%=render :partial=>"shared/flash_messages", :locals=>{:flash=>flash}%>
+
+$("#staffer_info").html("<%= escape_javascript(render :partial=>"edit", :locals=>{:staffer=>@staffer})%>");
+loading_indicator.hide();
+form_utils.focus_first_field();

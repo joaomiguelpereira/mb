@@ -25,8 +25,11 @@ class Business < ActiveRecord::Base
   
   validates :city, :presence=>true,
                    :length=>{:minimum=>2, :maximum=>120}
-  validates :postal_code, :presence=>true, 
-                   :length=>{:minimum=>8, :maximum=>120}
+  validates :postal_code, :presence=>true, :postal_code=>true
+  validates :phone, :phone=>true
+  validates :fax, :phone=>true
+  
+  
   validates :terms_and_conditions, :acceptance=>true
   validates :url, 
             :format=>/(^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$)|(^$)/ix

@@ -13,6 +13,10 @@
       =f.input :last_name
       =f.input :email
       =f.input :email_confirmation, :required=>true
+      =f.input :phone
+      =f.input :address
+      =f.input :postal_code
+      =f.input :city
       =f.input :notify_on_create, :as=>:boolean
       = f.submit I18n.t "activerecord.actions.staffer.create"
       =link_to t("actions.cancel"), :back, :class=>"link_as_button cancel_button"

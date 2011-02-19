@@ -68,6 +68,9 @@ Medibooking::Application.routes.draw do
   match "user/profile/preferences" =>"users#profile", :via=>[:get], :as=>:user_preferences
   
   resources :users
+  resources :staffer, :controller=>"users" 
+  
+  #match "user/profile/preferences" =>"users#profile", :via=>[:get], :as=>:user_preferences
   
   match "/business_admins/new(.:format)" => "business_admins#new", :via=>[:get], :as=>:new_business_admin
   match "/business_admins(.:format)" => "business_admins#create", :via=>[:post], :as=>:business_admins
@@ -82,8 +85,8 @@ Medibooking::Application.routes.draw do
   match "/business_admins/:business_admin_id/staffers/:id(.:format)" => "staffers#update", :via=>[:put]
   match "/business_admins/:business_admin_id/staffers/:id(.:format)" => "staffers#destroy", :via=>[:delete]
   match "/business_admins/:business_admin_id/staffers/:id/send_activation_email(.:format)" => "staffers#send_activation_email", :via=>[:put], :as=>:send_activation_email
-  
-  
+   
+  #macth "/user/:id/(.:format)"
   
   resources :business_admins, :controller=>"users", :except=>[:new, :create] do
     resources :staffers, :controller=>"users", :except=>[:new, :create, :index, :show, :edit, :update, :destroy]

@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class SessionsControllerTest < ActionController::TestCase
+  
   # Replace this with your real tests.
   test "should show new without email" do
     get :new
@@ -65,7 +66,24 @@ class SessionsControllerTest < ActionController::TestCase
     assert_success_flashed "flash.success.session.destroy"
   end
   
-  
+  test "should not login inactive staffer" do
+    badmin = Factory.create(:business_admin)
+    staffer = Factory.create(:staffer, :active=>false, :password=>"123456", :business_admin_id=>badmin.id)
+    post :create, :session=>{:email=>staffer.email, :password=>"123456", :keep_logged=>false}
+    assert_error_flashed "flash.error.session.inactive_user",{:email=>staffer.email}
+    assert_template :new    
+  end
+  test "should create session for sattfer" do
+    
+    badmin = Factory.create(:business_admin)
+    staffer = Factory.create(:staffer, :email=>"pleasessseeeeme@example.com", :active=>true, :password=>"123456", :business_admin_id=>badmin.id)
+    post :create, :session=>{:email=>staffer.email, :password=>"123456", :keep_logged=>false}
+    assert_success_flashed "flash.success.session.create",{:email=>staffer.email}
+    assert_equal staffer.id, session[:user_id]
+    
+    #assert_redirected_to business_dashboard_path
+    
+  end
   
   
 end

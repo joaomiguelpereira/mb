@@ -67,8 +67,14 @@ Medibooking::Application.routes.draw do
   match "user/profile/change_password" =>"users#change_password", :via=>[:get, :put], :as=>:user_change_password
   match "user/profile/preferences" =>"users#profile", :via=>[:get], :as=>:user_preferences
   
+  
+  match "staffer/dashboard/:id" =>"staffers#dashboard", :via=>[:get], :as=>:staffer_dashboard
+  
   resources :users
-  resources :staffer, :controller=>"users" 
+  resources :staffers, :controller=>"users" 
+  
+  
+  
   
   #match "user/profile/preferences" =>"users#profile", :via=>[:get], :as=>:user_preferences
   
@@ -77,19 +83,20 @@ Medibooking::Application.routes.draw do
   
   
   
-  match "/business_admins/:business_admin_id/staffers(.:format)" => "staffers#index", :via=>[:get], :as=>:business_admin_staffers
-  match "/business_admins/:business_admin_id/staffers(.:format)" => "staffers#create", :via=>[:post], :as=>:business_admin_staffers
-  match "/business_admins/:business_admin_id/staffers/new(.:format)" => "staffers#new", :via=>[:get], :as=>:new_business_admin_staffer
-  match "/business_admins/:business_admin_id/staffers/:id(.:format)" => "staffers#show", :via=>[:get], :as=>:business_admin_staffer
-  match "/business_admins/:business_admin_id/staffers/:id/edit(.:format)" => "staffers#edit", :via=>[:get], :as=>:edit_business_admin_staffer
-  match "/business_admins/:business_admin_id/staffers/:id(.:format)" => "staffers#update", :via=>[:put]
-  match "/business_admins/:business_admin_id/staffers/:id(.:format)" => "staffers#destroy", :via=>[:delete]
-  match "/business_admins/:business_admin_id/staffers/:id/send_activation_email(.:format)" => "staffers#send_activation_email", :via=>[:put], :as=>:send_activation_email
+  #match "/business_admins/:business_admin_id/staffers(.:format)" => "staffers#index", :via=>[:get], :as=>:business_admin_staffers
+  #match "/business_admins/:business_admin_id/staffers(.:format)" => "staffers#create", :via=>[:post], :as=>:business_admin_staffers
+  #match "/business_admins/:business_admin_id/staffers/new(.:format)" => "staffers#new", :via=>[:get], :as=>:new_business_admin_staffer
+  #match "/business_admins/:business_admin_id/staffers/:id(.:format)" => "staffers#show", :via=>[:get], :as=>:business_admin_staffer
+  #match "/business_admins/:business_admin_id/staffers/:id/edit(.:format)" => "staffers#edit", :via=>[:get], :as=>:edit_business_admin_staffer
+  #match "/business_admins/:business_admin_id/staffers/:id(.:format)" => "staffers#update", :via=>[:put]
+  #match "/business_admins/:business_admin_id/staffers/:id(.:format)" => "staffers#destroy", :via=>[:delete]
+  match "/business_admins/:business_admin_id/staffers/:id/send_activation_email(.:format)" => "business_admins/staffers#send_activation_email", :via=>[:put], :as=>:send_activation_email
    
   #macth "/user/:id/(.:format)"
   
   resources :business_admins, :controller=>"users", :except=>[:new, :create] do
-    resources :staffers, :controller=>"users", :except=>[:new, :create, :index, :show, :edit, :update, :destroy]
+    #resources :staffers, :controller=>"users", :except=>[:new, :create, :index, :show, :edit, :update, :destroy]
+    resources :staffers, :controller=>"business_admins/staffers"
     resources :businesses
   end
   

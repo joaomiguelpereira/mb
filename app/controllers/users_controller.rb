@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   
   before_filter :ensure_authenticated, :except=>[:new, :create, :activate, :reset_password, :create_new_password]
-  
+  before_filter :has_access?, :except=>[:change_password, :profile, :new, :create, :activate, :reset_password, :create_new_password]
   def profile
     @user = @current_user
   end
@@ -10,13 +10,12 @@ class UsersController < ApplicationController
   ####Edit User
   ##############################################
   def edit
-    raise WebAppException::AuthorizationError if params[:id].to_s != @current_user.id.to_s #in case of a super admin
+    #raise WebAppException::AuthorizationError if params[:id].to_s != @current_user.id.to_s #in case of a super admin
     @user = User.find(params[:id])
   end
   
   def update
-    
-    raise WebAppException::AuthorizationError if params[:id].to_s != @current_user.id.to_s #in case of a super admin
+    #raise WebAppException::AuthorizationError if params[:id].to_s != @current_user.id.to_s #in case of a super admin
     @user = User.find(params[:id])  
     ##This method is handling both the update of BusinessAdmins and Users....
     if @user.update_attributes(params[@user.class.name.underscore])
@@ -164,6 +163,10 @@ class UsersController < ApplicationController
   
   ##EXCEPTIONS FOR THIS CONTROLLER
   private
+  def has_access?
+    raise WebAppException::AuthorizationError if params[:id].to_s != @current_user.id.to_s #in case of a super admin
+  end
+  
   def update_cookies_for_new_password(user)
     if cookies.signed[:remember_me]   
       cookies.permanent.signed[:remember_me] = [user.id, user.password_salt]

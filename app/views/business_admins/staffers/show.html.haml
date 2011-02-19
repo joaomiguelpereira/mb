@@ -3,10 +3,10 @@
 = more_javascripts_files "businesses_functions"
 
 #full_content
-  =render :partial=>"staffers/staffer_dashboard_menu", :locals=>{:staffer=>@staffer}
+  =render :partial=>"staffer_dashboard_menu", :locals=>{:staffer=>@staffer}
   #content
     #staffer_info.has_help_float_box
-      =render :partial=>"staffers/staffer", :object=>@staffer
+      =render :partial=>"staffer", :object=>@staffer
     -if !@staffer.active
       .help_float_box
         %h1

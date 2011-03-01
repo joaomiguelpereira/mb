@@ -1,4 +1,4 @@
-class BusinessAdmins::StaffersController < BusinessAdminResourcesBaseController
+class BusinessAccounts::StaffersController < BusinessAdminResourcesBaseController
   before_filter :ensure_authenticated,  :ensure_has_access?, :ensure_is_business_admin
    
   
@@ -22,7 +22,7 @@ class BusinessAdmins::StaffersController < BusinessAdminResourcesBaseController
   
   def create
     @staffer = Staffer.new(params[:staffer])
-    @staffer.business_admin_id = params[:business_admin_id]
+    @staffer.business_account_id = params[:business_account_id]
     #has to create a default password
     @staffer.password = StringUtils.generate_random_string(5)
     @staffer.need_new_password = true
@@ -34,7 +34,7 @@ class BusinessAdmins::StaffersController < BusinessAdminResourcesBaseController
     
     if @staffer.save
       flash_success "flash.success.staffer.create", {:keep=>true}
-      redirect_to business_admin_staffers_path(params[:business_admin_id])
+      redirect_to business_account_staffers_path(params[:business_account_id])
     else
       flash_error "flash.error.staffer.create"
       render :new
@@ -90,10 +90,10 @@ class BusinessAdmins::StaffersController < BusinessAdminResourcesBaseController
     @staffer = Staffer.find(params[:id])
     if @staffer.destroy
       flash_success "flash.success.staffer.destroy", {:keep=>true}
-      redirect_to business_admin_staffers_path(@current_user)
+      redirect_to business_account_staffers_path(@current_user.business_account)
     else
       flash_success "flash.error.staffer.destroy", {:keep=>true}
-      redirect_to business_admin_staffes_path(@current_user, @staffer)
+      redirect_to business_account_staffes_path(@current_user.business_account, @staffer)
     end
   end
 end

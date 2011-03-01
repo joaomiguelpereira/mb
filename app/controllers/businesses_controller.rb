@@ -6,7 +6,7 @@ class BusinessesController < BusinessAdminResourcesBaseController
   
   def index
     #@businesses = BusinessAdmin.find(params[:business_admin_id]).businesses
-    @businesses = @current_user.businesses
+    @business = @current_user.business
   end
   
   ##################################
@@ -46,7 +46,7 @@ class BusinessesController < BusinessAdminResourcesBaseController
         format.html {
           
           flash_success "flash.success.business.update", {:keep=>true}
-          redirect_to business_admin_business_path(@current_user, @business)
+          redirect_to business_account_business_path(@current_user.business_account, @business)
         }
         format.js {
           flash_success "flash.success.business.update"
@@ -82,7 +82,8 @@ class BusinessesController < BusinessAdminResourcesBaseController
   def create
     
     @business = Business.new(params[:business])
-    @business.business_admin_id = @current_user.id
+    @business.business_account_id = params[:business_account_id]
+    
     if @business.save
       flash_success "flash.success.business.create", {:keep=>true}
       redirect_to business_dashboard_path

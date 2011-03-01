@@ -1,14 +1,6 @@
 class SessionsController < ApplicationController
   
   def new
-    
-    #@email = params[:email] if params[:email]
-    #if @email 
-    #  user = User.find_by_email(@email)
-    #  if user && !user.active
-    #    @not_active = true
-    #  end
-    #end
   end
   
   def destroy
@@ -46,6 +38,7 @@ class SessionsController < ApplicationController
         create_session_for(user,keep_logged)
         flash_success "flash.success.session.create", {:keep=>true}, {:email=>user.email}
         redirect_to root_path if( user.user? || user.staffer?)
+        
         redirect_to business_dashboard_path if user.business_admin?
       end
     end

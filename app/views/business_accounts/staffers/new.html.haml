@@ -7,7 +7,7 @@
   %h2
     Todos os campos marcados com * são obrigatórios
   #form_container{:style=>"width:550px"}
-    =simple_form_for [@current_user, @staffer] do |f|
+    =simple_form_for [@current_user.business_account, @staffer] do |f|
       /= f.error_messages
       =f.input :first_name
       =f.input :last_name

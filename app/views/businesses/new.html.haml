@@ -7,11 +7,11 @@
   %h1 Registar novo negócio
   %h2 Todos os campos marcados com * são obrigatórios
   #form_container
-    =simple_form_for [@current_user, @business] do |f|
+    =simple_form_for [@current_user.business_account, @business] do |f|
       =render :partial=>"businesses/form", :locals=>{:f=>f, :editing=>false}
       =f.input :terms_and_conditions, :as=>:boolean
       = f.submit I18n.t "activerecord.actions.business.create"
-      =link_to t("actions.cancel"), :back, :class=>"link_as_button cancel_button"
+      =link_to t("actions.cancel"), business_dashboard_path, :class=>"link_as_button cancel_button"
   .help_float_box
     %h1
       Registar novo negócio

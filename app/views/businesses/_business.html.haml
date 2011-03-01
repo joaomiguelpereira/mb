@@ -81,5 +81,5 @@
   %tr
     %td.label
     %td.value
-      =link_to I18n.t("actions.edit"), edit_business_admin_business_path(@current_user, business), :id=>"bt_edit_business", :class=>"link_as_button"
-      =link_to I18n.t("actions.remove"), [@current_user, business], :confirm=>t("activerecord.messages.business.remove_confirmation"), :class=>"link_as_button danger_button",  :method => :delete
+      =link_to I18n.t("actions.edit"), edit_business_account_business_path(@current_user.business_account, @current_user.business_account.business), :id=>"bt_edit_business", :class=>"link_as_button"
+      =link_to I18n.t("actions.remove"), [@current_user.business_account, @current_user.business_account.business], :confirm=>t("activerecord.messages.business.remove_confirmation"), :class=>"link_as_button danger_button",  :method => :delete

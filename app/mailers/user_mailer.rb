@@ -19,7 +19,6 @@ class UserMailer < ActionMailer::Base
   def staffer_activation_email(user)
     raise RuntimeError if user.class.name != Staffer.name
     @user = user
-    @business_admin = user.business_admin
     @url = activate_user_url(:activation_key=>user.activation_key)
     mail(:to=>user.email, :subject=>I18n.t("mailer.staffer.activation.subject") )
   end

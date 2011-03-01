@@ -1,4 +1,8 @@
 class BusinessAdmin < User
-  has_many :businesses, :dependent => :destroy
-  has_many :staffers, :dependent=> :destroy
+  belongs_to :business_account
+  
+  
+  def business
+    self.business_account.business
+  end
 end

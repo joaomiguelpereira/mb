@@ -4,13 +4,13 @@
 
 
 #full_content
-  =render :partial=>"shared/business_admin/dashboard_menu"
+  =render :partial=>"business_accounts/dashboard_menu"
   #content
     -if @staffers.empty?
       %strong
         Ainda não tem nenhum colaborador registado. Pretende registar um novo novo colaborador?
-        =link_to "Sim, quero registar um novo colaborador.", new_business_admin_staffer_path(@current_user)
+        =link_to "Sim, quero registar um novo colaborador.", new_business_account_staffer_path(@current_user.business_account)
     -else
-      =link_to "Adicionar colaborador", new_business_admin_staffer_path(@current_user), :class=>"action_add link_as_button"
+      =link_to "Adicionar colaborador", new_business_account_staffer_path(@current_user.business_account), :class=>"action_add link_as_button"
       =render :partial=>"list", :locals=>{:staffers=>@staffers}
         

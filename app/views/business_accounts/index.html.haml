@@ -1,0 +1,15 @@
+= title "Dashboard"
+= more_stylesheets "forms"
+
+#full_content
+  =render :partial=>"dashboard_menu"
+  #content
+    
+    -if @business_account.business.nil?
+      %strong
+        Ainda não tem nenhum negócio registado. Pretende registar um novo novo negócio?
+        =link_to "Sim, quero registar um novo negócio.", new_business_account_business_path(@business_account)
+    -else
+      =@business_account.business.full_name
+      
+    

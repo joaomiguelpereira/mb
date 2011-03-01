@@ -7,7 +7,11 @@ Factory.define :user do |f|
   f.active true
   f.activation_key nil
   f.reset_password_key nil
- 
+  
+end
+Factory.define :business_account do |f|
+  f.owner nil
+  
 end
 
 Factory.define :business do |f|
@@ -23,7 +27,7 @@ Factory.define :business do |f|
   f.twitter "http://twitter.com/test"
   f.city "Aveiro"
   f.postal_code "3452-202"
-  f.business_admin_id nil
+  #f.business_account_id nil
 end
 
 Factory.define :business_admin do |f|
@@ -32,6 +36,8 @@ Factory.define :business_admin do |f|
   f.first_name "Jonh"
   f.last_name "Doe"
   f.active true
+  f.business_account_id nil
+  #f.business_id nil
 end
 
 Factory.define :staffer do |f|
@@ -41,7 +47,7 @@ Factory.define :staffer do |f|
   f.last_name "Doe"
   f.active true
   f.notify_on_create false
-  f.business_admin_id nil
+  f.business_account_id nil
   f.need_new_password false
 end
 #

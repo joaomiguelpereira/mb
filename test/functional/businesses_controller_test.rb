@@ -1,71 +1,62 @@
 require 'test_helper'
 
 class BusinessesControllerTest < ActionController::TestCase
-  
-  
-  test "should not get dashboard not authenticated user" do
+  setup do
+    @badmin = Factory.create(:business_admin)
+    @baccount = Factory.create(:business_account, :owner=>@badmin)
+    @badmin.business_account = @baccount
+    @badmin.save
     
-    assert_raise(WebAppException::SessionRequiredError) do
-      get :index,{},{}
-    end
+    @otherbadmin = Factory.create(:business_admin)
+    @otherbaccount = Factory.create(:business_account, :owner=>@otherbadmin)
+    @otherbadmin.business_account = @otherbaccount
+    @otherbadmin.save
     
-  end
-  
-  test "should not get dashboard not USER role" do
-    user = Factory.create(:user)
-    assert_raise(WebAppException::AuthorizationError) do
-      get :index,{},authenticated_user(user)
-    end
   end
   
   test "should get new page" do
-    user =  Factory.create(:business_admin)
-    get :new,{:business_admin_id=>user.id},authenticated_user(user)
+    get :new,{:business_account_id=>@badmin.business_account},authenticated_user(@badmin)
     assert_template :new
     assert_not_nil assigns(:business)
   end
-  test "should not show business fo other than owner" do
-     owner = Factory.create(:business_admin)
-     business = Factory.create(:business, :business_admin_id=>owner.id)
-     other = Factory.create(:business_admin)
-     
+  
+  test "should not show business fo other than an admin" do
+
+     business = Factory.create(:business, :business_account_id=>@badmin.business_account.id)
      assert_raise(WebAppException::AuthorizationError) do
-       get :show, {:business_admin_id=>owner.id, :id=>business.id}, authenticated_user(other)
+       get :show, {:business_account_id=>@badmin.business_account.id, :id=>business.id}, authenticated_user(@otherbadmin)
      end
   end
   
   test "should create business" do
-    user = Factory.create(:business_admin)
-    valid_business = Factory.attributes_for(:business, :business_admin_id=>user.id)
+
+    
+    valid_business = Factory.attributes_for(:business)
     
     assert_difference ('Business.count') do
-      post :create, {:business_admin_id=>user.id, :business=>valid_business}, authenticated_user(user)  
+      post :create, {:business_account_id=>@badmin.business_account.id, :business=>valid_business}, authenticated_user(@badmin)  
     end
     assert_success_flashed "flash.success.business.create"
     assert_redirected_to business_dashboard_path
     #User must have now a business
-    updated_user = User.find(user)
-    assert_equal 1, updated_user.businesses.count 
+    #updated_user = User.find(user)
+    #assert_equal 1, updated_user.businesses.count 
   end
   
   test "should not get edit form for not business owner" do
-     owner = Factory.create(:business_admin)
-     business = Factory.create(:business, :business_admin_id=>owner.id)
      
-     
-     other = Factory.create(:business_admin)
-     
+     business = Factory.create(:business, :business_account_id=>@badmin.business_account.id)   
      assert_raise(WebAppException::AuthorizationError) do
-       get :edit, {:business_admin_id=>owner.id, :id=>business.id}, authenticated_user(other)
+       get :edit, {:business_account_id=>@badmin.business_account.id, :id=>business.id}, authenticated_user(@otherbadmin)
      end
   end
   
   
   test "should not update short name" do
-    owner = Factory.create(:business_admin)
-    business = Factory.create(:business, :business_admin_id=>owner.id)
+    
+    business = Factory.create(:business, :business_account_id=>@badmin.business_account.id)
     old = business.short_name
-    put :update, {:business_admin_id=>owner.id, :business=>{:short_name=>"somenewname"},:id=>business.id}, authenticated_user(owner)
+    put :update, {:business_account_id=>@badmin.business_account.id, :business=>{:short_name=>"somenewname"},:id=>business.id}, authenticated_user(@badmin)
     assert_success_flashed "flash.success.business.update"
     updated_business = Business.find(business.id)
     assert_equal old, updated_business.short_name

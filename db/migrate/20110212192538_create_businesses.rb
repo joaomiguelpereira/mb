@@ -13,9 +13,10 @@ class CreateBusinesses < ActiveRecord::Migration
       t.string :url
       t.string :facebook
       t.string :twitter
-      t.integer :business_admin_id
       
-      t.boolean :publised
+      t.integer :business_account_id
+
+      t.boolean :published
       t.timestamps
     end
   end

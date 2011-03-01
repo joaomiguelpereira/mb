@@ -347,7 +347,9 @@ class UsersControllerTest < ActionController::TestCase
 
    test "should ask new password after activation" do
       badmin = Factory.create(:business_admin)
-      staffer = Factory.create(:staffer, :business_admin_id=>badmin.id, :active=>false, :need_new_password=>true)
+      #create business_account
+      baccount = Factory.create(:business_account, :owner=>badmin)
+      staffer = Factory.create(:staffer, :business_account=>baccount, :active=>false, :need_new_password=>true)
       assert_not_nil staffer.activation_key
       
       get :activate, :activation_key=>staffer.activation_key

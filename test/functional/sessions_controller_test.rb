@@ -2,6 +2,14 @@ require 'test_helper'
 
 class SessionsControllerTest < ActionController::TestCase
   
+  
+  setup do
+    @badmin = Factory.create(:business_admin)
+    @baccount = Factory.create(:business_account, :owner=>@badmin)
+    @badmin.business_account = @baccount
+    @badmin.save
+        
+  end
   # Replace this with your real tests.
   test "should show new without email" do
     get :new
@@ -68,7 +76,7 @@ class SessionsControllerTest < ActionController::TestCase
   
   test "should not login inactive staffer" do
     badmin = Factory.create(:business_admin)
-    staffer = Factory.create(:staffer, :active=>false, :password=>"123456", :business_admin_id=>badmin.id)
+    staffer = Factory.create(:staffer, :active=>false, :password=>"123456", :business_account_id=>@badmin.business_account.id)
     post :create, :session=>{:email=>staffer.email, :password=>"123456", :keep_logged=>false}
     assert_error_flashed "flash.error.session.inactive_user",{:email=>staffer.email}
     assert_template :new    
@@ -76,7 +84,8 @@ class SessionsControllerTest < ActionController::TestCase
   test "should create session for sattfer" do
     
     badmin = Factory.create(:business_admin)
-    staffer = Factory.create(:staffer, :email=>"pleasessseeeeme@example.com", :active=>true, :password=>"123456", :business_admin_id=>badmin.id)
+    
+    staffer = Factory.create(:staffer, :email=>"pleasessseeeeme@example.com", :active=>true, :password=>"123456", :business_account_id=>@badmin.business_account.id)
     post :create, :session=>{:email=>staffer.email, :password=>"123456", :keep_logged=>false}
     assert_success_flashed "flash.success.session.create",{:email=>staffer.email}
     assert_equal staffer.id, session[:user_id]

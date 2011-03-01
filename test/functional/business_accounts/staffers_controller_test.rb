@@ -1,18 +1,22 @@
 require 'test_helper'
 
-class BusinessAdmins::StaffersControllerTest < ActionController::TestCase
+class BusinessAccounts::StaffersControllerTest < ActionController::TestCase
   
   setup do
     @badmin = Factory.create(:business_admin)  
     @other_badmin = Factory.create(:business_admin)
-    @controller = BusinessAdmins::StaffersController.new
+    @controller = BusinessAccounts::StaffersController.new
+    @baccount = Factory.create(:business_account, :owner=>@badmin)
+    @badmin.business_account = @baccount
+    @badmin.save!
+  
   end
   ###################################################
   ### Basic authentication and authorization tests
   ###################################################
   test "should not get staffer list page for not authenticated user" do
      assert_raise(WebAppException::SessionRequiredError) do 
-      get :index , {:business_admin_id=>12}
+      get :index , {:business_account_id=>12}
     end
   end
   
@@ -22,13 +26,13 @@ class BusinessAdmins::StaffersControllerTest < ActionController::TestCase
     #fake_admin = Factory.create(:business_admin)
     
     assert_raise (WebAppException::AuthorizationError) do
-      get :index, {:business_admin_id=>@badmin.id}, authenticated_user(@other_badmin)
+      get :index, {:business_account_id=>@badmin.business_account.id}, authenticated_user(@other_badmin)
     end
   end
   
   test "should not get new staffer page for not wuthenticated user" do
     assert_raise(WebAppException::SessionRequiredError) do 
-      get :new , {:business_admin_id=>12}
+      get :new , {:business_account_id=>12}
     end
   end
   
@@ -37,7 +41,7 @@ class BusinessAdmins::StaffersControllerTest < ActionController::TestCase
     #fake_admin = Factory.create(:business_admin)
     
     assert_raise (WebAppException::AuthorizationError) do
-      get :new, {:business_admin_id=>@badmin.id}, authenticated_user(@other_badmin)
+      get :new, {:business_account_id=>@badmin.business_account.id}, authenticated_user(@other_badmin)
     end
   end
   
@@ -50,20 +54,20 @@ class BusinessAdmins::StaffersControllerTest < ActionController::TestCase
     
     staffer = Factory.attributes_for(:staffer)
     assert_raise( WebAppException::SessionRequiredError) do
-      post :create, {:business_admin_id=>@badmin.id, :staffer=>staffer}, {}
+      post :create, {:business_account_id=>@badmin.business_account.id, :staffer=>staffer}, {}
     end
   end
   
   test "should not create a staffer for other business admin" do
     staffer = Factory.attributes_for(:staffer)
     assert_raise( WebAppException::AuthorizationError) do
-      post :create, {:business_admin_id=>@badmin.id, :staffer=>staffer}, authenticated_user(@other_badmin)
+      post :create, {:business_account_id=>@badmin.business_account.id, :staffer=>staffer}, authenticated_user(@other_badmin)
     end
   end
   
   test "should not create a invalid staffer" do
     staffer = Factory.attributes_for(:staffer, :email=>"", :password=>"", :active=>false)
-    post :create, {:business_admin_id=>@badmin.id, :staffer=>staffer}, authenticated_user(@badmin)
+    post :create, {:business_account_id=>@badmin.business_account.id, :staffer=>staffer}, authenticated_user(@badmin)
     assert_error_flashed "flash.error.staffer.create"
     assert_template :new
   end
@@ -72,7 +76,7 @@ class BusinessAdmins::StaffersControllerTest < ActionController::TestCase
     email_sents = ActionMailer::Base.deliveries.size
     
     staffer = Factory.attributes_for(:staffer, :email=>"justfindme@mail.com", :password=>"", :active=>false, :notify_on_create=>false)
-    post :create, {:business_admin_id=>@badmin.id, :staffer=>staffer}, authenticated_user(@badmin)
+    post :create, {:business_account_id=>@badmin.business_account.id, :staffer=>staffer}, authenticated_user(@badmin)
     assert_success_flashed "flash.success.staffer.create"
     assert_equal email_sents, ActionMailer::Base.deliveries.size, "should have sent no email"
     #get the saved staffer
@@ -88,7 +92,7 @@ class BusinessAdmins::StaffersControllerTest < ActionController::TestCase
     email_sents = ActionMailer::Base.deliveries.size
     
     staffer = Factory.attributes_for(:staffer, :email=>"otherstaff@mail.com", :password=>"", :active=>false, :notify_on_create=>true)
-    post :create, {:business_admin_id=>@badmin.id, :staffer=>staffer}, authenticated_user(@badmin)
+    post :create, {:business_account_id=>@badmin.business_account.id, :staffer=>staffer}, authenticated_user(@badmin)
     assert_success_flashed "flash.success.staffer.create"
     assert_equal email_sents+1, ActionMailer::Base.deliveries.size, "should have sent  email"
     #get the saved staffer
@@ -119,36 +123,36 @@ class BusinessAdmins::StaffersControllerTest < ActionController::TestCase
     ####Basic delete tests
     #####################################
   test "should not delete not authenticated user" do
-    staffer = Factory.create(:staffer, :business_admin_id=>@badmin.id)
+    staffer = Factory.create(:staffer, :business_account=>@badmin.business_account)
     assert_raise( WebAppException::SessionRequiredError) do
-      delete :destroy, {:business_admin_id=>@badmin.id, :id=>staffer.id}, {}
+      delete :destroy, {:business_account_id=>@badmin.business_account.id, :id=>staffer.id}, {}
     end
   end
   
   test "should not delete staffer for other badmin" do
-    staffer = Factory.create(:staffer, :business_admin_id=>@badmin.id)
+    staffer = Factory.create(:staffer, :business_account=>@badmin.business_account)
     assert_raise (WebAppException::AuthorizationError) do
-      delete :destroy, {:business_admin_id=>@badmin.id, :id=>staffer.id}, authenticated_user(@other_badmin)
+      delete :destroy, {:business_account_id=>@badmin.business_account.id, :id=>staffer.id}, authenticated_user(@other_badmin)
     end
   end
   
   test "should delete staffer" do
-    staffer = Factory.create(:staffer, :business_admin_id=>@badmin.id)
-    delete :destroy, {:business_admin_id=>@badmin.id, :id=>staffer.id}, authenticated_user(@badmin)
+    staffer = Factory.create(:staffer, :business_account=>@badmin.business_account)
+    delete :destroy, {:business_account_id=>@badmin.business_account.id, :id=>staffer.id}, authenticated_user(@badmin)
     assert_success_flashed "flash.success.staffer.destroy"
-    assert_redirected_to business_admin_staffers_path(@badmin)
+    assert_redirected_to business_account_staffers_path(@badmin.business_account)
   end
   
   test "dont send activation email to active user" do
-    staffer = Factory.create(:staffer, :business_admin_id=>@badmin.id, :active=>true)
-    put :send_activation_email, {:business_admin_id=>@badmin.id, :id=>staffer.id, :format=>:js}, authenticated_user(@badmin)
+    staffer = Factory.create(:staffer, :business_account=>@badmin.business_account, :active=>true)
+    put :send_activation_email, {:business_account_id=>@badmin.business_account.id, :id=>staffer.id, :format=>:js}, authenticated_user(@badmin)
     assert_error_flashed "flash.error.staffer.send_activation_mail_active"  
   end
   
   test "send activation email to inactive user" do
     email_sents = ActionMailer::Base.deliveries.size
-    staffer = Factory.create(:staffer, :business_admin_id=>@badmin.id, :active=>false, :activation_key=>"1234", :email=>"some@example.com")
-    put :send_activation_email, {:business_admin_id=>@badmin.id, :id=>staffer.id, :format=>:js}, authenticated_user(@badmin)
+    staffer = Factory.create(:staffer, :business_account=>@baccount, :active=>false, :activation_key=>"1234", :email=>"some@example.com")
+    put :send_activation_email, {:business_account_id=>@badmin.business_account.id, :id=>staffer.id, :format=>:js}, authenticated_user(@badmin)
     assert_success_flashed "flash.success.staffer.send_activation_mail", {:email=>staffer.email}
     
     assert_equal email_sents+1, ActionMailer::Base.deliveries.size, "should have sent  email"

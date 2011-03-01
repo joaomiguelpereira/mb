@@ -10,7 +10,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110216151113) do
+ActiveRecord::Schema.define(:version => 20110228154423) do
+
+  create_table "business_accounts", :force => true do |t|
+    t.integer  "created_by_business_admin_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "businesses", :force => true do |t|
     t.string   "short_name"
@@ -25,8 +31,8 @@ ActiveRecord::Schema.define(:version => 20110216151113) do
     t.string   "url"
     t.string   "facebook"
     t.string   "twitter"
-    t.integer  "business_admin_id"
-    t.boolean  "publised"
+    t.integer  "business_account_id"
+    t.boolean  "published"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -37,7 +43,7 @@ ActiveRecord::Schema.define(:version => 20110216151113) do
     t.string   "password_salt"
     t.string   "first_name"
     t.string   "last_name"
-    t.boolean  "active",             :default => false
+    t.boolean  "active",              :default => false
     t.string   "activation_key"
     t.string   "reset_password_key"
     t.string   "phone"
@@ -47,8 +53,8 @@ ActiveRecord::Schema.define(:version => 20110216151113) do
     t.string   "city"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "business_admin_id"
-    t.boolean  "need_new_password",  :default => false
+    t.integer  "business_account_id"
+    t.boolean  "need_new_password",   :default => false
   end
 
 end

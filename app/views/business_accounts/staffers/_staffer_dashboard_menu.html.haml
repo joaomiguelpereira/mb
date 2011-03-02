@@ -6,10 +6,10 @@
   .right_menu
     %ul
       %li
-        =link_to "Informação", business_admin_staffer_path(@current_user, @staffer), :class=>(request.env['PATH_INFO'] == business_admin_staffer_path(@current_user, @staffer)) ? "selected" : ""
+        =link_to "Informação", business_account_staffer_path(@current_user.business_account, @staffer), :class=>(request.env['PATH_INFO'] == business_account_staffer_path(@current_user.business_account, @staffer)) ? "selected" : ""
       
   .left_menu
     %ul
       %li
-        =link_to "Voltar ao dashboard", business_admin_staffers_path(@current_user)    
+        =link_to "Voltar ao dashboard", business_account_staffers_path(@current_user.business_account)    
   

@@ -14,6 +14,6 @@
     -class_name = (i==staffers.size ? "last_row" : "middle_row")
   
     %tr{:class=>class_name}
-      %td=link_to staffer.full_name, business_admin_staffer_path(@current_user, staffer)
+      %td=link_to staffer.full_name, business_account_staffer_path(@current_user.business_account, staffer)
       %td=staffer.email
       %td.last_cell=boolean_to_yes_no(staffer.active)

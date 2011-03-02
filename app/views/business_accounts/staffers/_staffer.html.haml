@@ -53,6 +53,6 @@
     %tr
       %td.label
       %td.value
-        =link_to I18n.t("activerecord.actions.user.edit"), edit_business_admin_staffer_path(@current_user, staffer), :remote=>true, :class=>"link_as_button"
-        =link_to I18n.t("actions.remove"), [@current_user, staffer], :confirm=>t("activerecord.messages.staffer.remove_confirmation"), :class=>"link_as_button danger_button",  :method => :delete
+        =link_to I18n.t("activerecord.actions.user.edit"), edit_business_account_staffer_path(@current_user.business_account, staffer), :remote=>true, :class=>"link_as_button"
+        =link_to I18n.t("actions.remove"), [@current_user.business_account, staffer], :confirm=>t("activerecord.messages.staffer.remove_confirmation"), :class=>"link_as_button danger_button",  :method => :delete
         

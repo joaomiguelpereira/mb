@@ -1,4 +1,4 @@
-=simple_form_for [@current_user, staffer], :remote=>true do |f|
+=simple_form_for [@current_user.business_account, staffer], :remote=>true do |f|
   =f.input :first_name
   =f.input :last_name
   =f.input :email
@@ -8,4 +8,4 @@
   =f.input :city
   
   = f.submit t "actions.update"
-  =link_to "Cancelar", business_admin_staffer_path(@current_user, staffer), :remote=>true, :class=>"link_as_button cancel_button"
+  =link_to "Cancelar", business_account_staffer_path(@current_user.business_account, staffer), :remote=>true, :class=>"link_as_button cancel_button"

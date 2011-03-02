@@ -7,7 +7,7 @@ class BusinessAccounts::StaffersController < BusinessAdminResourcesBaseControlle
   ####List all staffers
   #########################################
   def index 
-    @staffers = BusinessAdmin.find(params[:business_admin_id]).staffers
+    @staffers = BusinessAccount.find(params[:business_account_id]).staffers
   end
   
   def show

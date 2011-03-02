@@ -11,7 +11,7 @@
         =link_to "Dashboard", business_dashboard_path, :class=>(request.env['PATH_INFO'] == business_dashboard_path) ? "selected" : ""
       -if !@current_user.business.nil?
         %li
-          =link_to "Colaboradores", ""
+          =link_to "Colaboradores", business_account_staffers_path(@current_user.business_account), :class=>(request.env['PATH_INFO'] ==  business_account_staffers_path(@current_user.business_account) ) ? "selected" : ""
       -if !@current_user.business.nil?
         %li
           =link_to "Informação da conta", business_account_business_path(@current_user.business_account,@current_user.business), :class=>(request.env['PATH_INFO'] ==  business_account_business_path(@current_user.business_account,@current_user.business_account.business) ) ? "selected" : ""

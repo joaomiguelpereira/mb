@@ -37,6 +37,7 @@ Factory.define :business_admin do |f|
   f.last_name "Doe"
   f.active true
   f.business_account_id nil
+  f.notify_on_create false
   #f.business_id nil
 end
 

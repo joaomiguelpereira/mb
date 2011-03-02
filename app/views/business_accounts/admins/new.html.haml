@@ -1,0 +1,30 @@
+= title "Novo administrador"
+= more_stylesheets "forms"
+
+
+#form_wrapper
+  %h1 Registar novo administrador
+  %h2
+    Todos os campos marcados com * são obrigatórios
+  #form_container{:style=>"width:550px"}
+    =simple_form_for @admin, :url=>business_account_admins_path(@current_user.business_account) do |f|
+      /= f.error_messages
+      =f.input :first_name
+      =f.input :last_name
+      =f.input :email
+      =f.input :email_confirmation, :required=>true
+      =f.input :phone
+      =f.input :address
+      =f.input :postal_code
+      =f.input :city
+      =f.input :notify_on_create, :as=>:boolean
+      = f.submit I18n.t "activerecord.actions.admin.create"
+      =link_to t("actions.cancel"), :back, :class=>"link_as_button cancel_button"
+  .help_float_box
+    %h1
+      Registar novo administrador
+    %p
+      Introduza a informação relativa ao novo administrador e assegure-se que o email que fornece é o correcto.
+    %p  
+      Vamos criar uma nova de administrador e enviar um email para que o novo administrador active a conta
+      e crie uma nova password.

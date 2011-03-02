@@ -95,6 +95,8 @@ Medibooking::Application.routes.draw do
   resources :business_accounts do
     resources :businesses, :except=>[:index]
     resources :staffers, :controller=>"business_accounts/staffers"
+    resources :admins, :controller=>"business_accounts/admins"
+    
   end
   
   resources :sessions, :only=>[:new, :create]

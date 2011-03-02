@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110228154423) do
+ActiveRecord::Schema.define(:version => 20110302173526) do
 
   create_table "business_accounts", :force => true do |t|
     t.integer  "created_by_business_admin_id"
@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(:version => 20110228154423) do
     t.datetime "updated_at"
     t.integer  "business_account_id"
     t.boolean  "need_new_password",   :default => false
+    t.integer  "created_by"
   end
 
 end

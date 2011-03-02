@@ -1,0 +1,2 @@
+module BusinessAccounts::AdminsHelper
+end

@@ -3,9 +3,9 @@ class User < ActiveRecord::Base
   
   attr_accessible :phone, :address, :postal_code, :city, :terms_and_conditions, 
                   :email_confirmation, :first_name, :last_name, 
-                  :password, :password_confirmation
+                  :password, :password_confirmation, :notify_on_create
   
-  attr_accessor  :password, :email_confirmation, :password_confirmation, :terms_and_conditions, :updating_password 
+  attr_accessor :notify_on_create, :password, :email_confirmation, :password_confirmation, :terms_and_conditions, :updating_password 
   #Validations
   validates :postal_code, :postal_code=>true
   validates :phone, :phone=>true

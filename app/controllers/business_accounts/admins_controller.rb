@@ -4,10 +4,12 @@ class BusinessAccounts::AdminsController < BusinessAdminResourcesBaseController
 
 
   def index
-    @admins = BusinessAccounts.find(params[:business_account_id]).business_admins
+    @admins = BusinessAccount.find(params[:business_account_id]).business_admins
   end
   
-  
+  def show
+    @admin = BusinessAdmin.find(params[:id])
+  end
   ###########################################
   #####Create staffer
   ############################################
@@ -17,7 +19,7 @@ class BusinessAccounts::AdminsController < BusinessAdminResourcesBaseController
 
   
   def create
-    @admin = BusinessAdmin.new(params[:admin])
+    @admin = BusinessAdmin.new(params[:business_admin])
     @admin.business_account_id = params[:business_account_id]
     #has to create a default password
     @admin.password = StringUtils.generate_random_string(5)
@@ -35,6 +37,20 @@ class BusinessAccounts::AdminsController < BusinessAdminResourcesBaseController
     else
       flash_error "flash.error.admin.create"
       render :new
+    end
+    
+  end
+  
+  ##########################################
+  ###Send activation email on rquestet
+  ##########################################
+  def send_activation_email
+    @admin = BusinessAdmin.find(params[:id])
+    if @admin.active
+      flash_error "flash.error.admin.send_activation_mail_active" 
+    else 
+      UserMailer.admin_activation_email(@admin).deliver
+      flash_success "flash.success.admin.send_activation_mail",{}, {:email=>@admin.email} 
     end
     
   end

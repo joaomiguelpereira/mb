@@ -1,0 +1,18 @@
+%table.data_table{:border=>"0px", :cellspacing=>"0px"}
+  %thead
+    %tr
+      %td{:width=>"180px"}
+        =link_to "Nome", ""
+      %td{:width=>"240px"}
+        =link_to "Email", ""
+      %td.last_cell
+        =link_to "Activo", ""
+          
+  -i=0      
+  -admins.each do |admin| 
+    -i+=1
+    -class_name = (i==admins.size ? "last_row" : "middle_row")
+    %tr{:class=>class_name}
+      %td=link_to admin.full_name, business_account_admin_path(@current_user.business_account, admin)
+      %td=admin.email
+      %td.last_cell=boolean_to_yes_no(admin.active)

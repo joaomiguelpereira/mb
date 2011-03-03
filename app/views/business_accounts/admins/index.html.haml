@@ -1,0 +1,10 @@
+= title "Administradores"
+= more_stylesheets "forms"
+
+#full_content
+  =render :partial=>"business_accounts/dashboard_menu"
+  #content
+    =link_to "Adicionar administrador", new_business_account_admin_path(@current_user.business_account), :class=>"action_add link_as_button"
+    
+    =render :partial=>"list", :locals=>{:admins=>@admins}
+      

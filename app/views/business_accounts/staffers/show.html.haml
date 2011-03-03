@@ -13,5 +13,5 @@
           Colaborador inactivo
         %p Este colaborador ainda não activou a sua conta. 
         %p Pode enviar um email de activação agora.
-        %p= link_to "Enviar um mail de activação",send_activation_email_path(@current_user.business_account, @staffer), :class=>"link_as_button", :remote=>true, :method=>:put
+        %p= link_to "Enviar um mail de activação",send_staffer_activation_email_path(@current_user.business_account, @staffer), :class=>"link_as_button", :remote=>true, :method=>:put
 

@@ -1,0 +1,14 @@
+%div.dashboard_header
+  %div.title
+    Administrador: #{@admin.full_name}
+
+.context_horizontal_menu      
+  .right_menu
+    %ul
+      %li
+        =link_to "Informação", business_account_admin_path(@current_user.business_account, @admin), :class=>(request.env['PATH_INFO'] == business_account_admin_path(@current_user.business_account, @admin)) ? "selected" : ""
+      
+  .left_menu
+    %ul
+      %li
+        =link_to "Voltar ao dashboard", business_account_admins_path(@current_user.business_account)    

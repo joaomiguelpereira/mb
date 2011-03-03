@@ -24,6 +24,11 @@ pt:
         destroy: Não foi possível eliminar o colaborador
         send_activation_mail_active: O colaborador já se encontra activo
         update: Não foi possível actualizar a informação.
+      admin:
+        create: Não foi possível criar o administrador
+        destroy: Não foi possível eliminar o administrador
+        send_activation_mail_active: O administrador já se encontra activo
+        update: Não foi possível actualizar a informação deste administrador.
       general:
         invalid_operation: Não foi possível entender este pedido 
         not_authorized: Não está autorizado a ver esta página
@@ -46,5 +51,10 @@ pt:
         destroy: O colaborador e toda a sua informação foi removida. 
         send_activation_mail: Foi enviado um email de activação ao colaborador com o email %{email}
         update: A informação do colaborador foi actualizada com sucesso.
+      admin:
+        create: O administrador foi criado com sucesso.
+        destroy: O administrador e toda a sua informação foi removida. 
+        send_activation_mail: Foi enviado um email de activação ao administrador com o email %{email}
+        update: A informação do administrador foi actualizada com sucesso.
      
         

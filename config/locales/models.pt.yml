@@ -20,6 +20,8 @@ pt:
         active: Activo?
       staffer:
         notify_on_create: Enviar agora email de activação ao colaborador?
+      business_admin:
+        notify_on_create: Enviar agora email de activação ao administrador?
       business:
         short_name: Identificação
         full_name: Nome
@@ -64,6 +66,8 @@ pt:
         change_password: Alterar password
       staffer:
         create: Criar colaborador
+      admin:
+        create: Criar administrador
       session:
         create: Iniciar sessão
       business:

@@ -8,3 +8,6 @@ pt:
     staffer:
       activation:
         subject: Active a sua conta
+    admin:
+      activation:
+        subject: Active a sua conta

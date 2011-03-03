@@ -55,9 +55,12 @@ pt:
     messages:
       staffer:
         remove_confirmation: "Todos os dados deste colaborador serão permanentemente removidos. Tem a certeza que quer continuar?"
+      admin: 
+        remove_confirmation: "Todos os dados deste administrador serão permanentemente removidos. Tem a certeza que quer continuar?"
       business:
         remove_confirmation: "Todos os dados deste negócio serão permanentemente removidos. Tem a certeza que quer continuar?"
     actions:
+      
       user:
         create: Criar utilizador
         recover_password: Enviar instruções por email

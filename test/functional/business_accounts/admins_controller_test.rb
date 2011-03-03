@@ -141,5 +141,37 @@ class BusinessAccounts::AdminsControllerTest < ActionController::TestCase
     assert_match /#{admin.activation_key}/, email.encoded
     ###end mail assertion
    
-   end
+ end
+ 
+ 
+   ####################################
+    ####Basic destroy tests
+    #####################################
+  test "should not delete not authenticated user" do
+    admin = Factory.create(:business_admin, :business_account=>@badmin.business_account)
+    assert_raise( WebAppException::SessionRequiredError) do
+      delete :destroy, {:business_account_id=>@badmin.business_account.id, :id=>admin.id}, {}
+    end
+  end
+  
+  test "should not delete admin for other badmin" do
+    admin = Factory.create(:business_admin, :business_account=>@badmin.business_account)
+    assert_raise (WebAppException::AuthorizationError) do
+      delete :destroy, {:business_account_id=>@badmin.business_account.id, :id=>admin.id}, authenticated_user(@other_badmin)
+    end
+  end
+  
+  test "should delete admin" do
+    admin = Factory.create(:business_admin, :business_account=>@badmin.business_account)
+    delete :destroy, {:business_account_id=>@badmin.business_account.id, :id=>admin.id}, authenticated_user(@badmin)
+    assert_success_flashed "flash.success.admin.destroy"
+    assert_redirected_to business_account_admins_path(@badmin.business_account)
+  end
+
+   test "should not delete current admin" do
+    delete :destroy, {:business_account_id=>@badmin.business_account.id, :id=>@badmin.id}, authenticated_user(@badmin)
+    assert_error_flashed "flash.error.admin.destroy"
+  end
+
+  
 end

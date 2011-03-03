@@ -54,5 +54,49 @@ class BusinessAccounts::AdminsController < BusinessAdminResourcesBaseController
     end
     
   end
+  
+  ###########################################
+  ####Destroy
+  ##########################################
+  def destroy
+    @admin = BusinessAdmin.find(params[:id])
+    if @admin.id == @current_user.id
+      flash_error "flash.error.admin.destroy", {:keep=>true}
+      redirect_to business_account_admin_path(@current_user.business_account, @admin)
+    elsif @admin.destroy
+      flash_success "flash.success.admin.destroy", {:keep=>true}
+      redirect_to business_account_admins_path(@current_user.business_account)
+    else
+      flash_error "flash.error.admin.destroy", {:keep=>true}
+      redirect_to business_account_admin_path(@current_user.business_account, @admin)
+    end
+  end
+  
+  ##############################################
+  ######Modify
+  ##############################################
+  def edit
+    @admin = BusinessAdmin.find(params[:id])
+  end
+  
+  def update
+   
+    @admin = BusinessAdmin.find(params[:id])
+    if @admin.update_attributes(params[:business_admin])
+      
+      respond_to do |format|
+        format.html {
+          flash_success "flash.success.admin.update", {:keep=>true}
+          redirect_to business_admin_admin(@current_user.business_admin, @admin)
+        }
+        format.js { flash_success "flash.success.admin.update"
+          render :show
+        }
+      end
+    else
+      flash_error "flash.error.admin.update"
+      render :edit
+    end
+  end
 
 end

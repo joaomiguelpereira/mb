@@ -1,7 +1,59 @@
-!!! Strict
-%html
-	%head
-		%meta{'http-equiv' => 'Content-Type', :content => "text/html; charset=iso-8859-1"}
-		%title Untitled Document
-	%body
-		
+%table.record
+  %tr
+    %td.label
+      =t "activerecord.attributes.user.first_name" 
+    %td.value
+      =admin.first_name
+  %tr
+    %td.label
+      =t "activerecord.attributes.user.last_name" 
+    %td.value
+      =admin.last_name
+  %tr
+    %td.label
+      =t "activerecord.attributes.user.email" 
+    %td.value
+      =admin.email
+  %tr
+    %td.label
+      =t "activerecord.attributes.user.phone" 
+    %td.value
+      =admin.phone
+
+  %tr
+    %td.label
+      =t "activerecord.attributes.user.address" 
+    %td.value
+      =admin.address
+  %tr
+    %td.label
+      =t "activerecord.attributes.user.postal_code" 
+    %td.value
+      =admin.postal_code
+
+  %tr
+    %td.label
+      =t "activerecord.attributes.user.city" 
+    %td.value
+      =admin.city
+
+
+  %tr
+    %td.label
+      =t "activerecord.attributes.user.active" 
+    %td.value
+      =boolean_to_yes_no(admin.active)
+
+
+  %tr
+    %td.label
+      =t "activerecord.attributes.user.created_at" 
+    %td.value
+      =l admin.created_at
+    %tr
+      %td.label
+      %td.value
+        =link_to I18n.t("activerecord.actions.user.edit"), edit_business_account_admin_path(@current_user.business_account, admin), :remote=>true, :class=>"link_as_button"
+        -if @current_user.id != admin.id
+          =link_to I18n.t("actions.remove"), business_account_admin_path(@current_user.business_account, admin), :confirm=>t("activerecord.messages.admin.remove_confirmation"), :class=>"link_as_button danger_button",  :method => :delete
+        

@@ -1,7 +1,7 @@
 =simple_form_for [@current_user.business_account, staffer], :remote=>true do |f|
   =f.input :first_name
   =f.input :last_name
-  =f.input :email
+  =f.input :email, :disabled=>true
   =f.input :phone
   =f.input :address
   =f.input :postal_code, :hint=>t("activerecord.hints.generic.postal-code")

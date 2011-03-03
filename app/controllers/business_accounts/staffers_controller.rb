@@ -92,7 +92,7 @@ class BusinessAccounts::StaffersController < BusinessAdminResourcesBaseControlle
       flash_success "flash.success.staffer.destroy", {:keep=>true}
       redirect_to business_account_staffers_path(@current_user.business_account)
     else
-      flash_success "flash.error.staffer.destroy", {:keep=>true}
+      flash_error "flash.error.staffer.destroy", {:keep=>true}
       redirect_to business_account_staffes_path(@current_user.business_account, @staffer)
     end
   end

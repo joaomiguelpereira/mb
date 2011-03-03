@@ -4,7 +4,7 @@
 #full_content
   =render :partial=>"admin_dashboard_menu", :locals=>{:admin=>@admin}
   #content
-    #staffer_info.has_help_float_box
+    #admin_info.has_help_float_box
       =render :partial=>"admin", :object=>@admin
     -if !@admin.active
       .help_float_box

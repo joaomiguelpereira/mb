@@ -1,0 +1,11 @@
+=simple_form_for admin, :url=>business_account_admin_path(@current_user.business_account, admin), :remote=>true do |f|
+  =f.input :first_name
+  =f.input :last_name
+  =f.input :email, :disabled=>true
+  =f.input :phone
+  =f.input :address
+  =f.input :postal_code, :hint=>t("activerecord.hints.generic.postal-code")
+  =f.input :city
+  
+  = f.submit t "actions.update"
+  =link_to "Cancelar", business_account_admin_path(@current_user.business_account, admin), :remote=>true, :class=>"link_as_button cancel_button"

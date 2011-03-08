@@ -329,7 +329,7 @@ CalendarEvent.prototype.initialize = function(){
 CalendarEvent.prototype.update = function(){
 
 
-    this.infoEl.html(CalendarUtils.formatHour(this.startHour) + " - " + CalendarUtils.formatHour(this.endHour) + "@" + this.weekDay);
+    this.infoEl.html(CalendarUtils.formatHour(this.startHour) + " - " + CalendarUtils.formatHour(this.endHour));
 }
 CalendarEvent.prototype.ajust = function(event){
     if (definingEvent != null) {

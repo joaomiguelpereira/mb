@@ -5,5 +5,11 @@ class BusinessAccountsController < BusinessAdminResourcesBaseController
   def index
       @business_account = @current_user.business_account
   end
+  def availability
+    
+  end
   
+  def specialities
+    
+  end
 end

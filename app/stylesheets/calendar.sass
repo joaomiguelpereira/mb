@@ -1,0 +1,85 @@
+$cell_heigh: 19px
+
+.calendar_event
+  background-color: #CC3333
+  height: $cell_heigh
+  width: 100px
+  color: #fff
+  -moz-border-radius: 4px
+  border-radius: 4px
+  border: solid 0px #CF0000
+  cursor: pointer
+  padding: 0
+    
+  .calendar_event_info
+    border-radius: 4px
+    
+    font-size: 10px
+    background-color: #CF7474
+    padding: 0
+    
+  .calendar_event_remove
+    float: left
+    padding: 0
+    padding-left: 2px
+    padding-right: 2px
+    
+    font-weight: bold
+    color: #000
+
+.calendar_header
+  width: 730px
+  padding-bottom: 0px
+  background-color: #fff
+  border-bottom: solid 3px #ccc
+  padding-left: 101px
+  table.calendar_table
+    background-color: #DFFFCF
+    
+    text-align: center
+    tr
+      td
+        padding: 0px
+        width: 100px
+        text-align: center
+        border-right: solid 1px #ccc
+        border-top: solid 1px #ccc
+        height: 30px
+        user-select: none
+        -moz-user-select: none
+        -khtml-user-select: none
+        
+
+.calendar_body_wrapper
+  position: relative
+  overflow: auto
+  height: 440px
+  width: 850px
+.calendar_body
+  padding-top: 1px
+  overflow: hidden
+  position: relative
+  
+  table.calendar_table
+    tr
+      td
+        padding: 0px
+        width: 100px
+        text-align: right
+        border-right: solid 1px #ccc
+        border-bottom: solid 1px #ccc
+        height: $cell_heigh
+        user-select: none
+        -moz-user-select: none
+        -khtml-user-select: none
+      td.calendar_slot
+        cursor: pointer
+      td.first_hour_half
+        border-bottom: dotted 1px #ccc
+      td.calendar_body_hour
+        background-color: #DFFFCF
+        vertical-align: top
+      td.selected
+        background-color: #CC3333
+        border: none  
+      

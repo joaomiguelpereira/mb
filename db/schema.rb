@@ -10,7 +10,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110302173526) do
+ActiveRecord::Schema.define(:version => 20110306180050) do
+
+  create_table "availabilities", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "business_account_specialities", :force => true do |t|
+    t.integer  "business_account_id"
+    t.integer  "speciality_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "business_accounts", :force => true do |t|
     t.integer  "created_by_business_admin_id"
@@ -36,6 +48,15 @@ ActiveRecord::Schema.define(:version => 20110302173526) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "specialities", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "specialities", ["name"], :name => "index_specialities_on_name"
 
   create_table "users", :force => true do |t|
     t.string   "email"

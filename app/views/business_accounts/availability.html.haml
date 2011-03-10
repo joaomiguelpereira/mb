@@ -2,12 +2,15 @@
 = more_stylesheets "forms"
 = more_stylesheets "calendar"
 = more_stylesheets "jquery-ui-1.8.10.custom/css/ui-lightness/jquery-ui-1.8.10.custom.css"
-= more_javascripts_files "availability"
 = more_javascripts_files "jquery.scrollTo-min"
+= more_javascripts_files "json2"
+= more_javascripts_files "availability"
 
 = more_javascripts_files "jquery-ui-1.8.10.custom/js/jquery-ui-1.8.10.custom.min.js"
 
-
+%script 
+  var initialData = "#{escape_javascript(raw(@availability.json_data))}";
+  var updateUrl = "#{business_account_availability_path(@business_account)}";
 #full_content
   =render :partial=>"business_accounts/dashboard_menu"
   #content

@@ -13,6 +13,8 @@
 ActiveRecord::Schema.define(:version => 20110306180050) do
 
   create_table "availabilities", :force => true do |t|
+    t.text     "json_data"
+    t.integer  "business_account_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -5,8 +5,24 @@ class BusinessAccountsController < BusinessAdminResourcesBaseController
   def index
       @business_account = @current_user.business_account
   end
+  
   def availability
+    @business_account = @current_user.business_account
+    @availability = @business_account.availability
+   
+    if request.put?
+      json_data = params[:json_data]
+      if Availability.is_json_valid?(json_data)
+        @availability.json_data = json_data
+        @availability.save
+        flash_success("flash.success.business_account.availability.update")
+      else
+        flash_error("flash.error.business_account.availability.update")
+    end
     
+      
+      
+    end
   end
   
   def specialities

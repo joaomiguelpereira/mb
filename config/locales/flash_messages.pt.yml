@@ -4,6 +4,9 @@ pt:
       user:
         activation_pending: O seu registo está quase completo. Enviamos um email para %{email}. Siga as instruções para activar a sua conta. Após a activação pode iniciar a sessão.
     error:
+      business_account:
+        availability:
+          update: Não foi possível actualizar o horário
       session:
         invalid_data: Não foi possível iniciar a sessão. Verifique os dados.
         inactive_user: O utilizador com o email %{email} não está activo. Já efectuou a sua activação? Veja o seu email.
@@ -33,6 +36,9 @@ pt:
         invalid_operation: Não foi possível entender este pedido 
         not_authorized: Não está autorizado a ver esta página
     success:
+      business_account:
+        availability:
+          update: O horário foi actualizado com sucesso
       session:
         create: A sessão foi criada com sucesso com o email %{email}
         destroy: A sessão for terminada com sucesso.

@@ -5,12 +5,13 @@
 function createElement(name){
     return $(document.createElement(name));
 }
+
 var flash_messages = {
 
     timer: null,
-    close_notice : function() {
-		$('#notice_message').hide();
-	},
+    close_notice: function(){
+        $('#notice_message').hide();
+    },
     close: function(){
         $('#floating_message_wrapper').hide();
         
@@ -61,37 +62,40 @@ var loading_indicator = {
 }
 //Drop down menu stuff
 var ddm = {
-	start: function(){
-		$(".ddm .ddm_title").live("click", function(){
-			$(this).siblings("ul").toggle();
-		
-			return false;
-		})
-	}, 
-	close : function() {
-		
-		$(".ddm .ddm_title").siblings("ul").hide();
-	}
+    start: function(){
+        $(".ddm .ddm_title").live("click", function(){
+            $(this).siblings("ul").toggle();
+            
+            return false;
+        })
+    },
+    close: function(){
+    
+        $(".ddm .ddm_title").siblings("ul").hide();
+    }
 };
 var form_utils = {
-	focus_first_field: function() {
-		$("[textarea||input]:visible:enabled:first").focus();
-		
-		//$("textarea:visible:enabled:first").focus();
-		
-		//try also on the on one that have errors
-		
-		$("div.field_with_errors").children("[textarea||input]:visible:enabled:first").focus();
-		//$("div.field_with_errors textarea:visible:enabled:first").focus();
-		
-		
-		
-	}
+    focus_first_field: function(){
+        $("[textarea||input]:visible:enabled:first").focus();
+        
+        //$("textarea:visible:enabled:first").focus();
+        
+        //try also on the on one that have errors
+        
+        $("div.field_with_errors").children("[textarea||input]:visible:enabled:first").focus();
+        //$("div.field_with_errors textarea:visible:enabled:first").focus();
+    
+    
+    
+    }
 }
+
 $(function(){
-	ddm.start();
-	form_utils.focus_first_field();
-	$(window).click(function() {ddm.close()});
+    ddm.start();
+    form_utils.focus_first_field();
+    $(window).click(function(){
+        ddm.close()
+    });
     $("*").live('ajax:beforeSend', function(){
         loading_indicator.show();
     });
@@ -117,5 +121,5 @@ $(function(){
         flash_messages.scroll();
     };
     
-})
+    })
 

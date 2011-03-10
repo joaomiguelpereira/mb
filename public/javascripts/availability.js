@@ -9,12 +9,36 @@ var definingEvent = null;
 var resizeIncrementY = 19;
 var moveIncrementX = 100;
 var minutesIncrement = 30;
+var hourMinutes = 60;
 var eventManager = new EventManager();
 var mouseDownOnEvent = false;
 var bodyElementId = "__body__el__id";
 var browser = $.browser;
-resizeIncrementY = browser.mozilla?19:20; 
+var startScrollPosition = (hourMinutes / minutesIncrement) * resizeIncrementY * 8;
+
+
+resizeIncrementY = browser.mozilla ? 19 : 20;
+
+//var testJSON = "[[{\"startHour\":450,\"endHour\":540,\"weekDay\":0},{\"startHour\":570,\"endHour\":630,\"weekDay\":0}],[{\"startHour\":540,\"endHour\":570,\"weekDay\":1}],[],[],[],[],[]]";
+//var testJSON = "[[],[{\"startHour\":0,\"endHour\":120,\"weekDay\":1}],[],[],[],[],[]]";
+//var testJSON = " [[{\"startHour\":480,\"endHour\":630,\"weekDay\":0}],[{\"startHour\":510,\"endHour\":660,\"weekDay\":1}],[{\"startHour\":540,\"endHour\":690,\"weekDay\":2}],[{\"startHour\":570,\"endHour\":720,\"weekDay\":3}],[],[],[]]";
 $(function(){
+
+
+    if (typeof initialData === 'undefined' || typeof updateUrl === 'undefined') {
+        alert("Missing initial data or updateUrl")
+        throw "Error: missing initial data or updateUrl";
+        
+    }
+    else {
+        //alert(initialData);
+        //alert(updateUrl);
+        
+        eventManager.createCalendar($("#ccontainer"));
+        eventManager.loadFromJson(initialData);
+    }
+    
+    
     $("#dump_events").bind("click", function(){
         eventManager.dump();
         return false;
@@ -33,7 +57,8 @@ $(function(){
  * EventsManager Object
  */
 function EventManager(){
-
+    this.parentElement = null;
+    this.weekCalendar = null;
     this.events = new Array();
     for (var i = 0; i < week_days.length; i++) {
         this.events[i] = new Array();
@@ -41,6 +66,46 @@ function EventManager(){
     
 }
 
+EventManager.prototype.createCalendar = function(element){
+    this.parentElement = element;
+    this.weekCalendar = new WeekCalendar(element);
+}
+
+EventManager.prototype.loadFromJson = function(json){
+    Logger.log("loading from json: " + json);
+    var array = JSON.parse(json);
+    for (var i = 0; i < array.length; i++) {
+        dayArray = array[i];
+        for (var j = 0; j < dayArray.length; j++) {
+        
+            var ev = new CalendarEvent().loadFromRawObject(dayArray[j]);
+            Logger.log("loading event: " + ev);
+            ev.renderInCalendar();
+            this.events[ev.weekDay].push(ev);
+            
+            
+        }
+    }
+    
+    
+}
+EventManager.prototype.toJson = function(){
+
+    var jsonArray = new Array();
+    for (var i = 0; i < week_days.length; i++) {
+    
+        jsonArray[i] = new Array();
+        
+        for (var j = 0; j < this.events[i].length; j++) {
+            var eventObj = this.events[i][j].toRawObject();
+            
+            jsonArray[i].push(eventObj);
+        }
+    }
+    
+    return JSON.stringify(jsonArray);
+    
+}
 EventManager.prototype.dump = function(){
     if ($("#dumper_zone")) {
         var html = "";
@@ -51,39 +116,54 @@ EventManager.prototype.dump = function(){
                 html += "<div>Event: " + day_array[j] + "</div>";
             }
         }
+        html += "<div>JSON: " + this.toJson() + "</div>"
         $("#dumper_zone").html(html);
     }
 }
 
-EventManager.prototype.save = function(event){
+
+EventManager.prototype.updateServer = function(event){
+    this.weekCalendar.calendarBody.disable();
+    loading_indicator.show();
+	var instanceVar = this;
+    $.ajax({
+        type: 'PUT',
+        url: updateUrl,
+        data: "json_data="+this.toJson(),
+        success: function(data){
+            //alert(data);
+			loading_indicator.hide();
+			instanceVar.weekCalendar.calendarBody.enable();
+			
+        }
+        
+    });
+}
+
+EventManager.prototype.add = function(event){
     var array = this.events[event.weekDay];
     array.push(event);
 }
 
 EventManager.prototype.moveDay = function(event, originalDay){
-    Logger.log("Moving original day: " + originalDay);
-    Logger.log("Moving event day: " + event.weekDay);
     var array = this.events[originalDay];
     array.splice(this.events.indexOf(event));
-    this.save(event);
+    this.add(event);
 }
-
-
 
 EventManager.prototype.remove = function(event){
 
     array = this.events[event.weekDay];
-    Logger.log("removing..." + array.length)
     array.splice(this.events.indexOf(event));
-    Logger.log("removed..." + array.length)
     event.remove();
+    eventManager.updateServer();
 }
 
 
 EventManager.prototype.canMove = function(event){
     //Check end hour if is beyond time
     
-    if (event.endHour > end_hour * 60 || event.endHour < minutesIncrement || event.startHour < 0) {
+    if (event.endHour > end_hour * hourMinutes || event.endHour < minutesIncrement || event.startHour < 0) {
         return false;
     }
     
@@ -121,7 +201,7 @@ EventManager.prototype.canResize = function(event, tolerance){
                 return false;
             }
         }
-        if (event.endHour > end_hour * 60) {
+        if (event.endHour > end_hour * hourMinutes) {
             return false;
         }
         
@@ -138,15 +218,19 @@ EventManager.prototype.canResize = function(event, tolerance){
  * @param {Object} parent
  *********************************************************/
 function WeekCalendar(parent){
+
     this.container = createElement("div");
     this.calendarHeader = new WeekCalendarHeader();
     this.calendarBody = new WeekCalendarBody();
     this.container.append(this.calendarHeader.element());
     this.container.append(this.calendarBody.element());
     parent.append(this.container);
-    $(this.calendarBody.element()).scrollTo('+=300px', {
+    $(this.calendarBody.element()).scrollTo(startScrollPosition, {
         axis: 'y'
     });
+    
+    
+    
 }
 
 
@@ -190,6 +274,17 @@ function WeekCalendarBody(){
     this.container_wrapper = null;
 }
 
+WeekCalendarBody.prototype.disable = function(){
+    this.table.css("opacity", "0.5");
+    
+}
+
+WeekCalendarBody.prototype.enable = function(){
+    this.table.css("opacity", "1");
+    
+}
+
+
 WeekCalendarBody.prototype.element = function(){
     if (this.container_wrapper == null) {
     
@@ -202,56 +297,49 @@ WeekCalendarBody.prototype.element = function(){
         this.table = createElement("table").attr("border", "0px").attr("cellspacing", "0px").addClass("calendar_table");
         
         
+        var trNumber = hourMinutes / minutesIncrement;
+        
+        var trElements = new Array();
+        
         for (i = start_hour; i < end_hour; i++) {
         
         
-            first_half_hour_row = createElement("tr");
-            second_half_hour_row = createElement("tr");
-            hour_cell = createElement("td").attr("rowspan", 2).html(CalendarUtils.formatHour(i * 60)).addClass("calendar_body_hour");
-            
-            
-            
-            first_half_hour_row.append(hour_cell)
-            for (j = 0; j < week_days.length; j++) {
-            
-            
-            
-                first_half_slot = new CalendarSlot(j, i * 60);
-                second_half_slot = new CalendarSlot(j, ((i * 60) + minutesIncrement));
-                
-                first_half = first_half_slot.element();
-                second_half = second_half_slot.element();
-                first_half.addClass("calendar_slot");
-                second_half.addClass("calendar_slot");
-                first_half.addClass("first_hour_half");
-                first_half_hour_row.append(first_half);
-                second_half_hour_row.append(second_half);
+        
+            for (var trCount = 0; trCount < trNumber; trCount++) {
+                trElements[trCount] = createElement("tr");
             }
             
-            this.table.append(first_half_hour_row);
-            this.table.append(second_half_hour_row);
+            hour_cell = createElement("td").attr("rowspan", trNumber).html(CalendarUtils.formatHour(i * hourMinutes)).addClass("calendar_body_hour");
             
+            trElements[0].append(hour_cell);
+            
+            for (var j = 0; j < week_days.length; j++) {
+            
+                for (var slotCount = 0; slotCount < trNumber; slotCount++) {
+                    aSlot = new CalendarSlot(j, ((i * hourMinutes) + minutesIncrement * slotCount));
+                    aSlot.element().addClass("calendar_slot");
+                    if (slotCount < trNumber - 1) {
+                        aSlot.element().addClass("first_hour_half");
+                    }
+                    trElements[slotCount].append(aSlot.element());
+                }
+            }
+            for (var k = 0; k < trElements.length; k++) {
+                this.table.append(trElements[k]);
+            }
         }
-        
-        
         this.container.append(this.table);
         this.container_wrapper.append(this.container);
-        
-        
-        
         this.table.bind("mousemove", function(event){
             if (definingEvent != null) {
                 definingEvent.ajust(event);
             }
         });
-        
         this.table.bind("mouseup", function(event){
             if (definingEvent != null) {
-                definingEvent.save(event);
+                definingEvent.create(event);
             }
-            
         });
-        
     }
     return this.container_wrapper;
     
@@ -265,8 +353,6 @@ function CalendarSlot(weekDay, hour){
     this.slotElement = null;
     this.weekDay = weekDay;
     this.hour = hour;
-    
-    
 }
 
 CalendarSlot.prototype.startSelecting = function(){
@@ -310,32 +396,62 @@ function CalendarEvent(startHour, weekDay){
     this.startSlot = null;
     this.initialized = false;
     this.lastMouseYPosition = -1;
+}
+
+
+CalendarEvent.prototype.renderInCalendar = function(){
+    //find the day in the table
+    targetTable = eventManager.weekCalendar.calendarBody.table;
+    
+    var trIndex = (this.startHour / minutesIncrement);
+    
+    var tdIndex = this.weekDay + 1;
+    //if starting if half hour, ajust trIndex
+    if (this.startHour % hourMinutes != 0) {
+        tdIndex -= 1;
+    }
+    
+    var trElement = targetTable.find("tr:eq(" + trIndex + ")");
+    var tdElement = trElement.find("td:eq(" + tdIndex + ")");
+    
+    var element = this.element();
+    
+    tdElement.append(element);
+    //ajust size
+    this.initialize();
+    var newSize = ((this.endHour - this.startHour) / minutesIncrement) * resizeIncrementY;
+    
+    
+    element.animate({
+        height: newSize + "px"
+    }, 500);
+    
+    
+    
+}
+
+CalendarEvent.prototype.loadFromRawObject = function(rawObject){
+    this.weekDay = rawObject.weekDay;
+    this.startHour = rawObject.startHour;
+    this.endHour = rawObject.endHour;
+    return this;
     
 }
 
 CalendarEvent.prototype.initialize = function(){
     if (this.initialized == false) {
         position = this.eventElement.position();
-        
-        
         this.eventElement.css("position", "absolute");
-        
-        
         this.eventElement.css("top", (position.top) + "px");
         this.initialized = true;
     }
-    
 }
 CalendarEvent.prototype.update = function(){
-
-
     this.infoEl.html(CalendarUtils.formatHour(this.startHour) + " - " + CalendarUtils.formatHour(this.endHour));
 }
 CalendarEvent.prototype.ajust = function(event){
     if (definingEvent != null) {
         this.initialize();
-        
-        
         if (this.lastMouseYPosition == -1) {
             this.lastMouseYPosition = event.pageY;
         }
@@ -354,22 +470,44 @@ CalendarEvent.prototype.ajust = function(event){
             }
         
         this.update();
-        
     }
     
 }
 
 
-CalendarEvent.prototype.save = function(event){
+CalendarEvent.prototype.create = function(event){
     if (definingEvent != null) {
-    
-        eventManager.save(definingEvent);
+        eventManager.add(definingEvent);
+        eventManager.updateServer();
         mouseDownOnEvent = false;
         definingEvent = null;
     }
 }
 
+
+
+CalendarEvent.prototype.toRawObject = function(){
+    var json = {
+        startHour: this.startHour,
+        endHour: this.endHour,
+        weekDay: this.weekDay
+    };
+    return json;
+    
+    
+}
+
+
+
+
+CalendarEvent.prototype.toJson = function(){
+
+    return JSON.stringify(this.toRawObject());
+}
+
 CalendarEvent.prototype.toString = function(){
+
+
     return this.startHour + "-" + this.endHour + "@" + this.weekDay + "(" + CalendarUtils.formatHour(this.startHour) + " - " + CalendarUtils.formatHour(this.endHour) + "@" + this.weekDay + ")";
 }
 
@@ -387,6 +525,7 @@ var originalResizingEndHour = null;
 
 CalendarEvent.prototype.remove = function(){
     this.eventElement.remove();
+    
 }
 
 CalendarEvent.prototype.element = function(){
@@ -444,6 +583,9 @@ CalendarEvent.prototype.element = function(){
                     instanceVar.endHour = originalResizingEndHour;
                     instanceVar.update();
                     
+                }
+                else {
+                    eventManager.updateServer();
                 }
                 
                 originalResizingHeigh = null;
@@ -555,11 +697,11 @@ CalendarEvent.prototype.element = function(){
                 }
                 else {
                     if (originalDraggingEventWeekDay != instanceVar.weekDay) {
-                        Logger.log("Moving...");
                         eventManager.moveDay(instanceVar, originalDraggingEventWeekDay);
                     }
+                    eventManager.updateServer();
                     
-                }  
+                }
                 draggingEvent = null;
                 originalDraggingElementPos = null;
                 mouseDownOnEvent = false;
@@ -608,10 +750,8 @@ var Logger = {
 }
 var CalendarUtils = {
     formatHour: function(minutes){
-        var date = new Date(minutes * 60 * 1000)
-        var hours = date.getHours();
-        var minutes = date.getMinutes();
-        
+        var hours = Math.floor(minutes / 60);
+        var minutes = minutes % 60;
         
         if (hours <= 9) {
             hours = "0" + hours

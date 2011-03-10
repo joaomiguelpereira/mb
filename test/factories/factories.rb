@@ -1,3 +1,11 @@
+Factory.define :availability do |f| 
+ 
+end
+
+Factory.define :speciality do |f|
+  f.sequence(:name) {StringUtils.generate_random_string(10)}
+  f.description "Some description"
+end
 
 Factory.define :user do |f|
   f.sequence(:email) {"user#{(rand*Time.now.to_f).to_i}@mail.com"}
@@ -7,7 +15,6 @@ Factory.define :user do |f|
   f.active true
   f.activation_key nil
   f.reset_password_key nil
-  
 end
 Factory.define :business_account do |f|
   f.owner nil

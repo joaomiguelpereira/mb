@@ -15,9 +15,11 @@ class BusinessAccountsController < BusinessAdminResourcesBaseController
       if Availability.is_json_valid?(json_data)
         @availability.json_data = json_data
         @availability.save
-        flash_success("flash.success.business_account.availability.update")
+        render :json=> { :status => :ok}
+        #flash_success("flash.success.business_account.availability.update")
       else
-        flash_error("flash.error.business_account.availability.update")
+        render :json=> { :status => :error}
+        #flash_error("flash.error.business_account.availability.update")
     end
     
       

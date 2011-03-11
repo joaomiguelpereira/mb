@@ -38,19 +38,6 @@ table.record
     padding-top: 10px
     padding-left: 15px
     width: 340px
-  td
-    input
-      @include input-base
-    input[type='submit']
-      @include base-submit
-    input[type="button"]
-      @include base-submit
-  .field_with_errors
-    input
-      border: solid 1px red
-    textarea
-      border: solid 1px red
-    
   .hint
     font-size: $hint-error-font-size
     color: $hint-color 
@@ -59,6 +46,27 @@ table.record
     color: $error-color
 
 
+
+textarea
+  @include input-base
+input
+  @include input-base
+input[type='submit']
+  @include base-submit
+input[type="button"]
+  @include base-submit
+
+.field_with_errors
+  input
+    border: solid 1px red
+  textarea
+    border: solid 1px red
+
+input.field_with_errors
+  border: solid 1px red
+textarea.field_with_errors
+  border: solid 1px red
+      
 
 #form_wrapper
   padding: 10px
@@ -140,13 +148,6 @@ a.danger_button
 a.danger_button:hover
   background-color: #FF4F67
   color: #fff
-  
-a.action_add
-  
-  background: #ddd url("../images/plus-circle.png") no-repeat left
-  padding-left: 20px !important
-  
-a.action_remove
-  background: url("../images/minus-circle.png") no-repeat
-  padding-left: 20px !important
+
+
   

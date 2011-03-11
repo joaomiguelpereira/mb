@@ -1,6 +1,6 @@
-=simple_form_for [@current_user.business_account, @current_user.business_account.business] ,:remote=>true do |f|
+=simple_form_for [@current_user.business_account, business] ,:remote=>true do |f|
   =render :partial=>"businesses/form", :locals=>{:f=>f, :editing=>true}
   /= f.error_messages
   = f.submit I18n.t "actions.update"
-  = link_to I18n.t("actions.cancel"), business_account_business_path(@current_user.business_account,@current_user.business_account.business), :id=>"cancel_business_edit", :class=>"link_as_button cancel_button"
+  = link_to I18n.t("actions.cancel"), business_account_business_path(@current_user.business_account,business), :id=>"cancel_business_edit", :class=>"link_as_button cancel_button"
   

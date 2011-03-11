@@ -29,11 +29,12 @@ class Availability < ActiveRecord::Base
   private 
   def create_default_json_data
     def_json_data = Array.new
-    
     for i in (0..6)
       day_array = Array.new
       def_json_data << day_array
     end
+    exceptions_array = Array.new
+    self.exceptions_json_data = exceptions_array.to_json
     self.json_data = def_json_data.to_json
     self.save
   end

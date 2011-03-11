@@ -1,4 +1,58 @@
 $cell_heigh: 19px
+$header_cell_bg_color: #DFFFCF
+  
+@mixin table_header_td
+  padding: 0px
+  width: 100px
+  text-align: center
+  border-right: solid 1px #ccc
+  border-top: solid 1px #ccc
+  height: 30px
+  user-select: none
+  -moz-user-select: none
+  -khtml-user-select: none
+
+
+
+
+
+table.editable_table
+  thead
+    tr
+      td
+        @include table_header_td
+        background: $header_cell_bg_color
+      td.border_left
+        border-left: solid 1px #ccc
+  tbody
+    tr
+      td
+        vertical-align: middle
+        text-align: center
+        border-right: solid 1px #ccc
+        border-top: solid 1px #ccc  
+        padding-right: 0px
+        textarea
+          margin: 0
+        input
+          margin: 0
+        div
+          img
+            border: 0
+            cursor: pointer
+            padding: 4px
+      td.border_left
+        border-left: solid 1px #ccc
+    tr.last_row
+      td
+        border: solid 1px #ccc
+        text-align: right
+        padding: 10px
+        padding-right: 0px
+  
+
+      
+
 
 .calendar_event
   background-color: #CC3333
@@ -34,20 +88,13 @@ $cell_heigh: 19px
   border-bottom: solid 3px #ccc
   padding-left: 101px
   table.calendar_table
-    background-color: #DFFFCF
+    background-color: $header_cell_bg_color
     
     text-align: center
     tr
       td
-        padding: 0px
-        width: 100px
-        text-align: center
-        border-right: solid 1px #ccc
-        border-top: solid 1px #ccc
-        height: 30px
-        user-select: none
-        -moz-user-select: none
-        -khtml-user-select: none
+        @include table_header_td
+        
         
 
 .calendar_body_wrapper
@@ -82,4 +129,8 @@ $cell_heigh: 19px
       td.selected
         background-color: #CC3333
         border: none  
+
+
+#ui-datepicker-div
+  z-index: 99999 !important
       

@@ -6,9 +6,51 @@ function createElement(name){
     return $(document.createElement(name));
 }
 
-var flash_messages = {
 
+/*************************************************************
+ * Calendar Utils
+ * @param {Object} minutes
+ ************************************************************/
+var Logger = {
+    log: function(what){
+        if (window.console) {
+            console.log(what);
+        }
+        
+    }
+}
+
+var flash_messages = {
+	
     timer: null,
+	show: function(type, msg) {
+		
+		//if exists
+		if ( $('#floating_message_wrapper') ) {
+		  $('#floating_message_wrapper').remove();
+		}
+		fM = createElement("div").attr("id","floating_message_wrapper").addClass(type);
+		innerEl = createElement("div").addClass("page_message");
+		message = createElement("strong").html(msg);
+		innerEl.append(message);
+		fM.append(innerEl);
+		closeC = createElement("div").addClass("page_message_close");
+		closeA = createElement("a").attr("href","#").html("X");
+		closeC.append(closeA);
+		fM.append(closeC);
+		closeA.bind("click", function() {
+			
+			flash_messages.close();
+		});
+      //=link_to_function 'X', 'flash_messages.close()'
+	  
+	  
+		$("#page_errors_container").append(fM);
+		//alert(msg);
+		$("#floating_message_wrapper").trigger('float_message:loaded');
+		$(window).trigger("scroll");
+		
+	},
     close_notice: function(){
         $('#notice_message').hide();
     },
@@ -20,20 +62,21 @@ var flash_messages = {
         
             clearInterval(flash_messages.timer);
         }
-        else {
-            console.log("times is null");
-        }
+       
         
     },
+	
     close_future: function(){
     
         flash_messages.timer = window.setInterval(flash_messages.close, 5000);
         
         
     },
-    scroll: function(){
+   
+	scroll: function(){
         element = $("#floating_message_wrapper");
-        element.animate({
+        
+		element.animate({
             top: $(window).scrollTop() + "px"
         }, {
             "duration": 100
@@ -52,6 +95,7 @@ var loading_indicator = {
     },
     scroll: function(){
         element = $('#loading_indicator');
+		
         element.animate({
             top: $(window).scrollTop() + "px"
         }, {
@@ -84,7 +128,7 @@ var form_utils = {
         
         $("div.field_with_errors").children("[textarea||input]:visible:enabled:first").focus();
         //$("div.field_with_errors textarea:visible:enabled:first").focus();
-    
+    	$(window).trigger("scroll");
     
     
     }
@@ -105,8 +149,9 @@ $(function(){
     });
     
     $("#floating_message_wrapper").live("float_message:loaded", function(){
+		
         flash_messages.close_future();
-        flash_messages.scroll();
+		loading_indicator.scroll();
     });
     
     $(window).scroll(function(){

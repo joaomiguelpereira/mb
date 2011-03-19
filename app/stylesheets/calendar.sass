@@ -1,5 +1,8 @@
 $cell_heigh: 19px
 $header_cell_bg_color: #DFFFCF
+$calendar_event_bg_color: #40BF17
+$calendar_event_info_bg_color:  #9EFF7F
+    
   
 @mixin table_header_td
   padding: 0px
@@ -55,7 +58,7 @@ table.editable_table
 
 
 .calendar_event
-  background-color: #CC3333
+  background-color: $calendar_event_bg_color
   height: $cell_heigh
   width: 100px
   color: #fff
@@ -67,10 +70,10 @@ table.editable_table
     
   .calendar_event_info
     border-radius: 4px
-    
     font-size: 10px
-    background-color: #CF7474
+    background-color: $calendar_event_info_bg_color
     padding: 0
+    color: #000
     
   .calendar_event_remove
     float: left

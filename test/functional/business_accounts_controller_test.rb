@@ -27,6 +27,81 @@ class BusinessAccountsControllerTest < ActionController::TestCase
     assert_equal @baccount.id, assigns(:business_account).id
   end
   
+  ####################Availability exception
+  
+  test "update availability exception" do
+    json_data = Array.new
+    #create two new exceptions
+    json_data << {Availability::EXCEPTION_START_DATE_FIELD_NAME=>"12/12/2001", Availability::EXCEPTION_END_DATE_FIELD_NAME=>"1/1/2002", Availability::EXCEPTION_MOTIVE_FIELD_NAME=>"Holidays, big ones", Availability::EXCEPTION_NOTES_FIELD_NAME=>"Some notes"}
+    put :availability_exceptions, {:business_account_id=>@badmin.id, :json_data=>json_data.to_json} , authenticated_user(@badmin)
+    assert_json_success("flash.success.business_account.availability_exceptions.update"); 
+  end
+  
+  
+  test "update availability more exception" do
+    json_data = Array.new
+    #create two new exceptions
+    json_data << {Availability::EXCEPTION_START_DATE_FIELD_NAME=>"12/12/2001", Availability::EXCEPTION_END_DATE_FIELD_NAME=>"1/1/2002", Availability::EXCEPTION_MOTIVE_FIELD_NAME=>"Holidays, big ones", Availability::EXCEPTION_NOTES_FIELD_NAME=>"Some notes"}
+    json_data << {Availability::EXCEPTION_START_DATE_FIELD_NAME=>"12/12/2001", Availability::EXCEPTION_END_DATE_FIELD_NAME=>"1/1/2002", Availability::EXCEPTION_MOTIVE_FIELD_NAME=>"Holidays, big ones", Availability::EXCEPTION_NOTES_FIELD_NAME=>"Some notes"}
+    
+    put :availability_exceptions, {:business_account_id=>@badmin.id, :json_data=>json_data.to_json} , authenticated_user(@badmin)
+    assert_json_success("flash.success.business_account.availability_exceptions.update"); 
+  end
+  
+  test "update availability exception if dates same" do
+    json_data = Array.new
+    #create two new exceptions
+    json_data << {Availability::EXCEPTION_START_DATE_FIELD_NAME=>"12/12/2001", Availability::EXCEPTION_END_DATE_FIELD_NAME=>"12/12/2001", Availability::EXCEPTION_MOTIVE_FIELD_NAME=>"Holidays, big ones", Availability::EXCEPTION_NOTES_FIELD_NAME=>"Some notes"}
+    put :availability_exceptions, {:business_account_id=>@badmin.id, :json_data=>json_data.to_json} , authenticated_user(@badmin)
+    assert_json_success("flash.success.business_account.availability_exceptions.update"); 
+  end
+
+  test "update empty availability exception" do
+    json_data = Array.new
+    #create two new exceptions
+    #json_data << {Availability::EXCEPTION_START_DATE_FIELD_NAME=>"12/12/2001", Availability::EXCEPTION_END_DATE_FIELD_NAME=>"1/1/2002", Availability::EXCEPTION_MOTIVE_FIELD_NAME=>"Holidays, big ones", Availability::EXCEPTION_NOTES_FIELD_NAME=>"Some notes"}
+    put :availability_exceptions, {:business_account_id=>@badmin.id, :json_data=>json_data.to_json} , authenticated_user(@badmin)
+    assert_json_success("flash.success.business_account.availability_exceptions.update"); 
+  end
+  
+   test "dont update nil availability exception" do
+    json_data = ""
+    #create two new exceptions
+    #json_data << {Availability::EXCEPTION_START_DATE_FIELD_NAME=>"12/12/2001", Availability::EXCEPTION_END_DATE_FIELD_NAME=>"1/1/2002", Availability::EXCEPTION_MOTIVE_FIELD_NAME=>"Holidays, big ones", Availability::EXCEPTION_NOTES_FIELD_NAME=>"Some notes"}
+    put :availability_exceptions, {:business_account_id=>@badmin.id, :json_data=>json_data.to_json} , authenticated_user(@badmin)
+    assert_json_error("flash.error.business_account.availability_exceptions.update"); 
+  end
+  
+
+   test "dont update not valid availability exception" do
+    json_data = Array.new
+    #create two new exceptions
+    json_data << {"start_date"=>"12/12/2001", Availability::EXCEPTION_END_DATE_FIELD_NAME=>"1/1/2002", Availability::EXCEPTION_NOTES_FIELD_NAME=>"Some notes"}
+    put :availability_exceptions, {:business_account_id=>@badmin.id, :json_data=>json_data.to_json} , authenticated_user(@badmin)
+    assert_json_error("flash.error.business_account.availability_exceptions.update")
+  end
+
+   test "do not update availability exception if dates wrong" do
+    json_data = Array.new
+    #create two new exceptions
+    json_data << {Availability::EXCEPTION_START_DATE_FIELD_NAME=>"12/12/2001", Availability::EXCEPTION_END_DATE_FIELD_NAME=>"11/12/2001", Availability::EXCEPTION_MOTIVE_FIELD_NAME=>"Holidays, big ones", Availability::EXCEPTION_NOTES_FIELD_NAME=>"Some notes"}
+    put :availability_exceptions, {:business_account_id=>@badmin.id, :json_data=>json_data.to_json} , authenticated_user(@badmin)
+    assert_json_error("flash.error.business_account.availability_exceptions.update") 
+  end
+  
+  test "do not update availability exception if dates wrong format" do
+    json_data = Array.new
+    #create two new exceptions
+    json_data << {Availability::EXCEPTION_START_DATE_FIELD_NAME=>"232323", Availability::EXCEPTION_END_DATE_FIELD_NAME=>"11111", Availability::EXCEPTION_MOTIVE_FIELD_NAME=>"Holidays, big ones", Availability::EXCEPTION_NOTES_FIELD_NAME=>"Some notes"}
+    put :availability_exceptions, {:business_account_id=>@badmin.id, :json_data=>json_data.to_json} , authenticated_user(@badmin)
+    assert_json_error("flash.error.business_account.availability_exceptions.update") 
+  end
+
+
+
+
+
+  ####################Availability
   test "update availability" do
     json_data_array = Array.new
     for i in (0..(Availability::WEEK_DAYS-1))
@@ -38,8 +113,12 @@ class BusinessAccountsControllerTest < ActionController::TestCase
       json_data_array << day_array
     end
     put :availability, {:business_account_id=>@badmin.id, :json_data=>json_data_array.to_json}, authenticated_user(@badmin)
-    assert_success_flashed "flash.success.business_account.availability.update"
+    #json = ActiveSupport::JSON.decode(@response.body)
+    #assert_equal json["message"], I18n.t("flash.success.business_account.availability.update")
+    
+    assert_json_success("flash.success.business_account.availability.update"); 
   end
+  
   
   test "dont update availability with invalid format" do
     json_data_array = Array.new
@@ -54,8 +133,8 @@ class BusinessAccountsControllerTest < ActionController::TestCase
     end
     
     put :availability, {:business_account_id=>@badmin.id, :json_data=>json_data_array.to_json}, authenticated_user(@badmin)
-    assert_error_flashed "flash.error.business_account.availability.update"
-  end
+    assert_json_error("flash.error.business_account.availability.update"); 
+      end
   
   test "get availability" do
     

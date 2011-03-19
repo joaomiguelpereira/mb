@@ -5,7 +5,7 @@ var dataPickerGlobalOptions = null;
 var headerTitles = null;
 var isInitialized = false;
 
-
+var availabilityExceptionsInitialData__ = "[{\"startDate\":\"12/12/2001\",\"endDate\":\"12/12/2001\",\"motive\":\"Holidays, big ones\",\"notes\":\"Some notes\"}]";
 $.fn.qtip.styles.helpTip = {
 
 
@@ -28,23 +28,35 @@ $.fn.qtip.styles.helpTip = {
 $(function(){
     $("#exceptions_container").bind("initializeExceptions", function(){
         availabilityExceptionsManager.initialize();
+        
     });
     
     dataPickerGlobalOptions = {
-        monthNamesShort: dateMonthNamesShort,
-        dateFormat: 'd-M-yy',
-        monthNames: dateMonthNames,
-        dayNames: dateDayNames,
-        dayNamesMin: dateDayNamesShort,
-    
+        monthNamesShort: calendarConfig.dateMonthNamesShort,
+        dateFormat: calendarConfig.dateFormat.format,
+        monthNames: calendarConfig.dateMonthNames,
+        dayNames: calendarConfig.dateDayNames,
+        dayNamesMin: calendarConfig.dateDayNamesShort,
+        onSelect: function(dateText, inst){
+            $(this).trigger("change");
+        }
+        
     };
     
-    headerTitles = {
+    exceptionsHeaderTitles = {
         motive: "Motivo",
         startDate: "Data ínicio",
         endDate: "Data fim",
         notes: "Notas"
     };
+    exceptionsMessages = {
+        error: {
+            missingMotive: "É necessário preencher o motivo!",
+            missingStartDate: "É necessário preencher a data de início",
+            missingEndDate: "É necessário preencher a data de fim",
+            endDateGreaterStartDate: "A data de fim tem de ser após a data de ínicio"
+        }
+    }
 });
 
 var availabilityExceptionsManager = {
@@ -56,13 +68,27 @@ var availabilityExceptionsManager = {
             throw "Missing some configurations"
         }
         if (!isInitialized) {
+            availabilityExceptionsManager.loadFromJson(availabilityExceptionsInitialData__);
             availabilityExceptionsManager.exceptionsTable = new ExceptionsTable($("#exceptions_container")).render();
             
             isInitialized = true;
         }
-        else {
         
+    },
+	saveException: function(exception) {
+		alert("Add to a arrnay and save in server.,.");
+	},
+    loadFromJson: function(jsonData){
+        Logger.log("Loading from json: " + jsonData);
+        var array = JSON.parse(jsonData);
+        for (var i = 0; i < array.length; i++) {
+            Logger.log("Loading exception startDate: " + array[i].startDate);
+            Logger.log("Loading exception endDate: " + array[i].endDate);
+            Logger.log("Loading exception motive: " + array[i].motive);
+            Logger.log("Loading exception notes: " + array[i].notes);
+            
         }
+        
     }
 }
 
@@ -80,25 +106,99 @@ function ExceptionsRow(){
     this.okSymbol = null;
     this.cancelSymbol = null;
     
+    this.dataObject = {
+        startDate: null,
+        endDate: null,
+        motive: null,
+        notes: null
+    };
+    
 }
 
+ExceptionsRow.prototype.fromDataObject = function(dataObject){
+    this.dataObject = dataObject;
+}
+
+
+ExceptionsRow.prototype.toDataObject = function(){
+
+
+    this.dataObject.motive = this.motiveInput.val().trim();
+    
+    this.dataObject.startDate = calendarConfig.dateFormat.parser(this.startDateInput.val());
+    this.dataObject.endDate = calendarConfig.dateFormat.parser(this.endDateInput.val());
+    this.dataObject.notes = this.notesInput.val().trim();
+    
+    Logger.log("Start Date Day: " + this.dataObject.startDate.day);
+    Logger.log("Start Date Month: " + this.dataObject.startDate.month);
+    Logger.log("Start Date Year: " + this.dataObject.startDate.year);
+    
+    
+    
+}
 ExceptionsRow.prototype.focus = function(){
     this.motiveInput.focus();
-    
-    
-    
 }
 
 ExceptionsRow.prototype.validate = function(){
+
+    var changeHanlder = function(){
+        $(this).removeClass("field_with_errors");
+        $(this).unbind("change", changeHanlder)
+    };
+    
+    
     if (this.motiveInput.val().trim().length == 0) {
+    
         this.motiveInput.addClass("field_with_errors");
-    	this.motiveInput.focus();
-		flash_messages.show("error","É necessário preencher o motivo");
-		return false;
-	}
+        this.motiveInput.focus();
+        flash_messages.show("error", exceptionsMessages.error.missingMotive, {
+            autoClose: true,
+            autoCloseTime: 10000
+        });
+        this.motiveInput.bind("change", changeHanlder);
+        return false;
+    }
+    
+    if (this.startDateInput.val().trim().length == 0) {
+        this.startDateInput.addClass("field_with_errors");
+        this.startDateInput.focus();
+        flash_messages.show("error", exceptionsMessages.error.missingStartDate);
+        this.startDateInput.bind("change", changeHanlder);
+        return false;
+        
+    }
+    if (this.endDateInput.val().trim().length == 0) {
+        this.endDateInput.addClass("field_with_errors");
+        this.endDateInput.focus();
+        flash_messages.show("error", exceptionsMessages.error.missingEndDate);
+        this.endDateInput.bind("change", changeHanlder);
+        return false;
+    }
+    
+    //check date
+    if (!this.dataObject.endDate.isInFuture(this.dataObject.startDate)) {
+        this.endDateInput.addClass("field_with_errors");
+        this.endDateInput.focus();
+        flash_messages.show("error", exceptionsMessages.error.endDateGreaterStartDate);
+        this.endDateInput.bind("change", changeHanlder);
+        return false;
+    }
+	
+	return true;
 }
+
+
 ExceptionsRow.prototype.saveException = function(){
-    this.validate();
+    this.toDataObject();
+    if ( this.validate() ) {
+		alert("Adding to table....");
+		availabilityExceptionsManager.saveException(this);
+		
+		
+	}
+	
+    
 }
 var dateUtils = {
 
@@ -183,6 +283,16 @@ ExceptionsRow.prototype.element = function(){
             instanceVar.cancelEditException();
         });
         
+        this.startDateInput.bind("keydown", function(event){
+            event.preventDefault();
+            
+        });
+        this.endDateInput.bind("keydown", function(event){
+            event.preventDefault();
+            
+        });
+        
+        
         
     }
     return this.rowElement;
@@ -212,10 +322,10 @@ ExceptionsTable.prototype.render = function(){
     var tHeader = createElement("thead");
     var tHeaderRow = createElement("tr");
     
-    var tdHeaderCellMotive = createElement("td").html(headerTitles.motive).addClass("border_left").css("width", "240px");
-    var tdHeaderCellStartDate = createElement("td").html(headerTitles.startDate).css("width", "120px");
-    var tdHeaderCellEndDate = createElement("td").html(headerTitles.endDate).css("width", "120px");
-    var tdHeaderCellNotes = createElement("td").html(headerTitles.notes).css("width", "240px");
+    var tdHeaderCellMotive = createElement("td").html(exceptionsHeaderTitles.motive).addClass("border_left").css("width", "240px");
+    var tdHeaderCellStartDate = createElement("td").html(exceptionsHeaderTitles.startDate).css("width", "120px");
+    var tdHeaderCellEndDate = createElement("td").html(exceptionsHeaderTitles.endDate).css("width", "120px");
+    var tdHeaderCellNotes = createElement("td").html(exceptionsHeaderTitles.notes).css("width", "240px");
     var tdHeaderCellActions = createElement("td").html("Actions").css("width", "82px");
     
     tHeaderRow.append(tdHeaderCellMotive);

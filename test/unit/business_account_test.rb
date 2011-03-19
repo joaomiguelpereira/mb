@@ -11,9 +11,7 @@ class BusinessAccountTest < ActiveSupport::TestCase
   end
   
   test "availability should be destroyed on business detroy" do
-    #assert_nil @baccount.availability  
-    #availability = Factory.create(:availability, :business_account=>@baccount, :json_data=>"")
-    
+
     account  = BusinessAccount.find(@baccount.id)
     
     assert_not_nil account.availability
@@ -26,21 +24,22 @@ class BusinessAccountTest < ActiveSupport::TestCase
     
   end
   test "business account have an default availability" do
-    #assert_nil @baccount.availability  
-    #availability = Factory.create(:availability, :business_account=>@baccount, :json_data=>"")
+
     account  = BusinessAccount.find(@baccount.id)
     
     assert_not_nil account.availability
     assert_not_nil account.availability.json_data
+    assert_not_nil account.availability.exceptions_json_data
     #mimic default json_data
     
     def_json_data = Array.new
-    
     for i in (0..6)
       day_array = Array.new
       def_json_data << day_array
     end
     
+    
+    assert_equal account.availability.exceptions_json_data, Array.new.to_json
     assert_equal account.availability.json_data, def_json_data.to_json
       
   end

@@ -21,33 +21,35 @@ resizeIncrementY = browser.mozilla ? 19 : 20;
 $(function(){
 
 
-    if (typeof initialData === 'undefined' || typeof availabilityUpdateUrl === 'undefined') {
+    if (typeof availabilityInitialData === 'undefined' || typeof availabilityUpdateUrl === 'undefined') {
         alert("Missing initial data or updateUrl")
-        throw "Error: missing initial data or updateUrl";   
+        throw "Error: missing initial data or updateUrl";
     }
     else {
-    	eventManager = new EventManager();
+		
+        eventManager = new EventManager();
         eventManager.createCalendar($("#ccontainer"));
-        eventManager.loadFromJson(initialData);
+        eventManager.loadFromJson(availabilityInitialData);
     }
-	$("#config_exceptions_bt").bind("click", function() {
-		
-		$("#exceptions_container").toggle();
-		$("#exceptions_container").trigger("initializeExceptions");
-		if ($("#exceptions_container").is(":visible") ){
-			$("#config_exceptions_bt").html("Ocultar excepções");	
-		} else {
-			$("#config_exceptions_bt").html("Mostrar excepções");	
-		}
-		
-		
-		return false;
-	});
-	
-	
-	
-	    
-	
+    $("#config_exceptions_bt").bind("click", function(){
+    
+        $("#exceptions_container").toggle();
+        $("#exceptions_container").trigger("initializeExceptions");
+        if ($("#exceptions_container").is(":visible")) {
+            $("#config_exceptions_bt").html("Ocultar excepções");
+        }
+        else {
+            $("#config_exceptions_bt").html("Mostrar excepções");
+        }
+        
+        
+        return false;
+    });
+    
+    
+    
+    
+    
     if (dev) {
         $("#dump_events").bind("click", function(){
             eventManager.dump();
@@ -72,7 +74,7 @@ function EventManager(){
     this.parentElement = null;
     this.weekCalendar = null;
     this.events = new Array();
-    for (var i = 0; i < dateDayNames.length; i++) {
+    for (var i = 0; i < calendarConfig.dateDayNames.length; i++) {
         this.events[i] = new Array();
     }
     
@@ -84,7 +86,6 @@ EventManager.prototype.createCalendar = function(element){
 }
 
 EventManager.prototype.loadFromJson = function(json){
-    Logger.log("loading from json: " + json);
     var array = JSON.parse(json);
     for (var i = 0; i < array.length; i++) {
         dayArray = array[i];
@@ -104,7 +105,7 @@ EventManager.prototype.loadFromJson = function(json){
 EventManager.prototype.toJson = function(){
 
     var jsonArray = new Array();
-    for (var i = 0; i < dateDayNames.length; i++) {
+    for (var i = 0; i < calendarConfig.dateDayNames.length; i++) {
     
         jsonArray[i] = new Array();
         
@@ -121,7 +122,7 @@ EventManager.prototype.toJson = function(){
 EventManager.prototype.dump = function(){
     if ($("#dumper_zone")) {
         var html = "";
-        for (var i = 0; i < dateDayNames.length; i++) {
+        for (var i = 0; i < calendarConfig.dateDayNames.length; i++) {
             day_array = this.events[i];
             html += "<div><strong>Day " + i + "</strong></div>";
             for (var j = 0; j < day_array.length; j++) {
@@ -262,8 +263,8 @@ WeekCalendarHeader.prototype.element = function(){
         theader = createElement("thead");
         trow = createElement("tr");
         //Render week days
-        for (i = 0; i < dateDayNames.length; i++) {
-            el = createElement("td").html(dateDayNames[i]);
+        for (i = 0; i < calendarConfig.dateDayNames.length; i++) {
+            el = createElement("td").html(calendarConfig.dateDayNames[i]);
             if (i == 0) {
                 el.css("border-left", "solid 1px #ccc");
             }
@@ -324,7 +325,7 @@ WeekCalendarBody.prototype.element = function(){
             
             trElements[0].append(hour_cell);
             
-            for (var j = 0; j < dateDayNames.length; j++) {
+            for (var j = 0; j < calendarConfig.dateDayNames.length; j++) {
             
                 for (var slotCount = 0; slotCount < trNumber; slotCount++) {
                     aSlot = new CalendarSlot(j, ((i * hourMinutes) + minutesIncrement * slotCount));
@@ -744,22 +745,4 @@ CalendarEvent.prototype.element = function(){
     }
     
     return this.eventElement;
-}
-
-
-var CalendarUtils = {
-    formatHour: function(minutes){
-        var hours = Math.floor(minutes / 60);
-        var minutes = minutes % 60;
-        
-        if (hours <= 9) {
-            hours = "0" + hours
-        }
-        
-        if (minutes <= 9) {
-            minutes = "0" + minutes
-        }
-        
-        return hours + ":" + minutes;
-    }
 }

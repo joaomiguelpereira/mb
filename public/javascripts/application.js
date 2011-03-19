@@ -6,6 +6,7 @@ function createElement(name){
     return $(document.createElement(name));
 }
 
+var autoCloseFashMessagesTime = 5000;
 
 /*************************************************************
  * Calendar Utils
@@ -21,10 +22,14 @@ var Logger = {
 }
 
 var flash_messages = {
-	
+	settings: {
+		autoCloseFashMessagesTime: 5000,
+		autoClose: true
+	},
     timer: null,
-	show: function(type, msg) {
+	show: function(type, msg, options) {
 		
+		$.extend(flash_messages.settings, options);
 		//if exists
 		if ( $('#floating_message_wrapper') ) {
 		  $('#floating_message_wrapper').remove();
@@ -42,9 +47,8 @@ var flash_messages = {
 			
 			flash_messages.close();
 		});
-      //=link_to_function 'X', 'flash_messages.close()'
-	  
-	  
+      
+	  	
 		$("#page_errors_container").append(fM);
 		//alert(msg);
 		$("#floating_message_wrapper").trigger('float_message:loaded');
@@ -68,7 +72,10 @@ var flash_messages = {
 	
     close_future: function(){
     
-        flash_messages.timer = window.setInterval(flash_messages.close, 5000);
+		if ( flash_messages.settings.autoClose ) {
+			flash_messages.timer = window.setInterval(flash_messages.close, flash_messages.settings.autoCloseFashMessagesTime);	
+		}
+        
         
         
     },

@@ -12,7 +12,20 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
-  
+  def assert_json_success(i18nkey, *params )
+    
+    json = ActiveSupport::JSON.decode(@response.body)
+    assert_equal I18n.t(i18nkey,*params), json["message"]
+    assert_equal "ok", json["status"]
+    
+  end
+  def assert_json_error(i18nkey, *params )
+    
+    json = ActiveSupport::JSON.decode(@response.body)
+    assert_equal I18n.t(i18nkey,*params), json["message"]
+    assert_equal "error", json["status"]
+    
+  end
   def assert_error_flashed(i18nkey, *params)
     assert_equal I18n.t(i18nkey,*params), flash[:error]
   end

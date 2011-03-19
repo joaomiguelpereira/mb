@@ -7,7 +7,19 @@ class BusinessAccountsController < BusinessAdminResourcesBaseController
   end
   
   def availability_exceptions
+    
+    @business_account = @current_user.business_account
+    @availability = @business_account.availability
     json_data = params[:json_data]
+    puts "JSON EXCEPTION:  "+json_data
+    if Availability.is_exceptions_json_valid?(json_data)
+      @availability.exceptions_json_data = json_data      
+      @availability.save
+      render :json=> { :status => :ok, :message=>I18n.t("flash.success.business_account.availability_exceptions.update")}
+    else
+      render :json=> { :status => :error, :message=>I18n.t("flash.error.business_account.availability_exceptions.update")}
+
+    end
     
   end
   

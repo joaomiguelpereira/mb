@@ -7,6 +7,7 @@
 = more_javascripts_files "jquery.scrollTo-min"
 = more_javascripts_files "json2"
 
+= more_javascripts_files "calendar_functions"
 = more_javascripts_files "availability"
 = more_javascripts_files "availability_exceptions"
 
@@ -16,16 +17,23 @@
 
 = more_javascripts_files "jquery-ui-1.8.10.custom/js/jquery-ui-1.8.10.custom.min.js"
 
-%script 
-  var initialData = "#{escape_javascript(raw(@availability.json_data))}";
-  var availabilityUpdateUrl = "#{business_account_availability_path(@business_account)}";
-  var availabilityExceptionsInitialData = "#{escape_javascript(raw(@availability.exceptions_json_data))}";
-  var tickImageUrl = "#{image_path("tick.png")}";
-  var crossImageUrl = "#{image_path("cross.png")}"
-  var dateDayNamesShort = #{raw(@js_i18n_data[:dateDaysNamesShort])};
-  var dateDayNames = #{raw(@js_i18n_data[:dateDaysNames])};
-  var dateMonthNames = #{raw(@js_i18n_data[:dateMonthNames])};
-  var dateMonthNamesShort = #{raw(@js_i18n_data[:dateMonthNamesShort])};
+%script
+  :plain 
+    var availabilityInitialData = "#{escape_javascript(raw(@availability.json_data))}";
+    var availabilityUpdateUrl = "#{business_account_availability_path(@business_account)}";
+    var availabilityExceptionsInitialData = "#{escape_javascript(raw(@availability.exceptions_json_data))}";
+    var availabilityExceptionsUpdateUrl = "#{business_account_availability_exceptions_path(@business_account)}";
+    var tickImageUrl = "#{image_path("tick.png")}";
+    var crossImageUrl = "#{image_path("cross.png")}"
+   
+    var dateDayNamesShort = #{raw(@js_i18n_data[:dateDaysNamesShort])};
+    var dateDayNames = #{raw(@js_i18n_data[:dateDaysNames])};
+    var dateMonthNames = #{raw(@js_i18n_data[:dateMonthNames])};
+    var dateMonthNamesShort = #{raw(@js_i18n_data[:dateMonthNamesShort])};
+      
+       
+   
+  
   
 #full_content
   =render :partial=>"business_accounts/dashboard_menu"

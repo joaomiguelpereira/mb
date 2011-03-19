@@ -1,0 +1,25 @@
+base: &base
+  adapter: mysql2
+  encoding: utf8
+  reconnect: true
+  pool: 5
+  socket: /var/run/mysqld/mysqld.sock
+
+development:
+  <<: *base
+  database: medibooking_development
+  username: railsuser
+  password: railsuser1234
+  
+test:
+  <<: *base
+  database: medibooking_test
+  username: railsuser
+  password: railsuser1234
+  socket: /var/run/mysqld/mysqld.sock
+
+production:
+  <<: *base
+  database: #{db_name}
+  username: #{db_user}
+  password: #{db_password}

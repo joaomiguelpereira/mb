@@ -4,10 +4,10 @@ default_run_options[:pty] = true
 set :repository,  "git://github.com/jmrp/mb.git"
 set :scm, :git
 set :user, "rails"  # The server's user for deploys
-set :scm_passphrase, "monitor"  # The deploy user's password
+set :scm_passphrase, "**********"  # The deploy user's password
 
 
-set :deploy_to, "/home/rails/apps"
+set :deploy_to, "/home/rails/apps/medibooking"
 role :web, "demo.medibooking.com"                          # Your HTTP server, Apache/etc
 role :app, "demo.medibooking.com"                          # This may be the same as your `Web` server
 role :db,  "demo.medibooking.com", :primary => true # This is where Rails migrations will run

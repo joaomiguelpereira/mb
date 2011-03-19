@@ -22,4 +22,4 @@ production:
   <<: *base
   database: #{db_name}
   username: #{db_user}
-  password: #{db_password}
+  password: #{Capistrano::CLI.ui.ask("Enter MySQL database password: ")}

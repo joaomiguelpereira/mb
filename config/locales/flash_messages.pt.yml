@@ -5,6 +5,8 @@ pt:
         activation_pending: O seu registo está quase completo. Enviamos um email para %{email}. Siga as instruções para activar a sua conta. Após a activação pode iniciar a sessão.
     error:
       business_account:
+        availability_exceptions
+          update: Não foi possível actualizar as excepções
         availability:
           update: Não foi possível actualizar o horário
       session:
@@ -37,6 +39,8 @@ pt:
         not_authorized: Não está autorizado a ver esta página
     success:
       business_account:
+        availability_exceptions
+          update: As excepções foram actualizadas com sucesso
         availability:
           update: O horário foi actualizado com sucesso
       session:

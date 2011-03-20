@@ -7,10 +7,10 @@ set :user, "rails"  # The server's user for deploys
 set :scm_passphrase, "**********"  # The deploy user's password
 
 
-set :deploy_to, "/home/rails/apps/medibooking"
-role :web, "demo.medibooking.com"                          # Your HTTP server, Apache/etc
-role :app, "demo.medibooking.com"                          # This may be the same as your `Web` server
-role :db,  "demo.medibooking.com", :primary => true # This is where Rails migrations will run
+set :deploy_to, "/*****"
+role :web, "********.com"                          # Your HTTP server, Apache/etc
+role :app, "********.com"                          # This may be the same as your `Web` server
+role :db,  "********.com", :primary => true # This is where Rails migrations will run
 
 #role :db,  "your slave db-server here"
 

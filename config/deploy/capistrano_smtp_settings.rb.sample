@@ -1,0 +1,7 @@
+set :application_name, 'medibooking.com'
+set :mail_host, 'demo.medibooking.com'
+set :default_mail_from, 'notifications@medibooking.com'
+set :smtp_address,'smtp1.servage.net'
+set :smtp_port, 25
+set :smtp_domain,'demo.medibooking.com'
+set :smtp_user_name,'notifications@medibooking.com'

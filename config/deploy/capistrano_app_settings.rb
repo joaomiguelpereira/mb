@@ -5,7 +5,7 @@ Capistrano::Configuration.instance.load do
   before "deploy:setup", "deploy:app_settings"
   after "deploy:update_code", "deploy:app_settings:symlink" 
   namespace :deploy do
-    namespace :db do
+    namespace :app_settings do
       desc "Create application.yml in shared folder" 
       task :default do
         db_config = ERB.new <<-EOF

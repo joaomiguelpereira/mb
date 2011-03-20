@@ -9,7 +9,6 @@ default_run_options[:pty] = true
 set :repository,  "git://github.com/jmrp/mb.git"
 set :scm, :git
 set :user, "rails"  # The server's user for deploys
-set :scm_passphrase, "monitor"  # The deploy user's password
 
 
 set :db_user, "rails"  # The DB's user name
@@ -27,10 +26,10 @@ role :db,  "demo.medibooking.com", :primary => true # This is where Rails migrat
 # these http://github.com/rails/irs_process_scripts
 
 # If you are using Passenger mod_rails uncomment this:
-# namespace :deploy do
-#   task :start do ; end
-#   task :stop do ; end
-#   task :restart, :roles => :app, :except => { :no_release => true } do
-#     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
-#   end
-# end
+ namespace :deploy do
+   task :start do ; end
+   task :stop do ; end
+   task :restart, :roles => :app, :except => { :no_release => true } do
+     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
+   end
+ end

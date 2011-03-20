@@ -1,4 +1,3 @@
-set :application_name, 'medibooking.com'
 set :mail_host, 'demo.medibooking.com'
 set :default_mail_from, 'notifications@medibooking.com'
 set :smtp_address,'smtp1.servage.net'

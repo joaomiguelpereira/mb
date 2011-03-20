@@ -10,7 +10,7 @@ Capistrano::Configuration.instance.load do
       task :default do
         db_config = ERB.new <<-EOF
     production:
-      application_name: #{application_name}
+      application_name: #{application}
       mail_notifications:
         mail_host: #{mail_host}
         default_mail_from: #{default_mail_from}

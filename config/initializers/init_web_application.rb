@@ -10,16 +10,17 @@ WebApplication::load_configuration(application_config)
 ActionMailer::Base.default_url_options[:host] = WebApplication::config['mail_notifications']['mail_host']
 
 #if production, then use the following
-puts ::Rails.env
 
-puts "Loading smtp setting if in production..."
+
+
 if ::Rails.env == 'production'
-  ActionMailer::Base.server_settings = {
-  :address => "mail.domain.com",
-  :port => 25,
-  :domain => "mail.domain.com",
-  :user_name => "email_account_login",
-  :password => "email_account_password",
+  ActionMailer::Base.delivery_method = :smtp  
+  ActionMailer::Base.smtp_settings = {
+  :address => WebApplication::config['mail_notifications']['address'],
+  :port => WebApplication::config['mail_notifications']['port'],
+  :domain => WebApplication::config['mail_notifications']['domain'],
+  :user_name => WebApplication::config['mail_notifications']['user_name'],
+  :password => WebApplication::config['mail_notifications']['password'],
   :authentication => :login
   }  
 end

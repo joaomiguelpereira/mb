@@ -1,6 +1,7 @@
 $LOAD_PATH.unshift File.join(File.dirname(__FILE__), 'deploy')
 
 require 'capistrano_database'
+require 'capistrano_app_settings'
 
 set :application, "medibooking"
 

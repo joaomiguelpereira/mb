@@ -92,7 +92,7 @@
 unless Capistrano::Configuration.respond_to?(:instance)
   abort "This extension requires Capistrano 2"
 end
-
+require 'erb'
 Capistrano::Configuration.instance.load do
   
   namespace :deploy do

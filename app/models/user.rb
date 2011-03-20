@@ -76,7 +76,7 @@ class User < ActiveRecord::Base
     
   end
   def staffer?
-    (type.nil?) || (type == Staffer.name) ? true : false
+    (!type.nil?) || (type == Staffer.name) ? true : false
   end
   
   def user?

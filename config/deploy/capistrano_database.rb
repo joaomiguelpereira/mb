@@ -135,7 +135,7 @@ Capistrano::Configuration.instance.load do
         template = File.file?(location) ? File.read(location) : default_template
         
         config = ERB.new(template)
-        
+     
         run "mkdir -p #{shared_path}/db" 
         run "mkdir -p #{shared_path}/config" 
         put config.result(binding), "#{shared_path}/config/database.yml"
@@ -144,6 +144,7 @@ Capistrano::Configuration.instance.load do
       desc <<-DESC
         [internal] Updates the symlink for database.yml file to the just deployed release.
       DESC
+      
       task :symlink, :except => { :no_release => true } do
         run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml" 
       end

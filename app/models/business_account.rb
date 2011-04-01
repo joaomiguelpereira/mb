@@ -24,6 +24,8 @@ class BusinessAccount < ActiveRecord::Base
     if self.availability.nil?
       self.availability = Availability.new
       self.availability.json_data = ""
+      self.availability.exception_json_data = ""
+      
       self.save
     end
   end

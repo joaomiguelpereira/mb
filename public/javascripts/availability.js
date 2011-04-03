@@ -92,7 +92,7 @@ EventManager.prototype.loadFromJson = function(json){
         for (var j = 0; j < dayArray.length; j++) {
         
             var ev = new CalendarEvent().loadFromRawObject(dayArray[j]);
-            Logger.log("loading event: " + ev);
+            //Logger.log("loading event: " + ev);
             ev.renderInCalendar();
             this.events[ev.weekDay].push(ev);
             

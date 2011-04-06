@@ -7,7 +7,7 @@
   =link_to "A minha conta", :user_profile
   -if @current_user.business_admin?
     |
-    =link_to "Dashboard", :business_dashboard
+    =link_to "Dashboard", business_dashboard_path(@current_user.business_account)
 -else
   %span 
     =link_to 'Inicial Sessão', :new_session

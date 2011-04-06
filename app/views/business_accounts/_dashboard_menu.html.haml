@@ -8,7 +8,7 @@
     %ul
       %li
         
-        =link_to "Dashboard", business_dashboard_path, :class=>(request.env['PATH_INFO'] == business_dashboard_path) ? "selected" : ""
+        =link_to "Dashboard", business_dashboard_path(@current_user.business_account), :class=>(request.env['PATH_INFO'] == business_dashboard_path(@current_user.business_account)) ? "selected" : ""
       -if !@current_user.business.nil?
         %li
           =link_to "Colaboradores", business_account_staffers_path(@current_user.business_account), :class=>(request.env['PATH_INFO'] ==  business_account_staffers_path(@current_user.business_account) ) ? "selected" : ""

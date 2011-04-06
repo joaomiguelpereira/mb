@@ -37,8 +37,7 @@ class SessionsController < ApplicationController
         create_session_for(user,keep_logged)
         flash_success "flash.success.session.create", {:keep=>true}, {:email=>user.email}
         redirect_to root_path and return if( user.user? || user.staffer?)
-        redirect_to business_dashboard_path and return if user.business_admin?
-        
+        redirect_to business_dashboard_path(user.business_account) and return if user.business_admin?
       end
     end
   end

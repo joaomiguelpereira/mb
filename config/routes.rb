@@ -108,7 +108,7 @@ Medibooking::Application.routes.draw do
   resources :sessions, :only=>[:new, :create]
   #resources :businesses
   #match "business/:short_name/dashboard" => "businesses#show", :via=>[:get], :as=>:manage_business
-  match "business/dashboard" =>"business_accounts#index", :via=>[:get], :as=>:business_dashboard
+  match "business/:business_account_id/dashboard" =>"business_accounts#index", :via=>[:get], :as=>:business_dashboard
   match "session/delete" =>"sessions#destroy", :via=>[:delete], :as=>:delete_session
   
   

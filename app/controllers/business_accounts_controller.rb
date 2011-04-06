@@ -1,6 +1,6 @@
 class BusinessAccountsController < BusinessAdminResourcesBaseController
   
-  before_filter :ensure_authenticated, :ensure_is_business_admin
+  #before_filter :ensure_authenticated, :ensure_is_business_admin, :ensure_has_access?
   
   def index
     @business_account = @current_user.business_account

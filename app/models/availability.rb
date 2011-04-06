@@ -34,14 +34,13 @@ class Availability < ActiveRecord::Base
     
     start_date = Date.strptime(exception[EXCEPTION_START_DATE_FIELD_NAME], "%d/%m/%Y")
     end_date = Date.strptime(exception[EXCEPTION_END_DATE_FIELD_NAME], "%d/%m/%Y")
-    puts "Start Date: "+start_date.to_s
-    puts "End Date: "+end_date.to_s
+    
     
     return false if ( start_date > end_date )
-    puts "returning true"
+    
     true
   rescue ArgumentError
-    puts "----------------------------------INVALIDA DATE FORMAT"
+    logger.error("Error convertin dates.")
     false
     
   end

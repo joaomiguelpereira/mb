@@ -163,7 +163,10 @@ class BusinessAccountsControllerTest < ActionController::TestCase
   test "get specialities" do
     get :specialities,{:business_account_id=>@baccount.id},authenticated_user(@badmin)
     assert_not_nil assigns(:business_account)
-    assert assigns(:specialities)
-    
+    assert assigns(:specialities)  
+  end
+  
+  test "get json specialities" do
+    assert false
   end
 end

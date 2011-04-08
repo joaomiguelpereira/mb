@@ -58,7 +58,12 @@ class BusinessAccountsController < BusinessAdminResourcesBaseController
   
   def specialities
     @business_account = @current_user.business_account
-    @specialities = @business_account.specialities 
+    @specialities = @business_account.specialities
     
+    if request.get? && request.format.json?
+      res = {:status=>"error", :message=>"Working"}
+      render :json=>res.to_json
+      
+    end
   end
 end

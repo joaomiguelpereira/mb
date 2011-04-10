@@ -4,7 +4,7 @@ end
 
 Factory.define :speciality do |f|
   f.sequence(:name) {StringUtils.generate_random_string(10)}
-  f.description "Some description"
+  f.description {StringUtils.generate_random_string(10)}
 end
 
 Factory.define :user do |f|

@@ -60,10 +60,37 @@ class BusinessAccountsController < BusinessAdminResourcesBaseController
     @business_account = @current_user.business_account
     @specialities = @business_account.specialities
     
-    if request.get? && request.format.json?
-      res = {:status=>"error", :message=>"Working"}
-      render :json=>res.to_json
-      
+    #Get records as JSON
+    if request.get? && request.format.json?  
+      render :json=>@specialities.to_json
     end
+    
+    #Save new record as JSON
+    if request.post? && request.format.json?
+      specR = Speciality.new(ActiveSupport::JSON.decode(params[:speciality]))
+      #try to find if
+      speciality = Speciality.find_by_name(specR.name)
+      
+      
+      if speciality && @business_account.specialities.exists?(speciality) 
+        render :json=> { :status => :error, :message=>I18n.t("flash.error.speciality.create.exists")}
+      else
+        speciality = specR if speciality.nil?   
+        @business_account.specialities << speciality
+        if @business_account.save
+          render :json=> { :status => :ok, :message=>I18n.t("flash.success.speciality.create")}
+        else 
+          render :json=> { :status => :error, :message=>I18n.t("flash.error.speciality.create")}
+        end
+      end
+    end
+    #Delete record
+    if request.delete?
+      speciality = Speciality.find(params[:speciality_id])
+      @business_account.specialities.delete(speciality)
+      render :json=> { :status => :ok, :message=>I18n.t("flash.success.speciality.delete")}
+    end
+  rescue ActiveRecord::UnknownAttributeError
+    render :json=> { :status => :error, :message=>I18n.t("flash.error.speciality.general")}
   end
 end

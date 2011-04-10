@@ -4,6 +4,11 @@ pt:
       user:
         activation_pending: O seu registo está quase completo. Enviamos um email para %{email}. Siga as instruções para activar a sua conta. Após a activação pode iniciar a sessão.
     error:
+      speciality:
+        create: Não foi possível criar esta especialidade
+        general: Ocorreu um erro. Por favor volte a carregar a página e tente novamente.
+        create:
+          exists: Esta especialidade já se encontra definida
       business_account:
         availability_exceptions:
           update: Não foi possível actualizar as excepções
@@ -38,6 +43,9 @@ pt:
         invalid_operation: Não foi possível entender este pedido 
         not_authorized: Não está autorizado a ver esta página
     success:
+      speciality:
+        create: A especialidade foi criada com sucesso
+        delete: A especialidade foi removida com sucesso
       business_account:
         availability_exceptions
           update: As excepções foram actualizadas com sucesso

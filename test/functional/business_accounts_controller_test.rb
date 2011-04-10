@@ -167,6 +167,76 @@ class BusinessAccountsControllerTest < ActionController::TestCase
   end
   
   test "get json specialities" do
-    assert false
+    #create some specialities
+    spec1 = Factory.create(:speciality)
+    spec2 = Factory.create(:speciality)
+    spec3 = Factory.create(:speciality)
+    
+    @baccount.specialities << spec1
+    @baccount.specialities << spec2
+    @baccount.specialities << spec3
+    @baccount.save
+     
+    get :specialities,{:format=>:json, :business_account_id=>@baccount.id},authenticated_user(@badmin)
+    #puts @response.body
+    specs = ActiveSupport::JSON.decode(@response.body)
+    assert_equal 3, specs.length 
+    assert_equal 3, @baccount.specialities.length 
+    
   end
+  
+  test "create new speciality" do
+   assert_equal 0, @baccount.specialities.length
+   spec1 = Factory.attributes_for(:speciality, :name=>"rino", :description=>"Nose jobs")
+   assert_difference ('Speciality.count') do
+    post :specialities, {:format=>:json, :business_account_id=>@baccount.id,:speciality=>spec1.to_json}, authenticated_user(@badmin)  
+   end
+   assert_json_success("flash.success.speciality.create");
+   bAccount = BusinessAccount.find(@baccount.id)
+   assert_equal 1, bAccount.specialities.length
+ end
+ 
+  test "dont create new speciality for invalid data" do
+   assert_equal 0, @baccount.specialities.length
+   spec1 = {:dummy=>"dsdd"}
+   
+   assert_no_difference ('Speciality.count') do
+    post :specialities, {:format=>:json, :business_account_id=>@baccount.id,:speciality=>spec1.to_json}, authenticated_user(@badmin)  
+   end
+   assert_json_error("flash.error.speciality.general");
+   bAccount = BusinessAccount.find(@baccount.id)
+   assert_equal 0, bAccount.specialities.length
+ end
+
+  #Refactor this
+  #A existing speciality should be assigned to the business if not alreday assigned
+  test "dont create new speciality if same name" do
+   specRino = Factory.create(:speciality, :name=>"rino")
+   @baccount.specialities << specRino
+   @baccount.save
+   assert_equal 1, @baccount.specialities.length
+   spec1 = Factory.attributes_for(:speciality, :name=>"rino", :description=>"Nose jobs")
+   assert_no_difference ('Speciality.count') do
+    post :specialities, {:format=>:json, :business_account_id=>@baccount.id,:speciality=>spec1.to_json}, authenticated_user(@badmin)  
+   end
+   assert_json_error("flash.error.speciality.create.exists");
+   bAccount = BusinessAccount.find(@baccount.id)
+   assert_equal 1, bAccount.specialities.length
+ end
+ 
+ test "delete speciality" do
+    spec1 = Factory.create(:speciality) 
+    @baccount.specialities << spec1
+    @baccount.save
+    bAccount = BusinessAccount.find(@baccount.id)
+    assert_equal 1, bAccount.specialities.length
+    assert_no_difference('Speciality.count') do
+      delete :specialities, {:format=>:json, :business_account_id=>@baccount.id,:speciality_id=>spec1.id}, authenticated_user(@badmin)   
+    end
+    assert_json_success("flash.success.speciality.delete");
+    bAccount = BusinessAccount.find(@baccount.id)
+    assert_equal 0, bAccount.specialities.length
+   
+  end
+
 end

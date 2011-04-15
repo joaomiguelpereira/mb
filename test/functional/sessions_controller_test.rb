@@ -38,14 +38,19 @@ class SessionsControllerTest < ActionController::TestCase
   test "should redirect business type user to businesses dashboard path" do
     
     user = Factory.create(:business_admin, :password=>"123456")
+    #create the business_account
+     baccount = Factory.create(:business_account, :owner=>@badmin)
+    user.business_account = @baccount
+    user.save
     post :create, :session=>{:email=>user.email, :password=>"123456", :keep_logged=>false}
     assert_success_flashed "flash.success.session.create",{:email=>user.email}
     assert_equal user.id, session[:user_id]
-    assert_redirected_to business_dashboard_path
+    assert_redirected_to business_dashboard_path(user.business_account)
     
   end
   test "should create session for active user no remember option" do
     #get an active user    
+    
     user = Factory.create(:user, :password=>"123456")
     post :create, :session=>{:email=>user.email, :password=>"123456", :keep_logged=>false}
     assert_success_flashed "flash.success.session.create",{:email=>user.email}
@@ -60,7 +65,16 @@ class SessionsControllerTest < ActionController::TestCase
     assert_success_flashed "flash.success.session.create",{:email=>user.email}
     assert_equal user.id, session[:user_id]
     assert_redirected_to root_path
-    #assert_equal [user.id, user.password_salt], cookies[:remember_me]
+    #test the cookie here
+    
+    #@request.cookies.merge!(cookies)
+    #cookies = ActionDispatch::Cookies::CookieJar.build(@request)
+
+
+    #jar = @request.cookie_jar
+    #jar.signed[:remember_me] = [user.id, user.password_salt]
+    #assert_equal jar.signed[:remember_me], @response.cookies['remember_me'] 
+    #assert_equal [user.id, user.password_salt], cookies['remember_me']
     
   end
   

@@ -81,7 +81,7 @@ class BusinessAccounts::AdminsControllerTest < ActionController::TestCase
     assert !new_admin.active
   end
 
-  test "should create a new staffer and auto notify" do
+  test "should create a new badmin and auto notify" do
     
     
     email_sents = ActionMailer::Base.deliveries.size
@@ -102,14 +102,19 @@ class BusinessAccounts::AdminsControllerTest < ActionController::TestCase
     assert !ActionMailer::Base.deliveries.empty?
     #get the last sent email
     email = ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.size-1]
+    
+    
+    
+    assert_equal email.encoded, UserMailer.admin_activation_email(new_admin).encoded
+    
      # Test the body of the sent email contains what we expect it to
-    assert_equal [new_admin.email], email.to
-    assert_equal I18n.t("mailer.admin.activation.subject"), email.subject
-    assert_match /#{new_admin.full_name}/, email.encoded
-    assert_match /#{@badmin.full_name}/, email.encoded
+    #assert_equal [new_admin.email], email.to
+    #assert_equal I18n.t("mailer.admin.activation.subject"), email.subject
+    #assert_match /#{new_admin.full_name}/, email.encoded
+    #assert_match /#{@badmin.full_name}/, email.encoded
     
     #check if the activation key is there
-    assert_match /#{new_admin.activation_key}/, email.encoded
+    #assert_match /#{new_admin.activation_key}/, email.encoded
     ###end mail assertion
   end
   ##################################
@@ -133,12 +138,16 @@ class BusinessAccounts::AdminsControllerTest < ActionController::TestCase
     #get the last sent email
     email = ActionMailer::Base.deliveries[ActionMailer::Base.deliveries.size-1]
      # Test the body of the sent email contains what we expect it to
-    assert_equal [admin.email], email.to
-    assert_equal I18n.t("mailer.admin.activation.subject"), email.subject
-    assert_match /#{admin.full_name}/, email.encoded
-    assert_match /#{@badmin.full_name}/, email.encoded
+    
+    assert_equal email.encoded, UserMailer.admin_activation_email(admin).encoded
+    
+    #assert_equal [admin.email], email.to
+    #assert_equal I18n.t("mailer.admin.activation.subject"), email.subject
+    #puts "eail body is: "+email.body
+    #assert_match /#{admin.full_name}/, email.encoded
+    #assert_match /#{@badmin.full_name}/, email.encoded
     #check if the activation key is there
-    assert_match /#{admin.activation_key}/, email.encoded
+    #assert_match /#{admin.activation_key}/, email.encoded
     ###end mail assertion
    
  end

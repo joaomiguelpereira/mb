@@ -17,12 +17,17 @@
 
 = more_javascripts_files "jquery-ui-1.8.10.custom/js/jquery-ui-1.8.10.custom.min.js"
 
+-if @current_user.staffer?
+  - obj = @current_user
+-if @current_user.business_admin?
+  - obj = @staffer	
 %script
   :plain 
     var availabilityInitialData = "#{escape_javascript(raw(@availability.json_data))}";
-    var availabilityUpdateUrl = "#{staffers_availability_path(@business_account)}";
+    var availabilityUpdateUrl = "#{staffers_availability_path(obj)}";
+    var availabilityExceptionsUpdateUrl = "#{staffers_availability_exceptions_path(obj)}";
+    
     var availabilityExceptionsInitialData = "#{escape_javascript(raw(@availability.exceptions_json_data))}";
-    var availabilityExceptionsUpdateUrl = "#{staffers_availability_exceptions_path(@business_account)}";
     var tickImageUrl = "#{image_path("tick.png")}";
     var crossImageUrl = "#{image_path("cross.png")}"
    
@@ -30,7 +35,7 @@
     var dateDayNames = #{raw(@js_i18n_data[:dateDaysNames])};
     var dateMonthNames = #{raw(@js_i18n_data[:dateMonthNames])};
     var dateMonthNamesShort = #{raw(@js_i18n_data[:dateMonthNamesShort])};
-      
+    
 
 #full_content
   -if @current_user.staffer?

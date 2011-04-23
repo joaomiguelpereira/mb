@@ -88,7 +88,7 @@ Medibooking::Application.routes.draw do
 
   match "/business_accounts/:business_account_id/staffers/:id/send_activation_email(.:format)" => "business_accounts/staffers#send_activation_email", :via=>[:put], :as=>:send_staffer_activation_email
   match "/business_accounts/:business_account_id/admins/:id/send_activation_email(.:format)" => "business_accounts/admins#send_activation_email", :via=>[:put], :as=>:send_admin_activation_email
-   
+  
   
   resources :business_admins, :controller=>"users", :except=>[:new, :create] do
     #resources :staffers, :controller=>"users", :except=>[:new, :create, :index, :show, :edit, :update, :destroy]

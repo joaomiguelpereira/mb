@@ -33,8 +33,10 @@
       
 
 #full_content
-  =render :partial=>"users/profile_menu"
-  
+  -if @current_user.staffer?
+    =render :partial=>"users/profile_menu"
+  -if @current_user.business_admin?
+    =render :partial=>"business_accounts/staffers/staffer_dashboard_menu"
   #content.has_help_float_box
     =render :partial=>"availability"
   .help_float_box

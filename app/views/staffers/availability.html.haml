@@ -1,0 +1,47 @@
+= title "Calendário e horário de funcionamento"
+= more_stylesheets "forms"
+= more_stylesheets "calendar"
+= more_stylesheets "jquery-ui-1.8.10.custom/css/ui-lightness/jquery-ui-1.8.10.custom.css"
+
+= more_javascripts_files "jquery.qtip-1.0.0-rc3.min"
+= more_javascripts_files "jquery.scrollTo-min"
+= more_javascripts_files "json2"
+
+= more_javascripts_files "calendar_functions"
+= more_javascripts_files "availability"
+= more_javascripts_files "availability_exceptions"
+
+
+
+
+
+= more_javascripts_files "jquery-ui-1.8.10.custom/js/jquery-ui-1.8.10.custom.min.js"
+
+%script
+  :plain 
+    var availabilityInitialData = "#{escape_javascript(raw(@availability.json_data))}";
+    var availabilityUpdateUrl = "#{staffers_availability_path(@business_account)}";
+    var availabilityExceptionsInitialData = "#{escape_javascript(raw(@availability.exceptions_json_data))}";
+    var availabilityExceptionsUpdateUrl = "#{staffers_availability_exceptions_path(@business_account)}";
+    var tickImageUrl = "#{image_path("tick.png")}";
+    var crossImageUrl = "#{image_path("cross.png")}"
+   
+    var dateDayNamesShort = #{raw(@js_i18n_data[:dateDaysNamesShort])};
+    var dateDayNames = #{raw(@js_i18n_data[:dateDaysNames])};
+    var dateMonthNames = #{raw(@js_i18n_data[:dateMonthNames])};
+    var dateMonthNamesShort = #{raw(@js_i18n_data[:dateMonthNamesShort])};
+      
+
+#full_content
+  =render :partial=>"users/profile_menu"
+  
+  #content.has_help_float_box
+    =render :partial=>"availability"
+  .help_float_box
+    %h1
+      Defina o seu horário.
+    %p
+      Aqui pode definir o seu horário de trabalho.
+    %p
+      Com o botão do rato pressionado sobre o período de inicio, arraste até ao período de fim...   
+   

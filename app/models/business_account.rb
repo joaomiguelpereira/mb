@@ -1,7 +1,10 @@
 class BusinessAccount < ActiveRecord::Base
   has_many :business_admins
   has_many :staffers, :dependent=> :destroy
-  has_one :availability, :dependent=> :destroy
+  
+  #has_one :availability, :dependent=> :destroy
+  has_one :availability, :dependent=> :destroy, :as=>:availabilityable
+  
   has_many :business_account_specialities, :dependent=> :destroy
   has_many :specialities, :through=>:business_account_specialities
   
@@ -23,8 +26,8 @@ class BusinessAccount < ActiveRecord::Base
   def create_default_availability
     if self.availability.nil?
       self.availability = Availability.new
-      self.availability.json_data = ""
-      self.availability.exceptions_json_data = ""
+      #self.availability.json_data = ""
+      #self.availability.exceptions_json_data = ""
       
       self.save
     end

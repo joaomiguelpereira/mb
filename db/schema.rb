@@ -14,7 +14,8 @@ ActiveRecord::Schema.define(:version => 20110310142949) do
 
   create_table "availabilities", :force => true do |t|
     t.text     "json_data"
-    t.integer  "business_account_id"
+    t.integer  "availabilityable_id"
+    t.string   "availabilityable_type"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "exceptions_json_data"

@@ -7,6 +7,7 @@ pt:
       speciality:
         create: Não foi possível criar esta especialidade
         general: Ocorreu um erro. Por favor volte a carregar a página e tente novamente.
+        validation: Ocorreu um erro de validação. Por favor tente novamente.
         create:
           exists: Esta especialidade já se encontra definida
       business_account:

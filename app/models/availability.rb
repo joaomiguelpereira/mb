@@ -1,5 +1,7 @@
 class Availability < ActiveRecord::Base
   
+  belongs_to :availabilityable
+  
   #Class constants
   WEEK_DAYS = 7.freeze
   START_HOUR_FIELD_NAME = "startHour".freeze
@@ -10,7 +12,7 @@ class Availability < ActiveRecord::Base
   EXCEPTION_END_DATE_FIELD_NAME = "endDate".freeze
   EXCEPTION_MOTIVE_FIELD_NAME = "motive".freeze
   EXCEPTION_NOTES_FIELD_NAME = "notes".freeze
-  belongs_to :business_account
+  
   
   after_create :create_default_json_data
   
@@ -71,6 +73,7 @@ class Availability < ActiveRecord::Base
     exceptions_array = Array.new
     self.exceptions_json_data = exceptions_array.to_json
     self.json_data = def_json_data.to_json
+    self.exceptions_json_data = Array.new.to_json
     self.save
   end
 end

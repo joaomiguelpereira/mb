@@ -78,7 +78,7 @@ class BusinessAccountsController < BusinessAdminResourcesBaseController
         speciality = specR if speciality.nil?   
         @business_account.specialities << speciality
         if @business_account.save
-          render :json=> { :status => :ok, :message=>I18n.t("flash.success.speciality.create")}
+          render :json=> {:speciality=>speciality.to_json, :status => :ok, :message=>I18n.t("flash.success.speciality.create")}
         else 
           render :json=> { :status => :error, :message=>I18n.t("flash.error.speciality.create")}
         end
@@ -92,5 +92,8 @@ class BusinessAccountsController < BusinessAdminResourcesBaseController
     end
   rescue ActiveRecord::UnknownAttributeError
     render :json=> { :status => :error, :message=>I18n.t("flash.error.speciality.general")}
+  rescue ActiveRecord::RecordInvalid
+  	render :json=> { :status => :error, :message=>I18n.t("flash.error.speciality.validation")}
+  
   end
 end

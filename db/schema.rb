@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110310142949) do
+ActiveRecord::Schema.define(:version => 20110423190738) do
 
   create_table "availabilities", :force => true do |t|
     t.text     "json_data"
@@ -61,6 +61,13 @@ ActiveRecord::Schema.define(:version => 20110310142949) do
   end
 
   add_index "specialities", ["name"], :name => "index_specialities_on_name"
+
+  create_table "staffer_specialities", :force => true do |t|
+    t.integer  "staffer_id"
+    t.integer  "speciality_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", :force => true do |t|
     t.string   "email"

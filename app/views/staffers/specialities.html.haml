@@ -1,0 +1,26 @@
+= title "Especialidades"
+= more_stylesheets "forms"
+= more_stylesheets "calendar"
+= more_javascripts_files "json2"
+= more_javascripts_files "specialities"
+
+
+-if @current_user.staffer?
+  - obj = @current_user
+-if @current_user.business_admin?
+  - obj = @staffer	
+  
+%script
+  :plain 
+    var baseURL = "#{staffers_specialities_path(obj)}";
+    var tickImageUrl = "#{image_path("tick.png")}";
+    var crossImageUrl = "#{image_path("cross.png")}"
+    
+
+
+#full_content
+  =render :partial=>"business_accounts/dashboard_menu"
+  #content
+    Aqui pode definir quais as especialidades do seu negócio.
+    #specialities_container
+    

@@ -7,5 +7,8 @@ class StaffersController < UsersController
     @staffer = Staffer.find(params[:id])
   end
   
+  def availability
+  	
+  end
   
 end

@@ -13,6 +13,9 @@
         =link_to "Informação pessoal", user_profile_path, :class=>(request.env['PATH_INFO'] == user_profile_path) ? "selected" : ""
       %li
         =link_to "Preferênicas", user_preferences_path, :class=>(request.env['PATH_INFO'] == user_preferences_path) ? "selected" : ""
+      -if @current_user.staffer?
+        %li
+          =link_to "Horário", staffers_availability_path(@current_user), :class=>(request.env['PATH_INFO'] == staffers_availability_path(@current_user)) ? "selected" : ""          
       %li
         =link_to "Alterar password", user_change_password_path, :class=>(request.env['PATH_INFO'] == user_change_password_path) ? "selected" : ""
         

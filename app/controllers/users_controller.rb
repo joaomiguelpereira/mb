@@ -164,6 +164,7 @@ class UsersController < ApplicationController
   ##EXCEPTIONS FOR THIS CONTROLLER
   private
   def has_access?
+  	
     raise WebAppException::AuthorizationError if params[:id].to_s != @current_user.id.to_s #in case of a super admin
   end
   

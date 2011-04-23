@@ -69,6 +69,8 @@ Medibooking::Application.routes.draw do
   
   
   match "staffer/dashboard/:id" =>"staffers#dashboard", :via=>[:get], :as=>:staffer_dashboard
+  match "/staffer/:id/availability" => "staffers#availability", :via=>[:get, :put], :as=>:staffers_availability
+  
   
   resources :users
   resources :staffers, :controller=>"users" 

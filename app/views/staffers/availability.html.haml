@@ -24,8 +24,8 @@
 %script
   :plain 
     var availabilityInitialData = "#{escape_javascript(raw(@availability.json_data))}";
-    var availabilityUpdateUrl = "#{staffers_availability_path(obj)}";
-    var availabilityExceptionsUpdateUrl = "#{staffers_availability_exceptions_path(obj)}";
+    var availabilityUpdateUrl = "#{staffer_availability_path(obj)}";
+    var availabilityExceptionsUpdateUrl = "#{staffer_availability_exceptions_path(obj)}";
     
     var availabilityExceptionsInitialData = "#{escape_javascript(raw(@availability.exceptions_json_data))}";
     var tickImageUrl = "#{image_path("tick.png")}";

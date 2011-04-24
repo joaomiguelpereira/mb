@@ -12,14 +12,19 @@
   
 %script
   :plain 
-    var baseURL = "#{staffers_specialities_path(obj)}";
+    var baseURL = "#{staffer_specialities_path(obj)}";
     var tickImageUrl = "#{image_path("tick.png")}";
     var crossImageUrl = "#{image_path("cross.png")}"
     
 
 
 #full_content
-  =render :partial=>"business_accounts/dashboard_menu"
+  -if @current_user.staffer?
+    =render :partial=>"users/profile_menu"
+  -if @current_user.business_admin?
+    =render :partial=>"business_accounts/staffers/staffer_dashboard_menu"
+    
+  
   #content
     Aqui pode definir quais as especialidades do seu negócio.
     #specialities_container

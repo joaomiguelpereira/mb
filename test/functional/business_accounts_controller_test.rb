@@ -148,6 +148,8 @@ class BusinessAccountsControllerTest < ActionController::TestCase
     assert_not_nil assigns(:availability)
   end
   
+  #########Test specialities
+  
   test "dont get specialities if not authenticated" do 
      assert_raise(WebAppException::SessionRequiredError) do
       get :specialities,{:business_account_id=>@baccount.id},{}

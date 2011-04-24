@@ -21,7 +21,50 @@ class StaffersController < UsersController
 		end
 
 	end
-
+	##TODO: Refactor this since the logic is copy/paste from business_accounts_controller
+	def specialities
+	@staffer = Staffer.find(params[:id])
+    @specialities = @staffer.specialities
+    
+    #Get records as JSON
+    if request.get? && request.format.json?  
+      render :json=>@specialities.to_json
+    end
+    
+    #Save new record as JSON
+    if request.post? && request.format.json?
+      specR = Speciality.new(ActiveSupport::JSON.decode(params[:speciality]))
+      #try to find if
+      speciality = Speciality.find_by_name(specR.name)
+      
+      
+      if speciality && @staffer.specialities.exists?(speciality) 
+        render :json=> { :status => :error, :message=>I18n.t("flash.error.speciality.create.exists")}
+      else
+        speciality = specR if speciality.nil?   
+        @staffer.specialities << speciality
+        if @staffer.save
+          render :json=> {:speciality=>speciality.to_json, :status => :ok, :message=>I18n.t("flash.success.speciality.create")}
+        else 
+          render :json=> { :status => :error, :message=>I18n.t("flash.error.speciality.create")}
+        end
+      end
+    end
+    #Delete record
+    if request.delete?
+      speciality = Speciality.find(params[:speciality_id])
+      @staffer.specialities.delete(speciality)
+      render :json=> { :status => :ok, :message=>I18n.t("flash.success.speciality.delete")}
+    end
+  rescue ActiveRecord::UnknownAttributeError
+    render :json=> { :status => :error, :message=>I18n.t("flash.error.speciality.general")}
+  rescue ActiveRecord::RecordInvalid
+  	render :json=> { :status => :error, :message=>I18n.t("flash.error.speciality.validation")}
+  
+  end
+  
+  
+	##TODO: Refactor this since teh logic is copy/paste from business_accounts
 	def availability
 		dateDaysNamesShort = I18n.t('date.abbr_day_names').dup
 		dateDayNames = I18n.t('date.day_names').dup

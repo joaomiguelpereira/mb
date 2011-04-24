@@ -69,8 +69,12 @@ Medibooking::Application.routes.draw do
   
   
   match "staffer/dashboard/:id" =>"staffers#dashboard", :via=>[:get], :as=>:staffer_dashboard
-  match "/staffer/:id/availability" => "staffers#availability", :via=>[:get, :put], :as=>:staffers_availability
-  match "/staffer/:id/availability_exceptions" => "staffers#availability_exceptions", :via=>[:put], :as=>:staffers_availability_exceptions
+  match "/staffer/:id/availability" => "staffers#availability", :via=>[:get, :put], :as=>:staffer_availability
+  match "/staffer/:id/availability_exceptions" => "staffers#availability_exceptions", :via=>[:put], :as=>:staffer_availability_exceptions
+  
+  match "/staffer/:id/specialities" => "staffers#specialities", :via=>[:get, :post, :delete], :as=>:staffer_specialities
+  
+
   
   
   resources :users

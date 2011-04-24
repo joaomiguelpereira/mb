@@ -8,8 +8,10 @@
       %li
         =link_to "Informação", business_account_staffer_path(@current_user.business_account, @staffer), :class=>(request.env['PATH_INFO'] == business_account_staffer_path(@current_user.business_account, @staffer)) ? "selected" : ""
       %li
-        =link_to "Horário", staffers_availability_path(@staffer), :class=>(request.env['PATH_INFO'] == staffers_availability_path(@staffer)) ? "selected" : ""
-          
+        =link_to "Horário", staffer_availability_path(@staffer), :class=>(request.env['PATH_INFO'] == staffer_availability_path(@staffer)) ? "selected" : ""
+      %li
+        =link_to "Especialidades", staffer_specialities_path(@staffer), :class=>(request.env['PATH_INFO'] == staffer_specialities_path(@staffer)) ? "selected" : ""
+        
   .left_menu
     %ul
       %li

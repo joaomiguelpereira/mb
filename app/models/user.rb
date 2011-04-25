@@ -34,6 +34,9 @@ class User < ActiveRecord::Base
   
   #validates_format_of :email, :with => /[a-zA-Z0-9._%]@(?:[a-zA-Z0-9]\.)[a-zA-Z]{2,4}/, 
   
+  #Associations
+  has_many :appointments, :dependent=>:destroy
+  
   #interceptors
   before_save :encrypt_password
   before_create :generate_activation_key

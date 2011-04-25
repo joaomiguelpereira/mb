@@ -8,6 +8,10 @@ class BusinessAccount < ActiveRecord::Base
   has_many :business_account_specialities, :dependent=> :destroy
   has_many :specialities, :through=>:business_account_specialities
   
+  #has_many :business_account_appointments, :dependent=> :destroy
+  #has_many :appointments, :through=>:business_account_appointments
+  
+  
   after_create :create_default_availability
   
   has_one :business

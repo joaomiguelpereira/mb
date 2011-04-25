@@ -58,13 +58,9 @@ Factory.define :staffer do |f|
   f.business_account_id nil
   f.need_new_password false
 end
-#
-#Factory.define :worker do |f|
-#  f.sequence(:name) {|n| "Worker#{n} name "}
-#  f.sequence(:email) {|n| "worker#{n}@mail.com"}
-#  f.address "worker address, Street of nowhere"
-#  f.city "city of angels"
-#  f.postal_code "34545262626"
-#  f.phone "123456789"
-#  f.user_id  nil
-#end
+
+Factory.define :appointment do |f|
+	f.notes "Notes on the appointment"
+	f.start_date DateTime.now
+	f.duration 30
+end

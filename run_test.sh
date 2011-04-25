@@ -1,2 +1,2 @@
-ruby -I"lib:test" test/unit/appointment_test.rb
+ruby -I"lib:test" test/unit/business_account_appointment_test.rb
 

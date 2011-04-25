@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110425142421) do
+ActiveRecord::Schema.define(:version => 20110425154329) do
 
   create_table "appointments", :force => true do |t|
     t.integer  "user_id"
@@ -28,6 +28,13 @@ ActiveRecord::Schema.define(:version => 20110425142421) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "exceptions_json_data"
+  end
+
+  create_table "business_account_appointments", :force => true do |t|
+    t.integer  "appointment_id"
+    t.integer  "business_account_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "business_account_specialities", :force => true do |t|

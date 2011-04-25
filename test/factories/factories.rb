@@ -58,7 +58,9 @@ Factory.define :staffer do |f|
   f.business_account_id nil
   f.need_new_password false
 end
-
+Factory.define :business_account_appointment do |f|
+	
+end
 Factory.define :appointment do |f|
 	f.notes "Notes on the appointment"
 	f.start_date DateTime.now

@@ -1,0 +1,18 @@
+= title "Marcações"
+= more_javascripts_files "eventmanagement/calendar"
+= more_javascripts_files "eventmanagement/weekview"
+
+#full_content
+  =render :partial=>"business_accounts/dashboard_menu"
+  #content
+    #calendar
+%script
+  :plain
+    $(function() {
+    	var calendar = new Calendar();
+    	calendar.init($("#calendar"),{view:"week"});
+    })
+    
+     
+
+    

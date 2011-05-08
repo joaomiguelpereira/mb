@@ -11,13 +11,14 @@
         =link_to "Dashboard", business_dashboard_path(@current_user.business_account), :class=>(request.env['PATH_INFO'] == business_dashboard_path(@current_user.business_account)) ? "selected" : ""
       -if !@current_user.business.nil?
         %li
+          =link_to "Marcações", business_account_appointments_path(@current_user.business_account), :class=>(request.env['PATH_INFO'] ==  business_account_appointments_path(@current_user.business_account) ) ? "selected" : ""
+        %li
           =link_to "Colaboradores", business_account_staffers_path(@current_user.business_account), :class=>(request.env['PATH_INFO'] ==  business_account_staffers_path(@current_user.business_account) ) ? "selected" : ""
         %li
           =link_to "Administradores", business_account_admins_path(@current_user.business_account), :class=>(request.env['PATH_INFO'] ==  business_account_admins_path(@current_user.business_account) ) ? "selected" : ""
         %li
           =link_to "Informação da conta", business_account_business_path(@current_user.business_account,@current_user.business), :class=>(request.env['PATH_INFO'] ==  business_account_business_path(@current_user.business_account,@current_user.business_account.business) ) ? "selected" : ""
         %li
-          =link_to "Horário", business_account_availability_path(@current_user.business_account), :class=>(request.env['PATH_INFO'] ==  business_account_availability_path(@current_user.business_account) ) ? "selected" : ""
-          
+          =link_to "Horário", business_account_availability_path(@current_user.business_account), :class=>(request.env['PATH_INFO'] ==  business_account_availability_path(@current_user.business_account) ) ? "selected" : ""          
         %li
           =link_to "Especialidades", business_account_specialities_path(@current_user.business_account), :class=>(request.env['PATH_INFO'] ==  business_account_specialities_path(@current_user.business_account) ) ? "selected" : ""

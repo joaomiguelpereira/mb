@@ -104,6 +104,7 @@ Medibooking::Application.routes.draw do
     resources :businesses, :except=>[:index]
     resources :staffers, :controller=>"business_accounts/staffers"
     resources :admins, :controller=>"business_accounts/admins"
+    resources :appointments, :controller=>"business_accounts/appointments"
   end
   match "/business_accounts/:business_account_id/availability" => "business_accounts#availability", :via=>[:get, :put], :as=>:business_account_availability
   match "/business_accounts/:business_account_id/availability_exceptions" => "business_accounts#availability_exceptions", :via=>[:put], :as=>:business_account_availability_exceptions
